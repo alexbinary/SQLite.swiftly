@@ -21,7 +21,7 @@ class SQLite_Connection {
     /// This pointer is guaranteed to always point to a valid, open connection
     /// to the database that was passed to the initializer.
     ///
-    private(set) var pointer: OpaquePointer!
+    private var pointer: OpaquePointer!
 
     
     /// Creates a new connection to a database.
@@ -73,6 +73,30 @@ extension SQLite_Connection {
             
             return nil
         }
+    }
+}
+
+
+extension SQLite_Connection {
+    
+    
+    /// Compiles a query into a statement and returns a raw SQLite pointer to
+    /// the statement.
+    ///
+    /// - Parameter query: The SQL query to compile.
+    ///
+    /// - Returns: A pointer to the SQLite statement object.
+    ///
+    func compile(_ query: SQLite_Query) -> OpaquePointer {
+        
+        var statementPointer: OpaquePointer!
+        
+        guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
+            
+            fatalError("[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")")
+        }
+        
+        return statementPointer
     }
 }
 
