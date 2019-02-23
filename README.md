@@ -1,3 +1,10 @@
+
+<p align="center">
+  <img src="sqlite-logo.png" height=128>
+  <img src="swift-logo.png" height=128>
+</p>
+
+
 #  SQLite.swiftly
 
 *SQLite.swiftly* is a simple Swift wrapper on  top of the C-style SQLite APIs available on Apple platforms.
