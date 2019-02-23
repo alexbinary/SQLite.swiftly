@@ -134,7 +134,10 @@ extension SQLite_Statement {
         
         (0..<parameterCount).forEach { index in
             
-            let rawParameterName = sqlite3_bind_parameter_name(pointer, index)!
+            guard let rawParameterName = sqlite3_bind_parameter_name(pointer, index) else {
+                
+                fatalError("[SQLite_Statement] Cannot get parameter name for index: \(index). Query: \(query.sqlRepresentation)")
+            }
             
             let parameterName = String(cString: rawParameterName)
             
