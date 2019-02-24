@@ -132,18 +132,21 @@ extension SQLite_Statement {
         
         let parameterNames = parameterValues.keys.map { $0.name }
         
-        (0..<parameterCount).forEach { index in
-            
-            guard let rawParameterName = sqlite3_bind_parameter_name(pointer, index) else {
+        if parameterCount > 0 {
+        
+            (1...parameterCount).forEach { index in
                 
-                fatalError("[SQLite_Statement] Cannot get parameter name for index: \(index). Query: \(query.sqlRepresentation)")
-            }
-            
-            let parameterName = String(cString: rawParameterName)
-            
-            guard parameterNames.contains(parameterName) else {
-            
-                fatalError("[SQLite_Statement] Statement has a query parameter \"\(parameterName)\" but no value was provided for that parameter. Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
+                guard let rawParameterName = sqlite3_bind_parameter_name(pointer, index) else {
+                    
+                    fatalError("[SQLite_Statement] Cannot get parameter name for index: \(index). Query: \(query.sqlRepresentation)")
+                }
+                
+                let parameterName = String(cString: rawParameterName)
+                
+                guard parameterNames.contains(parameterName) else {
+                
+                    fatalError("[SQLite_Statement] Statement has a query parameter \"\(parameterName)\" but no value was provided for that parameter. Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
+                }
             }
         }
     }
