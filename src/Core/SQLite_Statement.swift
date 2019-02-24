@@ -272,7 +272,7 @@ extension SQLite_Statement {
             
             let stepResult = sqlite3_step(pointer)
             
-            guard stepResult.isOneOf([SQLITE_ROW, SQLITE_DONE]) else {
+            guard [SQLITE_ROW, SQLITE_DONE].contains(stepResult) else {
                 
                 fatalError("[SQLite_Statement] sqlite3_step() returned \(stepResult) for query: \(query.sqlRepresentation). SQLite error: \(connection.errorMessage ?? "")")
             }
