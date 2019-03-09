@@ -7,118 +7,239 @@
 
 #  SQLite.swiftly
 
-*SQLite.swiftly* is a simple Swift wrapper on  top of the C-style SQLite APIs available on Apple platforms.
+*SQLite.swiftly* is a simple wrapper on top of the C-style SQLite APIs available
+on Apple platforms writing in Swift.
 
-*SQLite.swiftly* is being developped as part of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection)  project.
-It was originally part of the source code of the project, but has been moved into its own repository so it can have its own life,
-and why not inspire someone.
+*SQLite.swiftly* provides type safe APIs to work with SQLite databases, with as
+many compile time checks as possible, so you can avoid many common mistakes
+before even running the code.
 
-*SQLite.swiftly* provides type safe APIs to work with SQLite database, with as much compile time checks as possible,
-so you can avoid many common mistakes even before running your app.
+The design of *SQLite.swiftly* makes writing incorrect code harder.
 
-Besides the fact that the SQLite C-style APIs require the use of low level and not very swifty types such as `UnsafePointer` instead of `String`,
-connections and statement are both manipulated through pointers of the same type `OpaquePointer`, which makes it easy to make mistakes
-and pass one object when you intended the other one.
-
-By nature, a pointer can point to an uninitialized or disposed object, and there is no way to know
-if it points to a valid object at compile time. Keeping track of what the pointers point to is on the programmer.
-
-On top of that, objects have an internal state machine, which the programmer must keep track of
-in order to make the appropriate calls at the appropriate time. Again, it is easy to make mistakes,
-and the compiler cannot help at all. All work is on the programmer.
-
-*SQLite.swiftly* solves all these problems so you can focus on building your app instead of
-managing pointers and state machines.
-
-The design of *SQLite.swiftly* makes it very hard to write wrong code.
-
-Let's see how it works:
+Here is a simple example:
 
 ```swift
-// vanilla C-style API
+// 1. declare your database schema
+//
+// Here we describe a simple table named `contact` with one column `id` of type int and a column `name` of type varchar:
+
+struct DemoDatabaseSchema {
+  
+  let contactTableDescription = ContactTableDescription()
+
+  class ContactTableDescription: SQLite_TableDescription {
+  
+    let idColumnDescription = SQLite_ColumnDescription(
+      
+      name: "id",
+      type: .int(size: 11),
+      nullable: false
+    )
+    
+    let nameColumnDescription = SQLite_ColumnDescription(
+      
+      name: "name",
+      type: .char(size: 255),
+      nullable: false
+    )
+
+    init() {
+      
+      super.init(name: "contact", columns: [
+          
+        idColumnDescription,
+        nameColumnDescription,
+      ])
+    }
+  }
+}
+
+// 2. Connect to the database
+
+let connection = SQLite_Connection(toDatabaseAt: "path/to/db.sqlite")
+
+// 3. Create the table
+
+connection.createTable(describedBy: DemoDatabaseSchema.contactTableDescription)
+
+// 4. Insert data into the table
+//
+// We first need to get prepared statement, then run it with the data:
+
+let insertStatement = SQLite_InsertStatement(
+  insertingIntoTable: DemoDatabaseSchema.contactTableDescription,
+  connection: connection
+)
+
+insertStatement.insert([
+  DemoDatabaseSchema.contactTableDescription.idColumnDescription: 1,
+  DemoDatabaseSchema.contactTableDescription.nameColumnDescription: "John",
+])
+
+// 5. Read data
+
+let rows = connection.readlAllRows(fromTable: DemoDatabaseSchema.contactTableDescription)
+for row in rows {
+  for (column, value) in row {
+    print("\(column.name): \(String(describing: value))")
+  }
+}
+
+// 6. Make sure resources are released
+//
+// Instances of SQLite_Connections and SQLite_Statement hold resources that need 
+// to be released. Resources are released when the objects are deallocated, i.e. 
+// when there are no more strong references to them. Statements keep a reference 
+// to the connection that created them.
+```
+
+*SQLite.swiftly* was originally part of the source code of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project.
+It has been moved into its own repository so it can have its own life, and why not inspire someone.
+
+As such, development is driven by the needs of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
+and only features that are needed by that project are being developped.
+
+*SQLite.swiftly* currently supports the following SQLite data types:
+
+- [x] char
+- [x] bool
+- [ ] int
+- [ ] double
+- [ ] blob
+
+*SQLite.swiftly* currently supports the following operations:
+
+- [x] create tables
+- [ ] drop tables
+- [ ] alter tables
+- [ ] drop columns
+- [x] insert into tables (all columns)
+- [ ] insert into tables (only some columns)
+- [ ] update rows
+- [x] select from tables (all columns, all rows, not suited for very large data sets)
+- [ ] select from tables (some columns only)
+- [ ] select from tables (progressive/chunked reading)
+- [ ] select with `WHERE`, `GROUP BY` or `HAVING` clauses
+- [ ] use of SQL functions like `ABS()`, `LENGTH()` or `MIN()`
+
+*SQLite.swiftly* does not have proper error handling yet. Any error currently
+triggers a `fatalError()`.
+
+
+## Getting started
+
+TODO
+
+
+## Motivation and design
+
+The SQLite C-style APIs make writing incorrect code way too easy.
+
+Besides the fact that the SQLite C-style APIs require the use of low level and
+not very swifty types such as `UnsafePointer` instead of `String`, connections
+and statement are both manipulated through pointers of the same type
+`OpaquePointer`, which makes it easy to make mistakes and pass one object when
+you intended the other one.
+
+By nature, a pointer can point to an uninitialized or destroyed object, and
+there is no way to know if it points to a valid object at compile time. Keeping
+track of what happens to the objects is on the programmer, and programmers
+inevitably make mistakes.
+
+On top of that, objects have an internal state machine, which the programmer
+must keep track of in order to make the appropriate calls at the appropriate
+time. Again, it is easy to make mistakes, and the compiler cannot help at all.
+All the work is on the programmer, and errors are waiting at the corner.
+
+Example:
+
+```swift
+// -- Open a connection
 
 var connectionPointer: OpaquePointer!
 sqlite3_open("path/to/db.sqlite", &connectionPointer)
 
+// Easy, right ? but what if the connection failed ? sure we can check the
+// status of the connection, but if we fail to do the proper checks nothing is 
+// preventing us to use an invalid connection pointer.
+
+
+// -- Compile an insert statement
+
 var statementPointer: OpaquePointer!
 sqlite3_prepare_v2(connectionPointer, "INSERT INTO table(c1, c2) VALUES(1,2"), -1, &statementPointer, nil)
 
-// what if the connection failed ? we can use a if condition, but nothing is preventing us to use the connection pointer event if the connection failed.
-// what if we made a mistake in the SQL query ?
-// what's that -1 doing ?
-// what if we mistakenly swap the connectionPointer and statementPointer ?
+// What if we mistakenly swap the connectionPointer and statementPointer ? we
+// have to wait for the code to run, only to get an obscure and hard to debug 
+// error. Come on we can do better!
 
-sqlite3_finalize(statementPointer)  // now statementPointer cannot be used anymore, but who can tell ? we need to keep track of whether sqlite3_finalize() was called on that pointer.  
+// And what if we made a mistake in the SQL query ? again, we can check the 
+// status of the statement but it is so easy to forget, and we should not have
+// to do runtime checks on something we write in the code anyway.
 
-sqlite3_close(connectionPointer)    // same thing with connectionPointer
+// And also, what is that -1 doing ? and that `nil` at the end ?
 
 
-// now with SQLite.swiftly
+// -- Release resources
 
-var connection: SQLite_Connection! = SQLite_Connection(toDatabaseAt: "path/to/db.sqlite")
+sqlite3_finalize(statementPointer)
 
-// connection is guaranteed to be a valid connection, if the connection failed a fatal error is raised.
+// So now we have to worry about the fact that anyone can destroy a statement
+// without us knowing? Do we need to check if the object is still valid every
+// time before we use it ? And what do we do if it is not ?
 
-// lets first describe our table:
+sqlite3_close(connectionPointer)
 
-let c1 = SQLite_ColumnDescription(
-    name: "c1",
-    type: .char(size: 255),
-    nullable: false
-)
-
-let c2 = SQLite_ColumnDescription(
-    name: "c2",
-    type: .char(size: 255),
-    nullable: true
-) 
-
-let table = SQLite_TableDescription(name: "table", columns: [c1, c2])
-
-// now lets create a statement that inserts data in the table:
-
-let statement = SQLite_InsertStatement(insertingIntoTable: table, connection: connection)
-
-// again, statement is guaranteed to be a valid statement
-// since we did not write the SQL query ourself, we cannot make mistakes in it!
-
-// now lets insert data :
-
-statement.insert([
-    c1: "value1",
-    c2: nil,
-])
-
-// now lets close the connection:
-
-connection = nil
-
-// the connection is closed when the connection object is deallocated
-// thus, as long as you have a non-nil object, the connection is guaranteed to be open
-// using optionals as we did here forces you to think about the possibility of the connection being invalid *as you write the code*
+// Same problems with the connection.
 ```
 
-## Design considerations
+*SQLite.swiftly* solves all these problems so you can focus on building your app 
+instead of managing pointers and state machines.
 
-There is no proper error handling yet. Any error triggers a fatal error.
+The main design principles are:
 
-Proper error handling is planned. 
+1. Higher level objects encapsulate the underlying objects life cycle and expose
+friendlier APIs.
+
+2. You do not write SQL queries directly but instead describes the database
+schema and lets *SQLite.swiftly* build the SQL queries for you.
 
 
-## Features
+### Higher level objects
 
-Supported SQLite data types :
+These objects are `SQLite_Connection` and `SQLite_Statement` and its subclasses.
+They all hold a pointer to the low level SQLite object.
 
-- [x] char
-- [x] bool
+These objects are immutable as much as possible. Connections are opened in 
+`SQLite_Connection`'s initializer and closed in its deinitializer. Statements
+are compiled in `SQLite_Statement`'s initializer and destroyed in its
+deinitializer. This makes it impossible to use an invalid pointer.
 
-Supported operations :
+From the programmer's point of view `SQLite_Connection` and `SQLite_Statement`
+are stateless objects. Methods that mutate the underlying object always bring it
+back to a default state before or after they do their work.
 
-- [x] create tables
-- [x] insert into tables (all columns only)
-- [x] select from tables (all columns only)(no chunked reading, not suited for very large data sets)
+`SQLite_Connection` and `SQLite_Statement` expose features through simple APIs
+that leverage all the goodness that Swift has to offer.
+
+
+### Automatic SQL query generation
+
+The best way to avoid writing bugs is to avoid writing the code all together.
+
+*SQLite.swiftly* writes SQL queries so you don't have to. You provide type safe
+descriptions of your database schema with tables and columns and let
+*SQLite.swiftly* worry about writing correct SQL code.
+
+This also has the benefit of having a single source of truth instead of
+spreading the database structure in raw SQL queries that the compiler cannot
+understand.
 
 
 ## Demo / Development project
 
 TODO
+
+
+
+
