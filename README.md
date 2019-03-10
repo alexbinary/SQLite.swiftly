@@ -211,6 +211,10 @@ understand.
 
 TODO
 
+Setup git pre-commit hook:
 
+```bash
+$ ln -s "$PWD"/pre-commit.sh .git/hooks/pre-commit
+```
 
 
