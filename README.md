@@ -176,19 +176,19 @@ schema and lets *SQLite.swiftly* build the SQL queries for you.
 
 ### Higher level objects
 
-These objects are `SQLite_Connection` and `SQLite_Statement` and its subclasses.
+These objects are `Connection` and `Statement` and its subclasses.
 They all hold a pointer to the low level SQLite object.
 
 These objects are immutable as much as possible. Connections are opened in 
-`SQLite_Connection`'s initializer and closed in its deinitializer. Statements
-are compiled in `SQLite_Statement`'s initializer and destroyed in its
+`Connection`'s initializer and closed in its deinitializer. Statements
+are compiled in `Statement`'s initializer and destroyed in its
 deinitializer. This makes it impossible to use an invalid pointer.
 
-From the programmer's point of view `SQLite_Connection` and `SQLite_Statement`
+From the programmer's point of view `Connection` and `Statement`
 are stateless objects. Methods that mutate the underlying object always bring it
 back to a default state before or after they do their work.
 
-`SQLite_Connection` and `SQLite_Statement` expose features through simple APIs
+`Connection` and `Statement` expose features through simple APIs
 that leverage all the goodness that Swift has to offer.
 
 
