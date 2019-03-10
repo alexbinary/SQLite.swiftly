@@ -50,68 +50,44 @@ Here is how you create a table, insert data into it, and read the data back.
 Notice how we never write SQL queries:
 
 ```swift
-// 1. declare your database schema
-//
 // Here we describe a simple table named `contact` with one column `id` of type
 // int and a column `name` of type varchar:
 
-class ContactTableDescription: SQLite_TableDescription {
+class ContactTable: Table {
 
-  let idColumnDescription = SQLite_ColumnDescription(
-    
-    name: "id",
-    type: .int(size: 11),
-    nullable: false
-  )
-  
-  let nameColumnDescription = SQLite_ColumnDescription(
-    
-    name: "name",
-    type: .char(size: 255),
-    nullable: false
-  )
+  let idColumn = Column(name: "id", type: .int(size: 11), nullable: false)
+  let nameColumn = Column(name: "name", type: .char(size: 255), nullable: false)
 
   init() {
-    super.init(name: "contact", columns: [       
-      idColumnDescription,
-      nameColumnDescription,
-    ])
+    super.init(name: "contact", columns: [idColumn, nameColumn])
   }
 }
-let contactTableDescription = ContactTableDescription()
+let contactTable = ContactTable()
 
-// 2. Connect to the database
-let connection = SQLite_Connection(toDatabaseAt: "path/to/db.sqlite")
+// Open a connection to the database
+let connection = Connection(toDatabaseIn: "path/to/db.sqlite")
 
-// 3. Create the table
-connection.createTable(describedBy: DemoDatabaseSchema.contactTableDescription)
+// Create the table
+connection.create(contactTable)
 
-// 4. Prepare a statement that inserts data into the table
-let insertStatement = SQLite_InsertStatement(
-  insertingIntoTable: DemoDatabaseSchema.contactTableDescription,
-  connection: connection
-)
+// Prepare a statement that inserts data into the table
+let insertStatement = connection.prepare(insertInto: contactTable)
 
-// 5. Insert data into the table
-insertStatement.insert([
-  DemoDatabaseSchema.contactTableDescription.idColumnDescription: 1,
-  DemoDatabaseSchema.contactTableDescription.nameColumnDescription: "John",
-])
+// Insert data into the table
+insertStatement.insert([contactTable.idColumn: 1, contactTable.nameColumn: "Alice"])
+insertStatement.insert([contactTable.idColumn: 2, contactTable.nameColumn: "Bob"])
 
-// 6. Read data
-let rows = connection.readlAllRows(fromTable: DemoDatabaseSchema.contactTableDescription)
+// Read data
+let rows = connection.readlAllRows(from: contactTable)
 for row in rows {
   for (column, value) in row {
     print("\(column.name): \(String(describing: value))")
   }
 }
-
-// 7. Make sure resources are released
-//
-// Instances of SQLite_Connections and SQLite_Statement hold resources that need 
-// to be released. Resources are released when the objects are deallocated, i.e. 
-// when there are no more strong references to them. Statements keep a reference 
-// to the connection that created them.
+// "id: 1"
+// "name: Alice"
+// "id: 2"
+// "name: Bob"
 ```
 
 
