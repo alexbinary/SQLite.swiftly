@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import SQLite_Swiftly
 
 class SQLite_SwiftlyTests: XCTestCase {
 
@@ -30,4 +31,8 @@ class SQLite_SwiftlyTests: XCTestCase {
         }
     }
 
+    func testDemo() {
+        XCTAssertEqual(Demo.hello(), "hello2") 
+    }
+    
 }

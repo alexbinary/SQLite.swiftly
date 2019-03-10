@@ -11,8 +11,8 @@ import Foundation
 
 public struct Demo {
     
-    public static func hello() {
+    public static func hello() -> String {
         
-        print("hello")
+        return "hello"
     }
 }
