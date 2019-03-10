@@ -14,6 +14,30 @@ avoid many common mistakes before even running the code.
 
 In short, *SQLite.swiftly*  makes writing incorrect code harder.
 
+
+## Origins and features
+
+*SQLite.swiftly* was originally part of the source code of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project.
+It has been moved into its own repository so it can have its own life, and why not inspire someone.
+
+As such, development is driven by the needs of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
+and only features that are needed by that project are being developped.
+
+Supported features:
+
+- [x] create tables
+- [x] insert into tables
+- [x] select from tables (complete table dump, not suited for very large data sets)
+
+Supported SQLite data types:
+
+- [x] char
+- [x] bool
+
+*SQLite.swiftly* does not have proper error handling yet. Any error currently
+triggers a `fatalError()`.
+
+
 ## Reference example
 
 ```swift
@@ -91,26 +115,6 @@ for row in rows {
 // when there are no more strong references to them. Statements keep a reference 
 // to the connection that created them.
 ```
-
-*SQLite.swiftly* was originally part of the source code of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project.
-It has been moved into its own repository so it can have its own life, and why not inspire someone.
-
-As such, development is driven by the needs of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
-and only features that are needed by that project are being developped.
-
-Supported features:
-
-- [x] create tables
-- [x] insert into tables (all columns only)
-- [x] select from tables (all columns, all rows, not suited for very large data sets)
-
-Supported SQLite data types:
-
-- [x] char
-- [x] bool
-
-*SQLite.swiftly* does not have proper error handling yet. Any error currently
-triggers a `fatalError()`.
 
 
 ## Getting started
