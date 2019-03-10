@@ -5,7 +5,7 @@ import Foundation
 
 /// A description of a SQLite database table.
 ///
-class SQLite_TableDescription {
+public class SQLite_TableDescription {
    
     
     /// The table's name.
@@ -43,7 +43,7 @@ class SQLite_TableDescription {
     /// - Parameter name: The table's name.
     /// - Parameter columns: The table's columns.
     ///
-    init(name: String, columns: Set<SQLite_ColumnDescription>) {
+    public init(name: String, columns: Set<SQLite_ColumnDescription>) {
         
         self.name = name
         self.columns = columns

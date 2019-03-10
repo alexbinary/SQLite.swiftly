@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `CREATE TABLE (<columns>);`.
 ///
-class SQLite_CreateTableStatement: SQLite_Statement {
+public class SQLite_CreateTableStatement: SQLite_Statement {
     
     
     /// A description of the table the statement creates.
@@ -26,7 +26,7 @@ class SQLite_CreateTableStatement: SQLite_Statement {
     /// - Parameter tableDescription: The table the statement should create.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    init(creatingTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
+    public init(creatingTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
         
         self.tableDescription = tableDescription
         self.createTableQuery = SQLite_CreateTableQuery(creatingTable: tableDescription)

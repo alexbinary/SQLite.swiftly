@@ -5,22 +5,22 @@ import Foundation
 
 /// A description of a column in a SQLite database table.
 ///
-class SQLite_ColumnDescription {
+public class SQLite_ColumnDescription {
     
     
     /// The column's name.
     ///
-    let name: String
+    public let name: String
     
     
     /// The column's type.
     ///
-    let type: SQLite_ColumnType
+    public let type: SQLite_ColumnType
     
     
     /// Whether the column can contain the value NULL.
     ///
-    let nullable: Bool
+    public let nullable: Bool
     
     
     /// Creates a new description.
@@ -29,7 +29,7 @@ class SQLite_ColumnDescription {
     /// - Parameter type: The column's type.
     /// - Parameter nullable: Whether the column can contain the value NULL.
     ///
-    init(name: String, type: SQLite_ColumnType, nullable: Bool) {
+    public init(name: String, type: SQLite_ColumnType, nullable: Bool) {
         
         self.name = name
         self.type = type
@@ -49,7 +49,7 @@ extension SQLite_ColumnDescription: SQLite_SQLRepresentable {
     ///
     /// Example: `name CHAR(6) NOT NULL`
     ///
-    var sqlRepresentation: String {
+    public var sqlRepresentation: String {
         
         return [
             
@@ -65,7 +65,7 @@ extension SQLite_ColumnDescription: SQLite_SQLRepresentable {
 extension SQLite_ColumnDescription: Equatable {
     
     
-    static func == (lhs: SQLite_ColumnDescription, rhs: SQLite_ColumnDescription) -> Bool {
+    public static func == (lhs: SQLite_ColumnDescription, rhs: SQLite_ColumnDescription) -> Bool {
 
         return lhs.name == rhs.name
             && lhs.type == rhs.type
@@ -77,7 +77,7 @@ extension SQLite_ColumnDescription: Equatable {
 extension SQLite_ColumnDescription: Hashable {
     
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         
         hasher.combine(name)
         hasher.combine(type)

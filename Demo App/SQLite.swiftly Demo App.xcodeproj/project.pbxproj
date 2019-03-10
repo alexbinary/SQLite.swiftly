@@ -13,23 +13,6 @@
 		295B802A2221DF3B00E00A12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 295B80292221DF3B00E00A12 /* Assets.xcassets */; };
 		295B802D2221DF3B00E00A12 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 295B802B2221DF3B00E00A12 /* LaunchScreen.storyboard */; };
 		29B451D122356F7B00DBE06A /* SQLite_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B451D022356F6600DBE06A /* SQLite_Swiftly.framework */; };
-		29D850A72222A9BE00992092 /* SQLite_TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850932222A9BE00992092 /* SQLite_TableRow.swift */; };
-		29D850A92222A9BE00992092 /* SQLite_TableDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850942222A9BE00992092 /* SQLite_TableDescription.swift */; };
-		29D850AB2222A9BE00992092 /* SQLite_ColumnType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850952222A9BE00992092 /* SQLite_ColumnType.swift */; };
-		29D850AD2222A9BE00992092 /* SQLite_ColumnDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850962222A9BE00992092 /* SQLite_ColumnDescription.swift */; };
-		29D850AF2222A9BE00992092 /* SQLite_ColumnValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850972222A9BE00992092 /* SQLite_ColumnValue.swift */; };
-		29D850B12222A9BE00992092 /* SQLite_Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850992222A9BE00992092 /* SQLite_Statement.swift */; };
-		29D850B32222A9BE00992092 /* SQLite_SelectStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8509A2222A9BE00992092 /* SQLite_SelectStatement.swift */; };
-		29D850B52222A9BE00992092 /* SQLite_Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8509B2222A9BE00992092 /* SQLite_Connection.swift */; };
-		29D850B72222A9BE00992092 /* SQLite_CreateTableStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8509C2222A9BE00992092 /* SQLite_CreateTableStatement.swift */; };
-		29D850B92222A9BE00992092 /* SQLite_InsertStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8509D2222A9BE00992092 /* SQLite_InsertStatement.swift */; };
-		29D850BB2222A9BE00992092 /* SQLite_SQLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D8509F2222A9BE00992092 /* SQLite_SQLRepresentable.swift */; };
-		29D850BD2222A9BE00992092 /* SQLite_QueryParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A12222A9BE00992092 /* SQLite_QueryParameter.swift */; };
-		29D850BF2222A9BE00992092 /* SQLite_SelectQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A22222A9BE00992092 /* SQLite_SelectQuery.swift */; };
-		29D850C12222A9BF00992092 /* SQLite_Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A32222A9BE00992092 /* SQLite_Query.swift */; };
-		29D850C32222A9BF00992092 /* SQLite_QueryParameterValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A42222A9BE00992092 /* SQLite_QueryParameterValue.swift */; };
-		29D850C52222A9BF00992092 /* SQLite_CreateTableQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A52222A9BE00992092 /* SQLite_CreateTableQuery.swift */; };
-		29D850C72222A9BF00992092 /* SQLite_InsertQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D850A62222A9BE00992092 /* SQLite_InsertQuery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,23 +41,6 @@
 		295B802C2221DF3B00E00A12 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		295B802E2221DF3B00E00A12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29B451CB22356F6600DBE06A /* SQLite.Swiftly.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.Swiftly.xcodeproj; path = ../SQLite.Swiftly/SQLite.Swiftly.xcodeproj; sourceTree = "<group>"; };
-		29D850932222A9BE00992092 /* SQLite_TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_TableRow.swift; sourceTree = "<group>"; };
-		29D850942222A9BE00992092 /* SQLite_TableDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_TableDescription.swift; sourceTree = "<group>"; };
-		29D850952222A9BE00992092 /* SQLite_ColumnType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_ColumnType.swift; sourceTree = "<group>"; };
-		29D850962222A9BE00992092 /* SQLite_ColumnDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_ColumnDescription.swift; sourceTree = "<group>"; };
-		29D850972222A9BE00992092 /* SQLite_ColumnValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_ColumnValue.swift; sourceTree = "<group>"; };
-		29D850992222A9BE00992092 /* SQLite_Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_Statement.swift; sourceTree = "<group>"; };
-		29D8509A2222A9BE00992092 /* SQLite_SelectStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_SelectStatement.swift; sourceTree = "<group>"; };
-		29D8509B2222A9BE00992092 /* SQLite_Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_Connection.swift; sourceTree = "<group>"; };
-		29D8509C2222A9BE00992092 /* SQLite_CreateTableStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_CreateTableStatement.swift; sourceTree = "<group>"; };
-		29D8509D2222A9BE00992092 /* SQLite_InsertStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_InsertStatement.swift; sourceTree = "<group>"; };
-		29D8509F2222A9BE00992092 /* SQLite_SQLRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_SQLRepresentable.swift; sourceTree = "<group>"; };
-		29D850A12222A9BE00992092 /* SQLite_QueryParameter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_QueryParameter.swift; sourceTree = "<group>"; };
-		29D850A22222A9BE00992092 /* SQLite_SelectQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_SelectQuery.swift; sourceTree = "<group>"; };
-		29D850A32222A9BE00992092 /* SQLite_Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_Query.swift; sourceTree = "<group>"; };
-		29D850A42222A9BE00992092 /* SQLite_QueryParameterValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_QueryParameterValue.swift; sourceTree = "<group>"; };
-		29D850A52222A9BE00992092 /* SQLite_CreateTableQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_CreateTableQuery.swift; sourceTree = "<group>"; };
-		29D850A62222A9BE00992092 /* SQLite_InsertQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_InsertQuery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +58,6 @@
 		295B80162221DF3900E00A12 = {
 			isa = PBXGroup;
 			children = (
-				29D850852222A5FF00992092 /* SQLite.swiftly */,
 				295B80212221DF3900E00A12 /* SQLite.swiftly Demo App */,
 				295B80202221DF3900E00A12 /* Products */,
 				29B451CA22356F6500DBE06A /* Frameworks */,
@@ -135,66 +100,6 @@
 				296E641122357ABE00C6575D /* SQLite_SwiftlyTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		29D850852222A5FF00992092 /* SQLite.swiftly */ = {
-			isa = PBXGroup;
-			children = (
-				29D850982222A9BE00992092 /* Core */,
-				29D850922222A9BE00992092 /* DatabaseSchema */,
-				29D850A02222A9BE00992092 /* Query */,
-				29D8509E2222A9BE00992092 /* SQL */,
-			);
-			name = SQLite.swiftly;
-			sourceTree = "<group>";
-		};
-		29D850922222A9BE00992092 /* DatabaseSchema */ = {
-			isa = PBXGroup;
-			children = (
-				29D850932222A9BE00992092 /* SQLite_TableRow.swift */,
-				29D850942222A9BE00992092 /* SQLite_TableDescription.swift */,
-				29D850952222A9BE00992092 /* SQLite_ColumnType.swift */,
-				29D850962222A9BE00992092 /* SQLite_ColumnDescription.swift */,
-				29D850972222A9BE00992092 /* SQLite_ColumnValue.swift */,
-			);
-			name = DatabaseSchema;
-			path = ../src/DatabaseSchema;
-			sourceTree = "<group>";
-		};
-		29D850982222A9BE00992092 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				29D850992222A9BE00992092 /* SQLite_Statement.swift */,
-				29D8509A2222A9BE00992092 /* SQLite_SelectStatement.swift */,
-				29D8509B2222A9BE00992092 /* SQLite_Connection.swift */,
-				29D8509C2222A9BE00992092 /* SQLite_CreateTableStatement.swift */,
-				29D8509D2222A9BE00992092 /* SQLite_InsertStatement.swift */,
-			);
-			name = Core;
-			path = ../src/Core;
-			sourceTree = "<group>";
-		};
-		29D8509E2222A9BE00992092 /* SQL */ = {
-			isa = PBXGroup;
-			children = (
-				29D8509F2222A9BE00992092 /* SQLite_SQLRepresentable.swift */,
-			);
-			name = SQL;
-			path = ../src/SQL;
-			sourceTree = "<group>";
-		};
-		29D850A02222A9BE00992092 /* Query */ = {
-			isa = PBXGroup;
-			children = (
-				29D850A12222A9BE00992092 /* SQLite_QueryParameter.swift */,
-				29D850A22222A9BE00992092 /* SQLite_SelectQuery.swift */,
-				29D850A32222A9BE00992092 /* SQLite_Query.swift */,
-				29D850A42222A9BE00992092 /* SQLite_QueryParameterValue.swift */,
-				29D850A52222A9BE00992092 /* SQLite_CreateTableQuery.swift */,
-				29D850A62222A9BE00992092 /* SQLite_InsertQuery.swift */,
-			);
-			name = Query;
-			path = ../src/Query;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,25 +196,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29D850AD2222A9BE00992092 /* SQLite_ColumnDescription.swift in Sources */,
-				29D850C52222A9BF00992092 /* SQLite_CreateTableQuery.swift in Sources */,
 				295B80252221DF3900E00A12 /* ViewController.swift in Sources */,
-				29D850C72222A9BF00992092 /* SQLite_InsertQuery.swift in Sources */,
-				29D850BB2222A9BE00992092 /* SQLite_SQLRepresentable.swift in Sources */,
-				29D850B32222A9BE00992092 /* SQLite_SelectStatement.swift in Sources */,
-				29D850C12222A9BF00992092 /* SQLite_Query.swift in Sources */,
-				29D850BD2222A9BE00992092 /* SQLite_QueryParameter.swift in Sources */,
-				29D850A92222A9BE00992092 /* SQLite_TableDescription.swift in Sources */,
 				295B80232221DF3900E00A12 /* AppDelegate.swift in Sources */,
-				29D850BF2222A9BE00992092 /* SQLite_SelectQuery.swift in Sources */,
-				29D850AB2222A9BE00992092 /* SQLite_ColumnType.swift in Sources */,
-				29D850AF2222A9BE00992092 /* SQLite_ColumnValue.swift in Sources */,
-				29D850C32222A9BF00992092 /* SQLite_QueryParameterValue.swift in Sources */,
-				29D850A72222A9BE00992092 /* SQLite_TableRow.swift in Sources */,
-				29D850B12222A9BE00992092 /* SQLite_Statement.swift in Sources */,
-				29D850B52222A9BE00992092 /* SQLite_Connection.swift in Sources */,
-				29D850B92222A9BE00992092 /* SQLite_InsertStatement.swift in Sources */,
-				29D850B72222A9BE00992092 /* SQLite_CreateTableStatement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

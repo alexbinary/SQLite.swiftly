@@ -13,7 +13,7 @@ import SQLite3
 /// It is important that you let the object be deallocated when you are done to
 /// close the connection and release associated resources.
 ///
-class SQLite_Connection {
+public class SQLite_Connection {
     
     
     /// The SQLite pointer to the underlying connection object.
@@ -33,7 +33,7 @@ class SQLite_Connection {
     ///
     /// - Parameter url: A URL to the database you want to connect to.
     ///
-    init(toDatabaseAt url: URL) {
+    public init(toDatabaseAt url: URL) {
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
@@ -108,7 +108,7 @@ extension SQLite_Connection {
     ///
     /// - Parameter tableDescription: A description of the table to create.
     ///
-    func createTable(describedBy tableDescription: SQLite_TableDescription) {
+    public func createTable(describedBy tableDescription: SQLite_TableDescription) {
         
         let statement = SQLite_CreateTableStatement(creatingTable: tableDescription, connection: self)
         
@@ -128,7 +128,7 @@ extension SQLite_Connection {
     ///            of the corresponding column declared in the table
     ///            description.
     ///
-    func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [SQLite_TableRow] {
+    public func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [SQLite_TableRow] {
         
         let statement = SQLite_SelectStatement(selectingFromTable: tableDescription, connection: self)
         

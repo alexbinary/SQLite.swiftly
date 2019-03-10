@@ -17,7 +17,7 @@ import SQLite3
 /// It is important that you let the object be deallocated when you are done to
 /// destroy the statement and release associated resources.
 ///
-class SQLite_Statement {
+public class SQLite_Statement {
 
     
     /// The SQLite pointer to the underlying statement object.
@@ -58,7 +58,7 @@ class SQLite_Statement {
     /// - Parameter query: The SQL query to compile.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    init(compiling query: SQLite_Query, on connection: SQLite_Connection) {
+    public init(compiling query: SQLite_Query, on connection: SQLite_Connection) {
         
         self.query = query
         self.connection = connection

@@ -5,7 +5,7 @@ import Foundation
 
 /// The set of possible data types for columns in a SQLite database table.
 ///
-enum SQLite_ColumnType: Hashable {
+public enum SQLite_ColumnType: Hashable {
     
     
     /// A column that contains a small amount of text.
@@ -31,7 +31,7 @@ extension SQLite_ColumnType: SQLite_SQLRepresentable {
     /// "CREATE TABLE" queries and other type of SQL queries where a column type
     /// needs to be expressed.
     ///
-    var sqlRepresentation: String {
+    public var sqlRepresentation: String {
         
         switch (self) {
             

@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `INSERT INTO <table>;`.
 ///
-class SQLite_InsertStatement: SQLite_Statement {
+public class SQLite_InsertStatement: SQLite_Statement {
     
     
     /// A description of the table the statement inserts data into.
@@ -28,7 +28,7 @@ class SQLite_InsertStatement: SQLite_Statement {
     ///
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    init(insertingIntoTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
+    public init(insertingIntoTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
         
         self.tableDescription = tableDescription
         self.insertQuery = SQLite_InsertQuery(insertingIntoTable: tableDescription)
@@ -46,7 +46,7 @@ extension SQLite_InsertStatement {
     /// - Parameter columnValues: A dictionary that contain the value to insert
     ///             in each column.
     ///
-    func insert(_ columnValues: [SQLite_ColumnDescription: SQLite_QueryParameterValue]) {
+    public func insert(_ columnValues: [SQLite_ColumnDescription: SQLite_QueryParameterValue]) {
         
         var parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:]
         
