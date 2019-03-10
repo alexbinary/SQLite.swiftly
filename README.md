@@ -7,10 +7,14 @@
 
 #  SQLite.swiftly
 
-*SQLite.swiftly* is a simple wrapper on top of the C-style SQLite APIs available
-on Apple platforms written in Swift that provides type safe APIs to work with
-SQLite databases, allowing as many compile time checks as possible, so you can
-avoid many common mistakes before even running the code.
+The [SQLite database engine](https://sqlite.org/) is available out of the box 
+for iOS apps, but it requires the use of a
+[clumsy and error prone C-style API](https://sqlite.org/cintro.html).
+
+*SQLite.swiftly* is a simple wrapper on top of the C-style SQLite API written in
+Swift that provides a modern and type safe API allowing as many compile time
+checks as possible, so you can avoid many common mistakes before even running
+the code.
 
 In short, *SQLite.swiftly*  makes writing incorrect code harder.
 
@@ -166,33 +170,39 @@ The main design principles are:
 1. Higher level objects encapsulate the underlying objects life cycle and expose
 friendlier APIs.
 
-  These objects are `SQLite_Connection` and `SQLite_Statement` and its subclasses.
-  They all hold a pointer to the low level SQLite object.
-
-  These objects are immutable as much as possible. Connections are opened in 
-  `SQLite_Connection`'s initializer and closed in its deinitializer. Statements
-  are compiled in `SQLite_Statement`'s initializer and destroyed in its
-  deinitializer. This makes it impossible to use an invalid pointer.
-
-  From the programmer's point of view `SQLite_Connection` and `SQLite_Statement`
-  are stateless objects. Methods that mutate the underlying object always bring it
-  back to a default state before or after they do their work.
-
-  `SQLite_Connection` and `SQLite_Statement` expose features through simple APIs
-  that leverage all the goodness that Swift has to offer.
-
 2. You do not write SQL queries directly but instead describes the database
 schema and lets *SQLite.swiftly* build the SQL queries for you.
 
-  The best way to avoid writing bugs is to avoid writing the code all together.
 
-  *SQLite.swiftly* writes SQL queries so you don't have to. You provide type safe
-  descriptions of your database schema with tables and columns and let
-  *SQLite.swiftly* worry about writing correct SQL code.
+### Higher level objects
 
-  This also has the benefit of having a single source of truth instead of
-  spreading the database structure in raw SQL queries that the compiler cannot
-  understand.
+These objects are `SQLite_Connection` and `SQLite_Statement` and its subclasses.
+They all hold a pointer to the low level SQLite object.
+
+These objects are immutable as much as possible. Connections are opened in 
+`SQLite_Connection`'s initializer and closed in its deinitializer. Statements
+are compiled in `SQLite_Statement`'s initializer and destroyed in its
+deinitializer. This makes it impossible to use an invalid pointer.
+
+From the programmer's point of view `SQLite_Connection` and `SQLite_Statement`
+are stateless objects. Methods that mutate the underlying object always bring it
+back to a default state before or after they do their work.
+
+`SQLite_Connection` and `SQLite_Statement` expose features through simple APIs
+that leverage all the goodness that Swift has to offer.
+
+
+### Automatic SQL query generation
+
+The best way to avoid writing bugs is to avoid writing the code all together.
+
+*SQLite.swiftly* writes SQL queries so you don't have to. You provide type safe
+descriptions of your database schema with tables and columns and let
+*SQLite.swiftly* worry about writing correct SQL code.
+
+This also has the benefit of having a single source of truth instead of
+spreading the database structure in raw SQL queries that the compiler cannot
+understand.
 
 
 ## Demo / Development project
