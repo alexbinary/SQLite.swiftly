@@ -1,0 +1,6 @@
+os: osx
+osx_image: xcode10.1
+language: swift
+xcode_project: SQLite.Swiftly/SQLite.Swiftly.xcodeproj
+xcode_scheme: SQLite_SwiftlyTests
+xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XS Max
