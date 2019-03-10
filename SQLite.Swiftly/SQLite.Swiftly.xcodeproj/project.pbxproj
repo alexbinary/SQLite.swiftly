@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		29893355223564D000679782 /* SQLite_Swiftly.h in Headers */ = {isa = PBXBuildFile; fileRef = 29893353223564D000679782 /* SQLite_Swiftly.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29B451D32235704400DBE06A /* Demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B451D22235704400DBE06A /* Demo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		29893350223564D000679782 /* SQLite_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLite_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29893353223564D000679782 /* SQLite_Swiftly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLite_Swiftly.h; sourceTree = "<group>"; };
 		29893354223564D000679782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29B451D22235704400DBE06A /* Demo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Demo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 			children = (
 				29893353223564D000679782 /* SQLite_Swiftly.h */,
 				29893354223564D000679782 /* Info.plist */,
+				29B451D22235704400DBE06A /* Demo.swift */,
 			);
 			path = SQLite.Swiftly;
 			sourceTree = "<group>";
@@ -95,6 +98,7 @@
 				TargetAttributes = {
 					2989334F223564D000679782 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -130,6 +134,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B451D32235704400DBE06A /* Demo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +266,7 @@
 		29893359223564D000679782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -278,6 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.bintz.SQLite-Swiftly";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -286,6 +293,7 @@
 		2989335A223564D000679782 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
