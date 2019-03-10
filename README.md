@@ -7,6 +7,8 @@
 
 #  SQLite.swiftly
 
+[![Build Status](https://travis-ci.org/alexbinary/SQLite.swiftly.svg?branch=master)](https://travis-ci.org/alexbinary/SQLite.swiftly)
+
 The [SQLite database engine](https://sqlite.org/) is available out of the box 
 for iOS apps, but it requires the use of a
 [clumsy and error prone C-style API](https://sqlite.org/cintro.html).
