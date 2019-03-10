@@ -8,20 +8,19 @@
 #  SQLite.swiftly
 
 *SQLite.swiftly* is a simple wrapper on top of the C-style SQLite APIs available
-on Apple platforms writing in Swift.
+on Apple platforms written in Swift that provides type safe APIs to work with
+SQLite databases, allowing as many compile time checks as possible, so you can
+avoid many common mistakes before even running the code.
 
-*SQLite.swiftly* provides type safe APIs to work with SQLite databases, with as
-many compile time checks as possible, so you can avoid many common mistakes
-before even running the code.
+In short, *SQLite.swiftly*  makes writing incorrect code harder.
 
-The design of *SQLite.swiftly* makes writing incorrect code harder.
-
-Here is a simple example:
+## Reference example
 
 ```swift
 // 1. declare your database schema
 //
-// Here we describe a simple table named `contact` with one column `id` of type int and a column `name` of type varchar:
+// Here we describe a simple table named `contact` with one column `id` of type
+// int and a column `name` of type varchar:
 
 struct DemoDatabaseSchema {
   
@@ -99,28 +98,16 @@ It has been moved into its own repository so it can have its own life, and why n
 As such, development is driven by the needs of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
 and only features that are needed by that project are being developped.
 
-*SQLite.swiftly* currently supports the following SQLite data types:
+Supported features:
+
+- [x] create tables
+- [x] insert into tables (all columns only)
+- [x] select from tables (all columns, all rows, not suited for very large data sets)
+
+Supported SQLite data types:
 
 - [x] char
 - [x] bool
-- [ ] int
-- [ ] double
-- [ ] blob
-
-*SQLite.swiftly* currently supports the following operations:
-
-- [x] create tables
-- [ ] drop tables
-- [ ] alter tables
-- [ ] drop columns
-- [x] insert into tables (all columns)
-- [ ] insert into tables (only some columns)
-- [ ] update rows
-- [x] select from tables (all columns, all rows, not suited for very large data sets)
-- [ ] select from tables (some columns only)
-- [ ] select from tables (progressive/chunked reading)
-- [ ] select with `WHERE`, `GROUP BY` or `HAVING` clauses
-- [ ] use of SQL functions like `ABS()`, `LENGTH()` or `MIN()`
 
 *SQLite.swiftly* does not have proper error handling yet. Any error currently
 triggers a `fatalError()`.
