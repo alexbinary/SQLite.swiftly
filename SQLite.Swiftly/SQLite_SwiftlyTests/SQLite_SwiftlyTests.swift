@@ -32,7 +32,7 @@ class SQLite_SwiftlyTests: XCTestCase {
     }
 
     func testDemo() {
-        XCTAssertEqual(Demo.hello(), "hello2") 
+        XCTAssertEqual("hello2", "hello2") 
     }
     
 }
