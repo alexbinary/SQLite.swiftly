@@ -37,8 +37,17 @@ Supported SQLite data types:
 *SQLite.swiftly* does not have proper error handling yet. Any error currently
 triggers a `fatalError()`.
 
+*SQLite.swiftly* is intended to be used primarily on iOS.
+
 
 ## Reference example
+
+One of the key principle of *SQLite.swiftly* is that it requires you to declare
+your database structure. That way it can generate the correct SQL queries for
+you.
+
+Here is how you create a table, insert data into it, and read the data back.
+Notice how we never write SQL queries:
 
 ```swift
 // 1. declare your database schema
@@ -46,61 +55,50 @@ triggers a `fatalError()`.
 // Here we describe a simple table named `contact` with one column `id` of type
 // int and a column `name` of type varchar:
 
-struct DemoDatabaseSchema {
-  
-  let contactTableDescription = ContactTableDescription()
+class ContactTableDescription: SQLite_TableDescription {
 
-  class ContactTableDescription: SQLite_TableDescription {
-  
-    let idColumnDescription = SQLite_ColumnDescription(
-      
-      name: "id",
-      type: .int(size: 11),
-      nullable: false
-    )
+  let idColumnDescription = SQLite_ColumnDescription(
     
-    let nameColumnDescription = SQLite_ColumnDescription(
-      
-      name: "name",
-      type: .char(size: 255),
-      nullable: false
-    )
+    name: "id",
+    type: .int(size: 11),
+    nullable: false
+  )
+  
+  let nameColumnDescription = SQLite_ColumnDescription(
+    
+    name: "name",
+    type: .char(size: 255),
+    nullable: false
+  )
 
-    init() {
-      
-      super.init(name: "contact", columns: [
-          
-        idColumnDescription,
-        nameColumnDescription,
-      ])
-    }
+  init() {
+    super.init(name: "contact", columns: [       
+      idColumnDescription,
+      nameColumnDescription,
+    ])
   }
 }
+let contactTableDescription = ContactTableDescription()
 
 // 2. Connect to the database
-
 let connection = SQLite_Connection(toDatabaseAt: "path/to/db.sqlite")
 
 // 3. Create the table
-
 connection.createTable(describedBy: DemoDatabaseSchema.contactTableDescription)
 
-// 4. Insert data into the table
-//
-// We first need to get prepared statement, then run it with the data:
-
+// 4. Prepare a statement that inserts data into the table
 let insertStatement = SQLite_InsertStatement(
   insertingIntoTable: DemoDatabaseSchema.contactTableDescription,
   connection: connection
 )
 
+// 5. Insert data into the table
 insertStatement.insert([
   DemoDatabaseSchema.contactTableDescription.idColumnDescription: 1,
   DemoDatabaseSchema.contactTableDescription.nameColumnDescription: "John",
 ])
 
-// 5. Read data
-
+// 6. Read data
 let rows = connection.readlAllRows(fromTable: DemoDatabaseSchema.contactTableDescription)
 for row in rows {
   for (column, value) in row {
@@ -108,7 +106,7 @@ for row in rows {
   }
 }
 
-// 6. Make sure resources are released
+// 7. Make sure resources are released
 //
 // Instances of SQLite_Connections and SQLite_Statement hold resources that need 
 // to be released. Resources are released when the objects are deallocated, i.e. 
