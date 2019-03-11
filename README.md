@@ -242,14 +242,32 @@ spreading the database structure in raw SQL queries that the compiler cannot
 understand.
 
 
-## Demo / Development project
+## Development
 
-TODO
+To get hacking, start by cloning the repo:
 
-Setup git pre-commit hook:
+```bash
+$ git clone https://github.com/alexbinary/SQLite.swiftly.git
+```
+
+Then setup the git pre-commit hook:
 
 ```bash
 $ ln -s "$PWD"/pre-commit.sh .git/hooks/pre-commit
 ```
 
+This will build the framework and run the tests before each commit and abort the
+commit if the build or tests fail.
 
+Then open the Xcode project `SQLite.Swiftly/SQLite.Swiftly.xcodeproj`.
+The project has two targets, the first one is for the framework, the other one
+is for the unit tests.
+
+Hack into the framework, then test your work by writing unit tests,
+either updating existing tests or adding new ones.
+
+To contribute on the demo app, open `Demo App/SQLite.swiftly Demo App.xcodeproj`.
+
+If you have a question, open an issue.
+
+If you want to contribute code or documentation, open a pull request.
