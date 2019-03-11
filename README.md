@@ -99,7 +99,31 @@ for row in rows {
 
 ## Getting started
 
-TODO
+*SQLite.swiftly* is distributed as a Cocoa Touch Framework.
+
+I recommend installing *SQLite.swiftly* as a git submodule in your project.
+
+First, add the submodule:
+
+```bash
+$ cd /path/to/your/repo
+$ git submodule add https://github.com/alexbinary/SQLite.swiftly.git Libs/SQLite.swiftly
+```
+
+This will clone the *SQLite.swiftly* repository in `Libs/SQLite.swiftly` inside your repository.
+
+Then you must reference the *SQLite.swiftly* framework in your Xcode project.
+
+In Xcode's navigation pane, select your project, then select the target for your
+app, then under the General tab, scroll down to Linked Frameworks and Librairies,
+and click the + button, then click "Add other", and navigate to the file
+`SQLite.Swiftly.xcodeproj` from the submodule. The SQLite.Swiftly project appears
+in your navigation pane under "Frameworks". Click the + button again in Linked
+Frameworks and Librairies, and this time select `SQLite_Swiftly.framework`.
+
+![](getting-started.gif)
+
+You can now `import SQLite_Swiftly` and start using it.
 
 
 ## Motivation and design
