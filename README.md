@@ -126,6 +126,17 @@ Frameworks and Librairies, and this time select `SQLite_Swiftly.framework`.
 You can now `import SQLite_Swiftly` and start using it.
 
 
+## Demo app
+
+A demo iPhone/iPad app is provided in `Demo App/`. You can run it on the simulator
+or on a real device.
+
+When you launch the app it creates a database on the device's file system,
+writes some data then reads it back.
+
+![](demo-app.png)
+
+
 ## Motivation and design
 
 The SQLite C-style APIs make writing incorrect code way too easy.
