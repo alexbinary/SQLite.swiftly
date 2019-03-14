@@ -73,6 +73,8 @@ class QueryTests: XCTestCase {
                 
                 (components: ["c1", "c2"], separatedBy: ", "),
                 (components: [":c1", ":c2"], separatedBy: ", "),
+                
+                // TODO check that order is the same, i.e. "c1,c2" - ":c2,:c1" is invalid
             ]
         )
     }
@@ -113,30 +115,51 @@ extension QueryTests {
         
     ) {
         
-        let inputRange = NSRange(inputString.startIndex..<inputString.endIndex, in: inputString)
+        let substrings = inputString.extractCaptureGroups(from: pattern)
         
-        let regex = try! NSRegularExpression(pattern: pattern, options: [])
-        
-        let firstMatch = regex.firstMatch(in: inputString, options: [], range: inputRange)
-        
-        XCTAssertNotNil(firstMatch, "Input string does not match pattern")
-        
-        let match = firstMatch!
-        
-        XCTAssertEqual(match.numberOfRanges, expectedComponents.count+1, "Number of capture groups does not match number of expected components")
-        
-        for (index, componentSet) in expectedComponents.enumerated() {
+        XCTAssertEqual(substrings.count, expectedComponents.count, "Could not extract one or more of the expected components from the string.")
+
+        for (index, substring) in substrings.enumerated() {
             
-            let nsrange = match.range(at: index + 1)
-            let range = Range(nsrange, in: inputString)!
-            
-            XCTAssertTrue(String(inputString[range]).matches(componentSet), "Component set at index \(index+1) does not match components in string")
+            XCTAssertTrue(String(substring).matches(expectedComponents[index]), "Component set at index \(index) does not match components found in the string.")
         }
     }
 }
 
 
 extension String {
+    
+    
+    /// Extracts the portions of the string that match the capture groups in
+    /// a regex pattern.
+    ///
+    /// - Parameter pattern: The regex pattern to use to extract portions of the
+    ///             string.
+    ///
+    /// - Returns: The portions of the string that match the capture groups in
+    ///            the pattern, in order.
+    ///
+    func extractCaptureGroups(from pattern: String) -> [Substring] {
+        
+        var results: [Substring] = []
+        
+        let inputRange = NSRange(self.startIndex..<self.endIndex, in: self)
+        
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        
+        if let match = regex.firstMatch(in: self, options: [], range: inputRange) {
+        
+            for i in 1..<match.numberOfRanges {
+                
+                let nsrange = match.range(at: i)
+                let range = Range(nsrange, in: self)!
+                
+                results.append(self[range])
+            }
+        }
+        
+        return results
+    }
     
     
     /// Returns whether the string matches a set of components separated by a
@@ -153,6 +176,6 @@ extension String {
     ///
     func matches(_ componentSet: (components: Set<String>, separatedBy: String)) -> Bool {
         
-        return Set(components(separatedBy: componentSet.separatedBy)) == componentSet.components
+        return Set(self.components(separatedBy: componentSet.separatedBy)) == componentSet.components
     }
 }
