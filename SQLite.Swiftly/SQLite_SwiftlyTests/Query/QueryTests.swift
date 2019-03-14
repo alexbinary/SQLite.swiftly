@@ -43,7 +43,7 @@ class QueryTests: XCTestCase {
             
             withUnorderedComponents: [
                 
-                (components: Set([column1, column2].map { $0.sqlRepresentation}), separatedBy: ", "),
+                (components: [column1, column2].map { $0.sqlRepresentation}, separatedBy: ", "),
             ]
         )
     }
@@ -87,14 +87,20 @@ extension QueryTests {
     /// Asserts that a string matches a pattern that contains one or more
     /// sequences of components whose order is undefined.
     ///
-    /// This method first matches the provided input string against the provided
-    /// regular expression pattern and asserts that there is a match.
+    /// This method attempts to extract substrings from the input string that
+    /// match the capture groups in the provided regex pattern.
     ///
-    /// It then asserts that each part of the string that matches a capture
-    /// group in the pattern matches the corresponding set of components
-    /// provided in `expectedComponents`, in order, i.e. the part of the string
-    /// that matches the first capture group must match the first set of
-    /// components.
+    /// It then asserts that each substring matches the corresponding set of
+    /// components provided in `expectedComponents`, in order, i.e. the first
+    /// substring must match the first set of components.
+    ///
+    /// A substring matches a set of components if the set of parts obtained by
+    /// splitting it with the specified separator matches exactly the specified
+    /// set of components.
+    ///
+    /// Additionnally, and while the order in which the components appear in
+    /// each substring is not relevant, the order must be the same in all the
+    /// substrings.
     ///
     /// - Parameter inputString: The string to test.
     ///
@@ -105,24 +111,48 @@ extension QueryTests {
     /// - Parameter expectedComponents: The sequences of components that must
     ///             match the capture groups in the pattern. Each sequence
     ///             contains the set of components expected to be in the capture
-    ///             group and the string used to join them in the input string.
+    ///             group and the string used to join them. The number of
+    ///             elements in this array must match the number of capture
+    ///             groups in the pattern.
     ///
     func assertThat(
         
         _ inputString: String,
         matchesPattern pattern: String,
-        withUnorderedComponents expectedComponents: [(components: Set<String>, separatedBy: String)]
+        withUnorderedComponents expectedComponents: [(components: [String], separatedBy: String)]
         
     ) {
+        
+        // 1 - extract substrings
         
         let substrings = inputString.extractCaptureGroups(from: pattern)
         
         XCTAssertEqual(substrings.count, expectedComponents.count, "Could not extract one or more of the expected components from the string.")
 
-        for (index, substring) in substrings.enumerated() {
-            
-            XCTAssertTrue(String(substring).matches(expectedComponents[index]), "Component set at index \(index) does not match components found in the string.")
+        // 2 - prepare components lists
+        
+        let nakedComponents = zip(substrings, expectedComponents).map { (substring, expectedComponentSet) in
+            return (
+                actual: substring.components(separatedBy: expectedComponentSet.separatedBy),
+                expected: expectedComponentSet.components
+            )
         }
+        
+        // 3 - check that actual components match expected components in all substrings
+        
+        nakedComponents.forEach {
+            
+            XCTAssertEqual(Set($0.actual), Set($0.expected), "Components found in the string do not match expected components.")
+        }
+        
+        // 4 - check that components always appear in the same order in all substrings
+        
+        let orders = nakedComponents.map { (actual, expected) in
+            
+            return actual.map { expected.firstIndex(of: $0)! }
+        }
+        
+        XCTAssertEqual(Set(orders).count, 1, "Order of appearance of components differ in two or more sequences.")
     }
 }
 
