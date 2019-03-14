@@ -7,7 +7,8 @@ import SQLite3
 /// A connection to a SQLite database.
 ///
 /// You open a connection with the `init(toDatabaseAt:)` initializer, passing
-/// the path to the SQLite database file you want to open.
+/// the path to the SQLite database file you want to open. If the file does not
+/// exist it is created.
 ///
 /// After initialization, instances of this class always represent a valid
 /// database connection. To close connection you must let the object be
@@ -80,14 +81,17 @@ extension SQLite_Connection {
     ///
     var errorMessage: String? {
         
-        if let error = sqlite3_errmsg(pointer) {
+        if let rawErrorString = sqlite3_errmsg(pointer) {
             
-            return String(cString: error)
+            let errorString = String(cString: rawErrorString)
             
-        } else {
-            
-            return nil
+            if errorString != SQLiteConstants.ERROR_NO_ERROR {
+                
+                return errorString
+            }
         }
+        
+        return nil
     }
 }
 
@@ -151,4 +155,10 @@ extension SQLite_Connection {
         
         return rows
     }
+}
+
+
+enum SQLiteConstants {
+    
+    static let ERROR_NO_ERROR = "not an error"
 }
