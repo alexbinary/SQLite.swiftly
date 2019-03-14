@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		296131BE223577AE006C4483 /* SQLite_SwiftlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296131BD223577AE006C4483 /* SQLite_SwiftlyTests.swift */; };
+		296131BE223577AE006C4483 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296131BD223577AE006C4483 /* ConnectionTests.swift */; };
 		296131C0223577AE006C4483 /* SQLite_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893350223564D000679782 /* SQLite_Swiftly.framework */; };
 		29893355223564D000679782 /* SQLite_Swiftly.h in Headers */ = {isa = PBXBuildFile; fileRef = 29893353223564D000679782 /* SQLite_Swiftly.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2990E9FF22357E160001CF2A /* SQLite_Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9EB22357E160001CF2A /* SQLite_Statement.swift */; };
@@ -41,7 +41,7 @@
 
 /* Begin PBXFileReference section */
 		296131BB223577AE006C4483 /* SQLite_SwiftlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SQLite_SwiftlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		296131BD223577AE006C4483 /* SQLite_SwiftlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite_SwiftlyTests.swift; sourceTree = "<group>"; };
+		296131BD223577AE006C4483 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		296131BF223577AE006C4483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29893350223564D000679782 /* SQLite_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SQLite_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29893353223564D000679782 /* SQLite_Swiftly.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQLite_Swiftly.h; sourceTree = "<group>"; };
@@ -87,10 +87,18 @@
 		296131BC223577AE006C4483 /* SQLite_SwiftlyTests */ = {
 			isa = PBXGroup;
 			children = (
-				296131BD223577AE006C4483 /* SQLite_SwiftlyTests.swift */,
+				2986A934223AA2A90066200E /* Core */,
 				296131BF223577AE006C4483 /* Info.plist */,
 			);
 			path = SQLite_SwiftlyTests;
+			sourceTree = "<group>";
+		};
+		2986A934223AA2A90066200E /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				296131BD223577AE006C4483 /* ConnectionTests.swift */,
+			);
+			path = Core;
 			sourceTree = "<group>";
 		};
 		29893346223564D000679782 = {
@@ -286,7 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				296131BE223577AE006C4483 /* SQLite_SwiftlyTests.swift in Sources */,
+				296131BE223577AE006C4483 /* ConnectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

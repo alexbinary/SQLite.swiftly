@@ -4,7 +4,7 @@ import XCTest
 @testable import SQLite_Swiftly
 
 
-class SQLite_SwiftlyTests: XCTestCase {
+class ConnectionTests: XCTestCase {
 
     
     /// URL to a database used in the tests.
@@ -39,7 +39,7 @@ class SQLite_SwiftlyTests: XCTestCase {
 }
 
 
-extension SQLite_SwiftlyTests {
+extension ConnectionTests {
     
     
     /// Asserts that a SQLite connection returns no error.
@@ -53,7 +53,7 @@ extension SQLite_SwiftlyTests {
 }
 
 
-extension SQLite_SwiftlyTests {
+extension ConnectionTests {
     
     /// Opening a connection on a file that does not exist should create the
     /// file.
