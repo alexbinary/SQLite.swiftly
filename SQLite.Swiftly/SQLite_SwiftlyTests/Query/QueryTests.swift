@@ -32,7 +32,15 @@ class QueryTests: XCTestCase {
         
         // assert: SQL representation is correct
         
-        XCTAssertEqual(query.sqlRepresentation, "CREATE TABLE t (\(column1.sqlRepresentation), \(column2.sqlRepresentation));")
+        assertThat(query.sqlRepresentation,
+            
+            matchesPattern: "CREATE TABLE t \\((.+)\\);",
+            
+            withUnorderedComponents: [
+                
+                (components: Set([column1, column2].map { $0.sqlRepresentation}), separatedBy: ", "),
+            ]
+        )
     }
     
     
@@ -49,6 +57,52 @@ class QueryTests: XCTestCase {
         
         // assert: SQL representation is correct
         
-        XCTAssertEqual(query.sqlRepresentation, "INSERT INTO t (c1, c2) VALUES(:c1, :c2);")
+        assertThat(query.sqlRepresentation,
+                   
+            matchesPattern: "INSERT INTO t \\((.+)\\) VALUES\\((.+)\\);",
+
+            withUnorderedComponents: [
+                
+                (components: ["c1", "c2"], separatedBy: ", "),
+                (components: [":c1", ":c2"], separatedBy: ", "),
+            ]
+        )
+    }
+}
+
+
+extension QueryTests {
+    
+    
+    func assertThat(
+        
+        _ inputString: String,
+        matchesPattern pattern: String,
+        withUnorderedComponents expectedComponents: [(components: Set<String>, separatedBy: String)]
+        
+    ) {
+        
+        let inputRange = NSRange(inputString.startIndex..<inputString.endIndex, in: inputString)
+        
+        let regex = try! NSRegularExpression(pattern: pattern, options: [])
+        
+        let firstMatch = regex.firstMatch(in: inputString, options: [], range: inputRange)
+        
+        XCTAssertNotNil(firstMatch, "Input string does not match pattern")
+        
+        let match = firstMatch!
+        
+        XCTAssertEqual(match.numberOfRanges, expectedComponents.count+1, "Number of capture groups does not match number of expected components")
+        
+        for (index, componentSet) in expectedComponents.enumerated() {
+            
+            let nsrange = match.range(at: index + 1)
+            let range = Range(nsrange, in: inputString)!
+            
+            let actualJoinedComponents = inputString[range]
+            let actualSplitComponents = actualJoinedComponents.components(separatedBy: componentSet.separatedBy)
+            
+            XCTAssertEqual(Set(actualSplitComponents), Set(componentSet.components), "Component set at index \(index+1) does not match components in string")
+        }
     }
 }
