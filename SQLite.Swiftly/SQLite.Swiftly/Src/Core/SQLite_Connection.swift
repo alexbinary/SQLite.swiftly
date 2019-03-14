@@ -9,16 +9,19 @@ import SQLite3
 /// You open a connection with the `init(toDatabaseAt:)` initializer, passing
 /// the path to the SQLite database file you want to open.
 ///
-/// Instances of this class hold a pointer to the underlying connection object.
-/// It is important that you let the object be deallocated when you are done to
-/// close the connection and release associated resources.
+/// After initialization, instances of this class always represent a valid
+/// database connection. To close connection you must let the object be
+/// deallocated.
+///
+/// It is important that you let the object be deallocated when it is not needed
+/// anymore to close the connection and release associated resources.
 ///
 public class SQLite_Connection {
     
     
     /// The SQLite pointer to the underlying connection object.
     ///
-    /// This pointer is guaranteed to always point to a valid, open connection
+    /// This should always be a pointer that points to a valid, open connection
     /// to the database that was passed to the initializer.
     ///
     private var pointer: OpaquePointer!
@@ -29,16 +32,28 @@ public class SQLite_Connection {
     /// This initializer opens the connection to the database. A fatal error is
     /// triggered if the connection fails.
     ///
-    /// To close the connection, just let the instance be deallocated.
+    /// To close the connection, you must let the object be deallocated.
     ///
-    /// - Parameter url: A URL to the database you want to connect to.
+    /// - Parameter url: A URL to a file that contains the database you want to
+    ///             connect to.
     ///
     public init(toDatabaseAt url: URL) {
+        
+        print("[SQLite_Connection] Opening connection to file \(url.path)")
+        
+        if FileManager.default.fileExists(atPath: url.path) {
+            
+            print("[SQLite_Connection] File exists, connecting to existing database...")
+        } else {
+            print("[SQLite_Connection] File does not exist, creating new database...")
+        }
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
             fatalError("[SQLite_Connection] Opening database: \(url.path). SQLite error: \(errorMessage ?? "")")
         }
+        
+        print("[SQLite_Connection] Connected")
     }
     
     
