@@ -73,8 +73,6 @@ class QueryTests: XCTestCase {
                 
                 (components: ["c1", "c2"], separatedBy: ", "),
                 (components: [":c1", ":c2"], separatedBy: ", "),
-                
-                // TODO check that order is the same, i.e. "c1,c2" - ":c2,:c1" is invalid
             ]
         )
     }
@@ -189,23 +187,5 @@ extension String {
         }
         
         return results
-    }
-    
-    
-    /// Returns whether the string matches a set of components separated by a
-    /// separator string.
-    ///
-    /// This method splits the string using the separator specified by
-    /// `componentSet.separatedBy` and compares the resulting set of components
-    /// with `componentSet.components`.
-    ///
-    /// - Parameter componentSet: A set of strings associated with a separator.
-    ///
-    /// - Returns: Whether the string matches a set of components separated by a
-    ///            separator string.
-    ///
-    func matches(_ componentSet: (components: Set<String>, separatedBy: String)) -> Bool {
-        
-        return Set(self.components(separatedBy: componentSet.separatedBy)) == componentSet.components
     }
 }
