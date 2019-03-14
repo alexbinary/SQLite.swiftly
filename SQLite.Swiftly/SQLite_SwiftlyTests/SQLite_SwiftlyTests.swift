@@ -58,7 +58,7 @@ extension SQLite_SwiftlyTests {
     /// Opening a connection on a file that does not exist should create the
     /// file.
     ///
-    func test_Connection_init_withNonExistantFile_shouldCreateDatabaseFileAndNotTriggerAnyError() {
+    func test_Connection_init_withNonExistantFile_shouldCreateDatabaseFile() {
         
         // test: connect to a new database
         
@@ -75,7 +75,7 @@ extension SQLite_SwiftlyTests {
     /// Opening a connection on a file that exists should connect to the
     /// database in the file.
     ///
-    func test_Connection_init_withExistantFile_shouldConnectToDatabaseInFileAndNotTriggerAnyError() {
+    func test_Connection_init_withExistantFile_shouldConnectToDatabaseInFile() {
         
         // setup: create empty database
         
@@ -102,6 +102,35 @@ extension SQLite_SwiftlyTests {
         // test: access latest error message
         
         _ = connection.errorMessage
+    }
+    
+    
+    /// Compiling a simple SQL query should not crash nor raise errors.
+    ///
+    func test_Connection_compile_withValidSQL_shouldNotCrash() {
+        
+        // setup: open connection
+        
+        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        
+        // test:
+        
+        _ = connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master"))
+        
+        // assert: no error raised on the connection
+        
+        assertNoError(on: connection)
+    }
+}
+
+
+struct CustomSQLQuery: SQLite_Query {
+    
+    let sqlRepresentation: String
+    
+    init(withSQL sql: String) {
+        
+        sqlRepresentation = sql
     }
 }
 
