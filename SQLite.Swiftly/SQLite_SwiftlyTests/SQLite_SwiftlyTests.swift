@@ -113,7 +113,9 @@ extension SQLite_SwiftlyTests {
         
         let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
         
-        // test:
+        // test: compile a simple query
+        // NB: `sqlite_master` is a built-in table that is guaranteed to always
+        ///exist.
         
         _ = connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master"))
         
@@ -121,13 +123,85 @@ extension SQLite_SwiftlyTests {
         
         assertNoError(on: connection)
     }
+    
+    
+    /// Calling `createTable()` should create the table without raising errors.
+    ///
+    func test_connection_createTable_shouldCreateTheTable() {
+        
+        // setup: open connection
+        
+        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        
+        // test: create a simple table
+        
+        let table = SQLite_TableDescription(name: "t", columns: [
+            SQLite_ColumnDescription(name: "c", type: .char(size: 1), nullable: false)
+        ])
+        connection.createTable(describedBy: table)
+        
+        // assert: table exists and no error raised on the connection
+        
+        _ = connection.readAllRows(fromTable: table)
+        assertNoError(on: connection)
+    }
+    
+    
+    func test_Connection_readAllRows_shouldReturnAllRowsAndAllColumns() {
+        
+        // setup: open connection
+        
+        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        
+        // test: create a simple table and populate with data
+        
+        let column1 = SQLite_ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
+        let column2 = SQLite_ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
+        let table = SQLite_TableDescription(name: "t", columns: [column1, column2])
+        
+        connection.createTable(describedBy: table)
+        
+        let insertStatement = SQLite_InsertStatement(insertingIntoTable: table, connection: connection)
+        insertStatement.insert([column1: "a", column2: "b"])
+        insertStatement.insert([column1: "c", column2: "d"])
+        
+        // assert: table exists and no error raised on the connection
+        
+        let rows = connection.readAllRows(fromTable: table)
+        
+        XCTAssertTrue(rows.count == 2)
+        
+        XCTAssertTrue(rows[0].count == 2)
+        XCTAssertTrue(rows[0].keys.contains(column1))
+        XCTAssertTrue(rows[0].keys.contains(column2))
+        XCTAssertTrue(rows[0][column1]! as! String == "a")
+        XCTAssertTrue(rows[0][column2]! as! String == "b")
+        
+        XCTAssertTrue(rows[1].count == 2)
+        XCTAssertTrue(rows[1].keys.contains(column1))
+        XCTAssertTrue(rows[1].keys.contains(column2))
+        XCTAssertTrue(rows[1][column1]! as! String == "c")
+        XCTAssertTrue(rows[1][column2]! as! String == "d")
+        
+        assertNoError(on: connection)
+    }
 }
 
 
+/// A SQL query built from raw SQL.
+///
 struct CustomSQLQuery: SQLite_Query {
     
-    let sqlRepresentation: String
     
+    /// The SQL string that represents the query.
+    ///
+    let sqlRepresentation: String
+   
+    
+    /// Creates a new query from raw SQL.
+    ///
+    /// - Parameter sql: The query's raw SQL string.
+    ///
     init(withSQL sql: String) {
         
         sqlRepresentation = sql
