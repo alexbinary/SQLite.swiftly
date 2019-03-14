@@ -7,6 +7,8 @@ import XCTest
 class QueryTests: XCTestCase {
 
  
+    /// A query of type SELECT FROM should produce the correct SQL code.
+    ///
     func test_selectQuery_shouldProduceCorrectSQL() {
         
         // setup: create a simple query
@@ -19,6 +21,8 @@ class QueryTests: XCTestCase {
     }
     
     
+    /// A query of type CREATE TABLE should produce the correct SQL code.
+    ///
     func test_createTableQuery_shouldProduceCorrectSQL() {
         
         // setup: create a simple query
@@ -31,6 +35,7 @@ class QueryTests: XCTestCase {
         let query = SQLite_CreateTableQuery(creatingTable: table)
         
         // assert: SQL representation is correct
+        // NB: the order of the columns is undefined
         
         assertThat(query.sqlRepresentation,
             
@@ -44,6 +49,8 @@ class QueryTests: XCTestCase {
     }
     
     
+    /// A query of type INSERT INTO should produce the correct SQL code.
+    ///
     func test_insertQuery_shouldProduceCorrectSQL() {
         
         // setup: create a simple query
@@ -56,6 +63,7 @@ class QueryTests: XCTestCase {
         let query = SQLite_InsertQuery(insertingIntoTable: table)
         
         // assert: SQL representation is correct
+        // NB: the order of the columns is undefined
         
         assertThat(query.sqlRepresentation,
                    
@@ -74,6 +82,29 @@ class QueryTests: XCTestCase {
 extension QueryTests {
     
     
+    /// Asserts that a string matches a pattern that contains one or more
+    /// sequences of components whose order is undefined.
+    ///
+    /// This method first matches the provided input string against the provided
+    /// regular expression pattern and asserts that there is a match.
+    ///
+    /// It then asserts that each part of the string that matches a capture
+    /// group in the pattern matches the corresponding set of components
+    /// provided in `expectedComponents`, in order, i.e. the part of the string
+    /// that matches the first capture group must match the first set of
+    /// components.
+    ///
+    /// - Parameter inputString: The string to test.
+    ///
+    /// - Parameter pattern: The regex pattern to evaluate the input string
+    ///             against. The number of capture groups must match the number
+    ///             of elements in expectedComponents.
+    ///
+    /// - Parameter expectedComponents: The sequences of components that must
+    ///             match the capture groups in the pattern. Each sequence
+    ///             contains the set of components expected to be in the capture
+    ///             group and the string used to join them in the input string.
+    ///
     func assertThat(
         
         _ inputString: String,
@@ -99,10 +130,29 @@ extension QueryTests {
             let nsrange = match.range(at: index + 1)
             let range = Range(nsrange, in: inputString)!
             
-            let actualJoinedComponents = inputString[range]
-            let actualSplitComponents = actualJoinedComponents.components(separatedBy: componentSet.separatedBy)
-            
-            XCTAssertEqual(Set(actualSplitComponents), Set(componentSet.components), "Component set at index \(index+1) does not match components in string")
+            XCTAssertTrue(String(inputString[range]).matches(componentSet), "Component set at index \(index+1) does not match components in string")
         }
+    }
+}
+
+
+extension String {
+    
+    
+    /// Returns whether the string matches a set of components separated by a
+    /// separator string.
+    ///
+    /// This method splits the string using the separator specified by
+    /// `componentSet.separatedBy` and compares the resulting set of components
+    /// with `componentSet.components`.
+    ///
+    /// - Parameter componentSet: A set of strings associated with a separator.
+    ///
+    /// - Returns: Whether the string matches a set of components separated by a
+    ///            separator string.
+    ///
+    func matches(_ componentSet: (components: Set<String>, separatedBy: String)) -> Bool {
+        
+        return Set(components(separatedBy: componentSet.separatedBy)) == componentSet.components
     }
 }
