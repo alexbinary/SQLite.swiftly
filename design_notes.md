@@ -75,3 +75,48 @@ the actual data to make sure that they match.
 
 The underlying state machine is reset on each execution so that the method can
 be called multiple times with different parameters.
+
+
+## Connection offers convenience methods
+
+Connection offers conveniance methods to execute simple queries on the
+connection without having to create a Statement. The method creates the
+Statement for you and executes it immediately.
+
+The followong convenience methods exist:
+- create a table from a table model
+- read all rows from a table
+
+
+## Inserts use explicit prepared statement
+
+Insert statements insert one row at a time. Although there are ways to insert
+multiple rows in one single `INSERT INTO` query, inserting only one row allows
+a much simpler design. Using prepared statements mitigates the possible
+performance loss.
+
+To insert data into a table, the user must explicitly request a prepared
+statement, then use it to insert data. 
+
+This helps achieve good performances when inserting large amount of data as it
+encourages the use of one prepared statement to insert many rows.
+
+Having a convenience method on the connection that compiles a statement and
+inserts a single row would make it too easy for the user to inadvertantly
+compile a new statement for each row they insert.
+
+`SELECT` and `CREATE TABLE` statements are not usually run multiple times with
+varying data, so compiling a new statement each time is not an issue.
+
+
+## Only insert statement are exposed for public usage
+
+Although internally various subclasses of Statement are used, almost everything 
+can be achieved using convenience methods on the Connection class.
+
+Thus, Statement and most of its subclasses do not need to be exposed for public
+use.
+
+Inserting data is the only operation that requires explicit use of Statement
+object, and thus only the corresponding subclass of Statement needs to be
+exposed for public use.
