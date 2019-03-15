@@ -120,3 +120,23 @@ use.
 Inserting data is the only operation that requires explicit use of Statement
 object, and thus only the corresponding subclass of Statement needs to be
 exposed for public use.
+
+
+## Connection has two intializers that expect the database to exist or not exist
+
+The native SQLite function create a new database when you try to connect to a
+database that does not exist. This is convenient but can lead to confusion.
+
+When you request a connection to a database, we ask you to express whether you
+expect the database to exist or not. If you expect the database to exist and it
+does not, then an error is raised. Same if you expect the database to not exist
+and it does.
+
+This helps prevent errors as most of the time you want to either create a new
+database or connect to an existing database.
+
+If you want to create a new database then you want to be alerted if a database
+already exists in the location you specified.
+
+If you want to connect to an existing database then you do want to be alerted
+if the database does not exist.
