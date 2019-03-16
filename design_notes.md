@@ -173,3 +173,17 @@ By default, things are kept internal or private.
 Whenever a SQL query is expected, use an instance of a type that conforms to the
 `SQLQuery` protocol. Passing SQL queries as strings should be avoided at all
 costs as this provides no guarantee that the string contains a valid SQL query.
+
+
+## Error handling uses conventional swift strategy
+
+Error handling in *SQLite.swiftly* is currently very crude. Any detectable
+divergence from the intended path triggers an error. More robust error handling
+is planned once the project becomes more stable.
+
+Methods that can fail can throw enum values that conform to the swift `Error`
+protocol.
+
+Initializer that can fail are marked as failable.
+
+It is up to the user to handle the error in any way they want.
