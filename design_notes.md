@@ -177,13 +177,29 @@ costs as this provides no guarantee that the string contains a valid SQL query.
 
 ## Error handling uses conventional swift strategy
 
-Error handling in *SQLite.swiftly* is currently very crude. Any detectable
-divergence from the intended path triggers an error. More robust error handling
-is planned once the project becomes more stable.
-
 Methods that can fail can throw enum values that conform to the swift `Error`
 protocol.
 
-Initializer that can fail are marked as failable.
-
 It is up to the user to handle the error in any way they want.
+
+Using `fatalError()` as was initially the case, although simple and convenient,
+is not testable. Throwable functions are testable.
+
+
+## Error handling is minimal
+
+Until *SQLite.swiftly* becomes more stable, error handling will recieve only as
+much attention as is absolutely required.
+
+For now, error handling is mostly useful to the programmer and should be
+designed to help identify design errors or external constraints that need to be
+addressed in the design.
+
+Proper error handling intented for the user is planned once the project becomes
+stable enough.
+
+Only the main code path is considered. Alternative code paths are not considered
+at all and any detectable divergence from the main path triggers an error.
+
+Only one, generic type of error is used. The error carries a custom message
+designed to help the programmer identify what went wrong.

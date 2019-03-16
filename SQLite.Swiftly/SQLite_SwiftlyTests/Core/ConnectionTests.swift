@@ -45,10 +45,11 @@ extension ConnectionTests {
     /// Asserts that a SQLite connection returns no error.
     ///
     /// - Parameter connection: The connection to test for errors.
+    /// - Parameter message: The assertion message.
     ///
-    func assertNoError(on connection: SQLite_Connection) {
+    func assertNoError(on connection: SQLite_Connection, _ message: String) {
         
-        XCTAssertNil(connection.errorMessage)
+        XCTAssertNil(connection.errorMessage, message)
     }
 }
 
@@ -62,18 +63,19 @@ extension ConnectionTests {
         
         // test: connect to a new database
         
-        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try? SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
-        // assert: the program should create the database file and not raise any
-        //         error
+        // assert: connection should succeed without error and the database
+        //         file should be created
         
-        XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path))
-        assertNoError(on: connection)
+        XCTAssertNotNil(connection, "Connection failed.")
+        assertNoError(on: connection!, "Connection produced one or more errors.")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file was not created.")
     }
     
     
-    /// Opening a connection to a new database file should trigger an error if
-    /// a file already exists at the provided location.
+    /// Opening a connection to a new database file should fail if a file
+    /// already exists at the provided location.
     ///
     func test_Connection_init_toNewDb_shouldErrorIfFileExists() {
         
@@ -82,10 +84,9 @@ extension ConnectionTests {
         FileManager.default.createFile(atPath: testDatabaseURL.path, contents: nil)
         
         // test: connect to a new database at the file's location
+        // assert: connection should fail with a "file exists" error
         
-        _ = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
-        
-        // assert: fatal error triggered
+        XCTAssertThrowsError(try SQLite_Connection(toNewDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
     
     
@@ -94,31 +95,39 @@ extension ConnectionTests {
     ///
     func test_Connection_init_toExistingDb_shouldNotCrashIfFileExists() {
         
-        // setup: create empty database
+        // prepare: create empty database
         
-        _ = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        _ = try? SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected to exist but does not.")
         
         // test: connect to the database created above
         
-        let connection = SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
+        let connection = try? SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
         
-        // assert: no error raised on the connection
+        // assert: connection should succeed without error
         
-        assertNoError(on: connection)
+        XCTAssertNotNil(connection, "Connection failed.")
+        assertNoError(on: connection!, "Connection produced one or more errors.")
     }
     
     
-    /// Opening a connection to an existing database file should trigger an
-    /// error if the file does not exist.
+    /// Opening a connection to an existing database file should fail if the
+    /// file does not exist.
     ///
     func test_Connection_init_toExistingDb_shouldErrorIfNoSuchFile() {
         
+        // prepare: make sure file does not exist
+        
+        XCTAssertFalse(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected not to exist but does.")
+        
         // test: connect to a database that does not exist
         
-        _ = SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
-        
-        // assert: fatal error triggered
+        XCTAssertThrowsError(try SQLite_Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
+}
+
+
+extension ConnectionTests {
     
     
     /// A connection should offer a way to access the latest error message.
@@ -127,7 +136,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: access latest error message
         
@@ -141,7 +150,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a simple query
         // NB: `sqlite_master` is a built-in table that is guaranteed to always
@@ -151,7 +160,7 @@ extension ConnectionTests {
         
         // assert: no error raised on the connection
         
-        assertNoError(on: connection)
+        assertNoError(on: connection, "Connection produced one or more errors.")
     }
     
     
@@ -161,7 +170,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table
         
@@ -173,7 +182,7 @@ extension ConnectionTests {
         // assert: table exists and no error raised on the connection
         
         _ = connection.readAllRows(fromTable: table)
-        assertNoError(on: connection)
+        assertNoError(on: connection, "Connection produced one or more errors.")
     }
     
     
@@ -181,7 +190,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table and populate with data
         
@@ -213,7 +222,7 @@ extension ConnectionTests {
         XCTAssertTrue(rows[1][column1]! as! String == "c")
         XCTAssertTrue(rows[1][column2]! as! String == "d")
         
-        assertNoError(on: connection)
+        assertNoError(on: connection, "Connection produced one or more errors.")
     }
 }
 

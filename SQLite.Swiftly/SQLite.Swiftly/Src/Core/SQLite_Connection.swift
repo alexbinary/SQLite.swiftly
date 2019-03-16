@@ -46,16 +46,16 @@ public class SQLite_Connection {
     /// - Parameter url: A URL that indicates the location of the database you
     ///             want to create.
     ///
-    public convenience init(toNewDatabaseAt url: URL) {
+    public convenience init(toNewDatabaseAt url: URL) throws {
         
         print("[SQLite_Connection] Opening connection to new database at \(url.path)")
         
         if FileManager.default.fileExists(atPath: url.path) {
             
-            fatalError("[SQLite_Connection] Cannot create database, file exists.")
+            throw Error.genericError(message: "[SQLite_Connection] Cannot create database, file exists: \(url.path)")
         }
         
-        self.init(toDatabaseAt: url)
+        try self.init(toDatabaseAt: url)
     }
     
     
@@ -72,16 +72,16 @@ public class SQLite_Connection {
     /// - Parameter url: A URL to a file that contains the database you want to
     ///             connect to.
     ///
-    public convenience init(toExistingDatabaseAt url: URL) {
+    public convenience init(toExistingDatabaseAt url: URL) throws {
         
         print("[SQLite_Connection] Opening connection to existing database at \(url.path)")
         
         if !FileManager.default.fileExists(atPath: url.path) {
             
-            fatalError("[SQLite_Connection] Cannot connect to database, file does not exist.")
+            throw Error.genericError(message: "[SQLite_Connection] Cannot connect to database, file does not exist: \(url.path)")
         }
         
-        self.init(toDatabaseAt: url)
+        try self.init(toDatabaseAt: url)
     }
     
     
@@ -99,11 +99,11 @@ public class SQLite_Connection {
     ///
     /// - Parameter url: A URL to the database file to connect to.
     ///
-    private init(toDatabaseAt url: URL) {
+    private init(toDatabaseAt url: URL) throws {
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
-            fatalError("[SQLite_Connection] sqlite3_open() failed. Error: \(errorMessage ?? "")")
+            throw Error.genericError(message: "[SQLite_Connection] sqlite3_open() failed. SQLite error: \(errorMessage ?? "")")
         }
         
         print("[SQLite_Connection] Connected")

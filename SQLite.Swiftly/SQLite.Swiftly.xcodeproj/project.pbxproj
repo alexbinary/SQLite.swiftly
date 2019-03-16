@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2915B72F223DACDB0018C3DA /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2915B72E223DACDB0018C3DA /* Errors.swift */; };
 		296131BE223577AE006C4483 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296131BD223577AE006C4483 /* ConnectionTests.swift */; };
 		296131C0223577AE006C4483 /* SQLite_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29893350223564D000679782 /* SQLite_Swiftly.framework */; };
 		2986A937223AA31E0066200E /* QueryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2986A936223AA31E0066200E /* QueryTests.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2915B72E223DACDB0018C3DA /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		296131BB223577AE006C4483 /* SQLite_SwiftlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SQLite_SwiftlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		296131BD223577AE006C4483 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		296131BF223577AE006C4483 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				2990E9ED22357E160001CF2A /* SQLite_Connection.swift */,
 				2990E9EE22357E160001CF2A /* SQLite_CreateTableStatement.swift */,
 				2990E9EF22357E160001CF2A /* SQLite_InsertStatement.swift */,
+				2915B72E223DACDB0018C3DA /* Errors.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				2990EA0622357E160001CF2A /* SQLite_ColumnType.swift in Sources */,
 				2990EA0E22357E160001CF2A /* SQLite_InsertQuery.swift in Sources */,
 				2990EA0222357E160001CF2A /* SQLite_CreateTableStatement.swift in Sources */,
+				2915B72F223DACDB0018C3DA /* Errors.swift in Sources */,
 				2990EA0822357E160001CF2A /* SQLite_ColumnValue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
