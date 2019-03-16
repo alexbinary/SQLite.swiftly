@@ -55,14 +55,14 @@ extension ConnectionTests {
 
 extension ConnectionTests {
     
-    /// Opening a connection on a file that does not exist should create the
-    /// file.
+    /// Opening a connection to a new database file should create a database
+    /// file at the provided location.
     ///
-    func test_Connection_init_withNonExistantFile_shouldCreateDatabaseFile() {
+    func test_Connection_init_toNewDb_shouldCreateFile() {
         
         // test: connect to a new database
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // assert: the program should create the database file and not raise any
         //         error
@@ -72,22 +72,52 @@ extension ConnectionTests {
     }
     
     
-    /// Opening a connection on a file that exists should connect to the
+    /// Opening a connection to a new database file should trigger an error if
+    /// a file already exists at the provided location.
+    ///
+    func test_Connection_init_toNewDb_shouldErrorIfFileExists() {
+        
+        // prepare: create an empty file
+        
+        FileManager.default.createFile(atPath: testDatabaseURL.path, contents: nil)
+        
+        // test: connect to a new database at the file's location
+        
+        _ = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        
+        // assert: fatal error triggered
+    }
+    
+    
+    /// Opening a connection to an existing database file should connect to the
     /// database in the file.
     ///
-    func test_Connection_init_withExistantFile_shouldConnectToDatabaseInFile() {
+    func test_Connection_init_toExistingDb_shouldNotCrashIfFileExists() {
         
         // setup: create empty database
         
-        _ = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        _ = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: connect to the database created above
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
         
         // assert: no error raised on the connection
         
         assertNoError(on: connection)
+    }
+    
+    
+    /// Opening a connection to an existing database file should trigger an
+    /// error if the file does not exist.
+    ///
+    func test_Connection_init_toExistingDb_shouldErrorIfNoSuchFile() {
+        
+        // test: connect to a database that does not exist
+        
+        _ = SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
+        
+        // assert: fatal error triggered
     }
     
     
@@ -97,7 +127,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: access latest error message
         
@@ -111,7 +141,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a simple query
         // NB: `sqlite_master` is a built-in table that is guaranteed to always
@@ -131,7 +161,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table
         
@@ -151,7 +181,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = SQLite_Connection(toDatabaseAt: testDatabaseURL)
+        let connection = SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table and populate with data
         
