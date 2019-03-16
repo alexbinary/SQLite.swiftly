@@ -23,11 +23,17 @@ In short, *SQLite.swiftly*  makes writing incorrect code harder.
 
 ## Origins and features
 
-*SQLite.swiftly* was originally part of the source code of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project.
-It has been moved into its own repository so it can have its own life, and why not inspire someone.
+*SQLite.swiftly* was originally part of the source code of the
+[My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project.
+It has been moved into its own repository so it can have its own life, and why
+not inspire someone.
 
-As such, development is driven by the needs of the [My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
+As such, development is driven by the needs of the
+[My LEGO Collection](https://github.com/alexbinary/My-LEGO-Collection) project,
 and only features that are needed by that project are being developped.
+
+As a result, many features you would expect from a generic SQLite client are 
+not implemented in *SQLite.swiftly*.
 
 Supported features:
 

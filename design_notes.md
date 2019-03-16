@@ -2,6 +2,23 @@
 # Design notes
 
 
+## SQLite.swiftly is designed for the needs of the My LEGO Collection project
+
+In My LEGO Collection we need to:
+
+- create nex SQLite databases
+- create tables from a static schema
+- insert large data sets into the tables efficiently
+- open an existing SQLite database
+- read all data from a table
+
+As a result *SQLite.swiftly* implements only these features, and does so with
+the goal of achieving the best performance.
+
+Many features you would expect from a generic SQLite client are not implemented
+in *SQLite.swiftly*.
+
+
 ## Connection and Statement encapsulate low level objects
 
 Connection and Statement are the two main objects in *SQLite.swiftly*.
@@ -140,3 +157,19 @@ already exists in the location you specified.
 
 If you want to connect to an existing database then you do want to be alerted
 if the database does not exist.
+
+
+## Things are exposed for public use only if they need to be
+
+Classes, structs, enums, protocols, methods and properties are exposed for
+public use only if there is at least one approved scenario where a user would
+need to use them.
+
+By default, things are kept internal or private.
+
+
+## SQL queries never transit as strings
+
+Whenever a SQL query is expected, use an instance of a type that conforms to the
+`SQLQuery` protocol. Passing SQL queries as strings should be avoided at all
+costs as this provides no guarantee that the string contains a valid SQL query.
