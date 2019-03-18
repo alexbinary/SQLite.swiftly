@@ -51,6 +51,17 @@ extension ConnectionTests {
         
         XCTAssertNil(connection.errorMessage, message)
     }
+    
+    
+    /// Asserts that a SQLite connection returns an error.
+    ///
+    /// - Parameter connection: The connection to test for errors.
+    /// - Parameter message: The assertion message.
+    ///
+    func assertError(on connection: SQLite_Connection, _ message: String) {
+        
+        XCTAssertNotNil(connection.errorMessage, message)
+    }
 }
 
 
@@ -142,11 +153,15 @@ extension ConnectionTests {
         
         _ = connection.errorMessage
     }
+}
+
+
+extension ConnectionTests {
+
     
-    
-    /// Compiling a simple SQL query should not crash nor raise errors.
+    /// Compiling a simple SQL query should not generate errors.
     ///
-    func test_Connection_compile_withValidSQL_shouldNotCrash() {
+    func test_Connection_compile_withValidSQL_shouldNotThrow() {
         
         // setup: open connection
         
@@ -154,14 +169,35 @@ extension ConnectionTests {
         
         // test: compile a simple query
         // NB: `sqlite_master` is a built-in table that is guaranteed to always
-        ///exist.
+        // exist.
+        // assert: no error should be thrown during compilation + no error
+        // should be produced on the connection
         
-        _ = connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master"))
-        
-        // assert: no error raised on the connection
-        
+        XCTAssertNoThrow(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master")), "Compilation failed.")
         assertNoError(on: connection, "Connection produced one or more errors.")
     }
+    
+    
+    
+    /// Compiling a buggy SQL query should generate errors.
+    ///
+    func test_Connection_compile_withInvalidSQL_shouldThrow() {
+        
+        // setup: open connection
+        
+        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        
+        // test: compile a buggy query
+        // assert: an error should be thrown during compilation + an error
+        // should be produced on the connection
+        
+        XCTAssertThrowsError(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM foo")), "Compilation did not fail as expected.")
+        assertError(on: connection, "Connection produced no errors.")
+    }
+}
+
+
+extension ConnectionTests {
     
     
     /// Calling `createTable()` should create the table without raising errors.

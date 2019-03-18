@@ -152,20 +152,19 @@ extension SQLite_Connection {
 extension SQLite_Connection {
     
     
-    /// Compiles a query into a statement and returns a raw SQLite pointer to
-    /// the statement.
+    /// Compiles a query into a low level SQLite statement object.
     ///
     /// - Parameter query: The SQL query to compile.
     ///
     /// - Returns: A pointer to the SQLite statement object.
     ///
-    func compile(_ query: SQLite_Query) -> OpaquePointer {
+    func compile(_ query: SQLite_Query) throws -> OpaquePointer {
         
         var statementPointer: OpaquePointer!
         
         guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
             
-            fatalError("[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")")
+            throw Error.genericError(message: "[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")")
         }
         
         return statementPointer

@@ -63,7 +63,7 @@ public class SQLite_Statement {
         self.query = query
         self.connection = connection
         
-        self.pointer = connection.compile(query)
+        self.pointer = try! connection.compile(query)
     }
     
     
