@@ -12,23 +12,24 @@ import SQLite3
 ///
 /// You open a connection to a new database with the `init(toNewDatabaseAt:)`
 /// initializer, passing the path to the SQLite database file you want to
-/// create. This initializer creates a new database at the location you provides
-/// and connect to it.
+/// create. This initializer creates a new database at the location you provide
+/// and connects to it.
 ///
-/// After initialization, instances of this class always represent a valid
-/// database connection. The connection is closed automatically when the object
-/// is deallocated.
-///
-/// It is important that you let the object be deallocated when it is not needed
-/// anymore to close the connection and release associated resources.
+/// The connection remains open as long as the object is not deallocated.
+/// Therefore it is important that you let the object be deallocated when it is
+/// not needed anymore to close the connection and release associated resources.
 ///
 public class SQLite_Connection {
     
     
     /// The SQLite pointer to the underlying connection object.
     ///
-    /// This should always be a pointer that points to a valid, open connection
-    /// to the database that was passed to the initializer.
+    /// This pointer is expected to always point to a valid, open connection
+    /// to the database. The property therefore needs to remain private to
+    /// prevent someone on the outside of this class to change the pointer or
+    /// the object it points to. The value being a pointer to an object,
+    /// exposing it in read-only mode is not enough, as accessing the pointer's
+    /// value allows a third party to make changes to the object it points to.
     ///
     private var pointer: OpaquePointer!
 
@@ -38,8 +39,8 @@ public class SQLite_Connection {
     /// This initializer creates a new database file at the location provided as
     /// parameter and opens a connection to the database.
     ///
-    /// A fatal error is triggered if the connection fails, the file cannot be
-    /// created, or a database already exist in that location.
+    /// An error is thrown if the connection fails, if the file cannot be
+    /// created, or if a database already exist in that location.
     ///
     /// The connection remains open as long as the object is not deallocated.
     ///
@@ -64,8 +65,8 @@ public class SQLite_Connection {
     /// This initializer opens the connection to the database at the location
     /// provided as parameter.
     ///
-    /// A fatal error is triggered if the connection fails or if the file does
-    /// not exist.
+    /// An error is thrown if the connection fails or if the file does not
+    /// exist.
     ///
     /// The connection remains open as long as the object is not deallocated.
     ///
@@ -93,7 +94,7 @@ public class SQLite_Connection {
     /// If no database exists at the provided location, a new database is
     /// created.
     ///
-    /// A fatal error is triggered if the connection fails.
+    /// An error is thrown if the connection fails.
     ///
     /// The connection remains open as long as the object is not deallocated.
     ///
