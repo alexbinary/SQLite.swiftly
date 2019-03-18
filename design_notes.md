@@ -203,3 +203,19 @@ at all and any detectable divergence from the main path triggers an error.
 
 Only one, generic type of error is used. The error carries a custom message
 designed to help the programmer identify what went wrong.
+
+
+## Connection provides internal access to the latest error message
+
+When errors occur on a connection, the latest error message is stores and can
+be access with a simple function. If no error has occured yet, the error message
+says "not an error".
+
+Connection offers a high level way to access the latest error message, with the
+added benefit of a clearly identified "no error" case. When the error is "not an
+error", Connection returns `nil` instead.
+
+The error message is not intended to be used publicly by client code, as it is
+part of the implementation details. It is however usefull to other classes that
+are related to a connection, namely statements. Statements log the connection's
+error message when they detect an error during their execution.
