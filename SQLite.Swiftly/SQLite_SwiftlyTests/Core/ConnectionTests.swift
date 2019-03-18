@@ -95,7 +95,7 @@ extension ConnectionTests {
         FileManager.default.createFile(atPath: testDatabaseURL.path, contents: nil)
         
         // test: connect to a new database at the file's location
-        // assert: connection should fail with a "file exists" error
+        // assert: connection should throw an error
         
         XCTAssertThrowsError(try SQLite_Connection(toNewDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
@@ -132,6 +132,7 @@ extension ConnectionTests {
         XCTAssertFalse(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected not to exist but does.")
         
         // test: connect to a database that does not exist
+        // assert: connection should throw an error
         
         XCTAssertThrowsError(try SQLite_Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
@@ -220,6 +221,10 @@ extension ConnectionTests {
         _ = connection.readAllRows(fromTable: table)
         assertNoError(on: connection, "Connection produced one or more errors.")
     }
+}
+
+
+extension ConnectionTests {
     
     
     func test_Connection_readAllRows_shouldReturnAllRowsAndAllColumns() {
@@ -303,10 +308,10 @@ extension FileManager {
     }
     
     
-    /// Removes the file or directory at the specified URL if it exists.
+    /// Attempts to remove the file or directory at the specified URL only if
+    /// it exists.
     ///
-    /// If the file or directory at the specified URL if exists this method
-    /// does not attempt to remove it.
+    /// - Parameter url: A file URL specifying the file or directory to remove.
     ///
     func removeItemIfExists(at url: URL) throws {
     
