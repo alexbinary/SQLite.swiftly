@@ -168,7 +168,7 @@ Example:
 var connectionPointer: OpaquePointer!
 sqlite3_open("path/to/db.sqlite", &connectionPointer)
 
-// Easy, right ? but what if the connection failed ? sure we can check the
+// Easy, right? but what if the connection failed? sure we can check the
 // status of the connection, but if we fail to do the proper checks nothing is 
 // preventing us to use an invalid connection pointer.
 
@@ -178,15 +178,15 @@ sqlite3_open("path/to/db.sqlite", &connectionPointer)
 var statementPointer: OpaquePointer!
 sqlite3_prepare_v2(connectionPointer, "INSERT INTO table(c1, c2) VALUES(1,2"), -1, &statementPointer, nil)
 
-// What if we mistakenly swap the connectionPointer and statementPointer ? we
+// What if we mistakenly swap the connectionPointer and statementPointer? we
 // have to wait for the code to run, only to get an obscure and hard to debug 
 // error. Come on we can do better!
 
-// And what if we made a mistake in the SQL query ? again, we can check the 
+// And what if we made a mistake in the SQL query? again, we can check the 
 // status of the statement but it is so easy to forget, and we should not have
 // to do runtime checks on something we write in the code anyway.
 
-// And also, what is that -1 doing ? and that `nil` at the end ?
+// And also, what is that -1 doing? and that `nil` at the end?
 
 
 // -- Release resources
@@ -195,7 +195,7 @@ sqlite3_finalize(statementPointer)
 
 // So now we have to worry about the fact that anyone can destroy a statement
 // without us knowing? Do we need to check if the object is still valid every
-// time before we use it ? And what do we do if it is not ?
+// time before we use it? And what do we do if it is not?
 
 sqlite3_close(connectionPointer)
 
