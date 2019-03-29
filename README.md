@@ -46,9 +46,6 @@ Supported SQLite data types:
 - [x] char
 - [x] bool
 
-*SQLite.swiftly* does not have proper error handling yet. Any error currently
-triggers a `fatalError()`.
-
 *SQLite.swiftly* is intended to be used primarily on iOS.
 
 
