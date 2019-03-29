@@ -245,6 +245,9 @@ spreading the database structure in raw SQL queries that the compiler cannot
 understand.
 
 
+For more details, see the [design notes](design-notes.md).
+
+
 ## Development
 
 To get hacking, start by cloning the repo:
