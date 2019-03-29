@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="sqlite-logo.png" height=128>
+  <img src="sqlite-logo.jpg" height=128>
   <img src="swift-logo.png" height=128>
 </p>
 
