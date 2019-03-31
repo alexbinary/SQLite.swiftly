@@ -53,7 +53,7 @@ public class SQLite_Connection {
         
         if FileManager.default.fileExists(atPath: url.path) {
             
-            throw Error.genericError(message: "[SQLite_Connection] Cannot create database, file exists: \(url.path)")
+            throw "[SQLite_Connection] Cannot create database, file exists: \(url.path)"
         }
         
         try self.init(toDatabaseAt: url)
@@ -79,7 +79,7 @@ public class SQLite_Connection {
         
         if !FileManager.default.fileExists(atPath: url.path) {
             
-            throw Error.genericError(message: "[SQLite_Connection] Cannot connect to database, file does not exist: \(url.path)")
+            throw "[SQLite_Connection] Cannot connect to database, file does not exist: \(url.path)"
         }
         
         try self.init(toDatabaseAt: url)
@@ -104,7 +104,7 @@ public class SQLite_Connection {
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
-            throw Error.genericError(message: "[SQLite_Connection] sqlite3_open() failed. SQLite error: \(errorMessage ?? "")")
+            throw "[SQLite_Connection] sqlite3_open() failed. SQLite error: \(errorMessage ?? "")"
         }
         
         print("[SQLite_Connection] Connected")
@@ -164,7 +164,7 @@ extension SQLite_Connection {
         
         guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
             
-            throw Error.genericError(message: "[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")")
+            throw "[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
         }
         
         return statementPointer

@@ -2,12 +2,8 @@
 import Foundation
 
 
-/// Errors that can be thrown by various components.
+/// Allows strings to be thrown as errors.
 ///
-public enum Error: Swift.Error {
+extension String: Swift.Error {
     
-    
-    /// A simple error with a message.
-    ///
-    case genericError(message: String)
 }
