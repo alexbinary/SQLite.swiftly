@@ -115,7 +115,7 @@ extension ConnectionTests {
 extension ConnectionTests {
 
     
-    /// Compiling a simple SQL query should not generate errors.
+    /// Compiling a simple SQL query should not throw.
     ///
     func test_Connection_compile_withValidSQL_shouldNotThrow() {
         
@@ -124,17 +124,18 @@ extension ConnectionTests {
         let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a simple query
+        //
         // NB: `sqlite_master` is a built-in table that is guaranteed to always
-        // exist.
-        // assert: no error should be thrown during compilation + no error
-        // should be produced on the connection
+        //     exist.
+        //
+        // assert: no error should be thrown during compilation
         
-        XCTAssertNoThrow(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master")), "Compilation failed.")
+        XCTAssertNoThrow(try connection.compile("SELECT * FROM sqlite_master"), "Compilation failed.")
     }
     
     
     
-    /// Compiling a buggy SQL query should generate errors.
+    /// Compiling a buggy SQL query should throw.
     ///
     func test_Connection_compile_withInvalidSQL_shouldThrow() {
         
@@ -143,10 +144,9 @@ extension ConnectionTests {
         let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a buggy query
-        // assert: an error should be thrown during compilation + an error
-        // should be produced on the connection
+        // assert: an error should be thrown during compilation
         
-        XCTAssertThrowsError(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM foo")), "Compilation did not fail as expected.")
+        XCTAssertThrowsError(try connection.compile("SELECT * FROM foo"), "Compilation did not fail as expected.")
     }
 }
 
@@ -218,24 +218,17 @@ extension ConnectionTests {
 }
 
 
-/// A SQL query built from raw SQL.
+/// Allows a string to be used as a query.
 ///
-struct CustomSQLQuery: SQLite_Query {
+/// NB: defeats the purpose of the protocol to enforce type safe values instead
+///     of opaque strings, but useful for tests.
+///
+extension String: SQLite_Query {
     
     
     /// The SQL string that represents the query.
     ///
-    let sqlRepresentation: String
-   
-    
-    /// Creates a new query from raw SQL.
-    ///
-    /// - Parameter sql: The query's raw SQL string.
-    ///
-    init(withSQL sql: String) {
-        
-        sqlRepresentation = sql
-    }
+    public var sqlRepresentation: String { return self }
 }
 
 

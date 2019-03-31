@@ -169,7 +169,7 @@ extension SQLite_Connection {
     
     /// Compiles a query into a low level SQLite statement object.
     ///
-    /// - Parameter query: The SQL query to compile.
+    /// - Parameter query: The query to compile.
     ///
     /// - Returns: A pointer to the SQLite statement object.
     ///
@@ -179,7 +179,7 @@ extension SQLite_Connection {
         
         guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
             
-            throw "[SQLite_Connection] Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
+            throw "[SQLite_Connection] sqlite3_prepare_v2() failed. Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
         }
         
         return statementPointer
