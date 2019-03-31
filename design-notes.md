@@ -48,7 +48,7 @@ From the user point of view, `Connection` and `Statement` are stateless: all
 public methods can be called at any time and in any order.
 
 
-## Statement are linked to a connection
+## Statements are linked to a connection
 
 A statement holds a reference to the connection that was used to compile it.
 The connection that was used to compile the statement is the connection on which
