@@ -45,7 +45,7 @@ extension ConnectionTests {
     /// Opening a connection to a new database file should create a database
     /// file at the provided location.
     ///
-    func test_Connection_init_toNewDb_shouldCreateFile() {
+    func test_init_toNewDb_shouldCreateFile() {
         
         // test: connect to a new database
         
@@ -62,7 +62,7 @@ extension ConnectionTests {
     /// Opening a connection to a new database file should fail if a file
     /// already exists at the provided location.
     ///
-    func test_Connection_init_toNewDb_shouldErrorIfFileExists() {
+    func test_init_toNewDb_shouldErrorIfFileExists() {
         
         // prepare: create an empty file
         
@@ -78,7 +78,7 @@ extension ConnectionTests {
     /// Opening a connection to an existing database file should connect to the
     /// database in the file.
     ///
-    func test_Connection_init_toExistingDb_shouldNotCrashIfFileExists() {
+    func test_init_toExistingDb_shouldNotCrashIfFileExists() {
         
         // prepare: create empty database
         
@@ -98,7 +98,7 @@ extension ConnectionTests {
     /// Opening a connection to an existing database file should fail if the
     /// file does not exist.
     ///
-    func test_Connection_init_toExistingDb_shouldErrorIfNoSuchFile() {
+    func test_init_toExistingDb_shouldErrorIfNoSuchFile() {
         
         // prepare: make sure file does not exist
         
@@ -117,7 +117,7 @@ extension ConnectionTests {
     
     /// Compiling a simple SQL query should not throw.
     ///
-    func test_Connection_compile_withValidSQL_shouldNotThrow() {
+    func test_compile_withValidSQL_shouldNotThrow() {
         
         // setup: open connection
         
@@ -137,7 +137,7 @@ extension ConnectionTests {
     
     /// Compiling a buggy SQL query should throw.
     ///
-    func test_Connection_compile_withInvalidSQL_shouldThrow() {
+    func test_compile_withInvalidSQL_shouldThrow() {
         
         // setup: open connection
         
@@ -156,7 +156,7 @@ extension ConnectionTests {
     
     /// Calling `createTable()` should create the table without raising errors.
     ///
-    func test_connection_createTable_shouldCreateTheTable() {
+    func test_createTable_shouldCreateTheTable() {
         
         // setup: open connection
         
@@ -179,7 +179,7 @@ extension ConnectionTests {
 extension ConnectionTests {
     
     
-    func test_Connection_readAllRows_shouldReturnAllRowsAndAllColumns() {
+    func test_readAllRows_shouldReturnAllRowsAndAllColumns() {
         
         // setup: open connection
         
