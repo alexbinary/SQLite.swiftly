@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `INSERT INTO <table>;`.
 ///
-public class SQLite_InsertStatement: Statement {
+public class InsertStatement: Statement {
     
     
     /// A description of the table the statement inserts data into.
@@ -38,7 +38,7 @@ public class SQLite_InsertStatement: Statement {
 }
 
 
-extension SQLite_InsertStatement {
+extension InsertStatement {
     
     
     /// Inserts values into the table.
@@ -54,7 +54,7 @@ extension SQLite_InsertStatement {
         
             guard let value = columnValues[column] else {
                 
-                fatalError("[SQLite_InsertStatement] Missing value for column: \(column). Trying to insert into table: \(tableDescription.name), values: \(columnValues)")
+                fatalError("[InsertStatement] Missing value for column: \(column). Trying to insert into table: \(tableDescription.name), values: \(columnValues)")
             }
             
             parameterValues[parameter] = value

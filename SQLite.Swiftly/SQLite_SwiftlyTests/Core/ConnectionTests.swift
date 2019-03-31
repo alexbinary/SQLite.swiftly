@@ -193,7 +193,7 @@ extension ConnectionTests {
         
         connection.createTable(describedBy: table)
         
-        let insertStatement = SQLite_InsertStatement(insertingIntoTable: table, connection: connection)
+        let insertStatement = InsertStatement(insertingIntoTable: table, connection: connection)
         insertStatement.insert([column1: "a", column2: "b"])
         insertStatement.insert([column1: "c", column2: "d"])
         
