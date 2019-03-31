@@ -1,6 +1,12 @@
 
 # Design notes
 
+## Overview
+
+![](design.png)
+
+[SVG version](design.svg) - [Draw.io source file](design.drawio)
+
 
 ## SQLite.swiftly is designed for the needs of the My LEGO Collection project
 
