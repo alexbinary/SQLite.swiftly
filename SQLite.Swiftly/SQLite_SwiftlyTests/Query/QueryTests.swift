@@ -60,7 +60,7 @@ class QueryTests: XCTestCase {
         
         let table = TableDescription(name: "t", columns: [column1, column2])
         
-        let query = SQLite_InsertQuery(insertingIntoTable: table)
+        let query = InsertQuery(insertingIntoTable: table)
         
         // assert: SQL representation is correct
         // NB: the order of the columns is undefined

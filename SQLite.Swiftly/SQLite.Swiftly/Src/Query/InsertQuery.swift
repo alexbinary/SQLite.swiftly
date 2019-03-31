@@ -12,7 +12,7 @@ import Foundation
 /// can access the query parameters that are used in the query along with the
 /// table column they correspond to with the `parameters` property.
 ///
-struct SQLite_InsertQuery: Query {
+struct InsertQuery: Query {
     
     
     /// A description of the table the query should insert data into.

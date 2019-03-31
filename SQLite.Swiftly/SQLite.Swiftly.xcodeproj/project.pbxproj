@@ -28,7 +28,7 @@
 		2990EA0B22357E160001CF2A /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9F922357E160001CF2A /* Query.swift */; };
 		2990EA0C22357E160001CF2A /* SQLite_QueryParameterValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FA22357E160001CF2A /* SQLite_QueryParameterValue.swift */; };
 		2990EA0D22357E160001CF2A /* CreateTableQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FB22357E160001CF2A /* CreateTableQuery.swift */; };
-		2990EA0E22357E160001CF2A /* SQLite_InsertQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */; };
+		2990EA0E22357E160001CF2A /* InsertQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FC22357E160001CF2A /* InsertQuery.swift */; };
 		29EEB7592251010300992A1D /* ColumnTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB7582251010300992A1D /* ColumnTypeTests.swift */; };
 		29EEB75B225105BB00992A1D /* TableDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */; };
 /* End PBXBuildFile section */
@@ -68,7 +68,7 @@
 		2990E9F922357E160001CF2A /* Query.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
 		2990E9FA22357E160001CF2A /* SQLite_QueryParameterValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_QueryParameterValue.swift; sourceTree = "<group>"; };
 		2990E9FB22357E160001CF2A /* CreateTableQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTableQuery.swift; sourceTree = "<group>"; };
-		2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_InsertQuery.swift; sourceTree = "<group>"; };
+		2990E9FC22357E160001CF2A /* InsertQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsertQuery.swift; sourceTree = "<group>"; };
 		29EEB7582251010300992A1D /* ColumnTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnTypeTests.swift; sourceTree = "<group>"; };
 		29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDescriptionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,7 +197,7 @@
 			children = (
 				2990E9F922357E160001CF2A /* Query.swift */,
 				2990E9FB22357E160001CF2A /* CreateTableQuery.swift */,
-				2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */,
+				2990E9FC22357E160001CF2A /* InsertQuery.swift */,
 				2990E9F822357E160001CF2A /* SQLite_SelectQuery.swift */,
 				2990E9F722357E160001CF2A /* SQLite_QueryParameter.swift */,
 				2990E9FA22357E160001CF2A /* SQLite_QueryParameterValue.swift */,
@@ -339,7 +339,7 @@
 				2990EA0D22357E160001CF2A /* CreateTableQuery.swift in Sources */,
 				2990EA0C22357E160001CF2A /* SQLite_QueryParameterValue.swift in Sources */,
 				2990EA0622357E160001CF2A /* ColumnType.swift in Sources */,
-				2990EA0E22357E160001CF2A /* SQLite_InsertQuery.swift in Sources */,
+				2990EA0E22357E160001CF2A /* InsertQuery.swift in Sources */,
 				2990EA0222357E160001CF2A /* CreateTableStatement.swift in Sources */,
 				2915B72F223DACDB0018C3DA /* Errors.swift in Sources */,
 				2990EA0822357E160001CF2A /* ColumnValue.swift in Sources */,

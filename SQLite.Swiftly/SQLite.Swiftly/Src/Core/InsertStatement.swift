@@ -18,7 +18,7 @@ public class InsertStatement: Statement {
     
     /// The query that was used to compile the statement.
     ///
-    private let insertQuery: SQLite_InsertQuery
+    private let insertQuery: InsertQuery
     
     
     /// Creates a new statement.
@@ -31,7 +31,7 @@ public class InsertStatement: Statement {
     public init(insertingIntoTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
-        self.insertQuery = SQLite_InsertQuery(insertingIntoTable: tableDescription)
+        self.insertQuery = InsertQuery(insertingIntoTable: tableDescription)
         
         super.init(compiling: insertQuery, on: connection)
     }
