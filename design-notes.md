@@ -243,3 +243,12 @@ whether an error occured or not.
 
 Errors triggered by SQLite functions are detected using the return value of
 those functions when they have one.
+
+
+## A table model has a set of columns, not an array
+
+Using a set guarantees that prevents a table model from having two identical
+columns.
+
+Plus, the order of the columns in a table is not important, and although columns
+do have an order in the table, using column names is safer than using positions.
