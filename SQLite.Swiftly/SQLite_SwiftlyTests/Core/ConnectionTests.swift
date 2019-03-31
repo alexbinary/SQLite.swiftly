@@ -67,6 +67,7 @@ extension ConnectionTests {
 
 extension ConnectionTests {
     
+    
     /// Opening a connection to a new database file should create a database
     /// file at the provided location.
     ///
