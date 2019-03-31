@@ -10,20 +10,20 @@ public class SQLite_ColumnDescription {
     
     /// The column's name.
     ///
-    public let name: String
+    let name: String
     
     
     /// The column's type.
     ///
-    public let type: SQLite_ColumnType
+    let type: SQLite_ColumnType
     
     
     /// Whether the column can contain the value NULL.
     ///
-    public let nullable: Bool
+    let nullable: Bool
     
     
-    /// Creates a new description.
+    /// Creates a new description of a table column.
     ///
     /// - Parameter name: The column's name.
     /// - Parameter type: The column's type.
@@ -63,8 +63,10 @@ extension SQLite_ColumnDescription: SQLite_SQLRepresentable {
 
 
 extension SQLite_ColumnDescription: Equatable {
-    
-    
+
+    // Implementing the `Equatable` protocol allows implementation of the
+    // `Hashable` protocol.
+
     public static func == (lhs: SQLite_ColumnDescription, rhs: SQLite_ColumnDescription) -> Bool {
 
         return lhs.name == rhs.name
@@ -76,6 +78,8 @@ extension SQLite_ColumnDescription: Equatable {
 
 extension SQLite_ColumnDescription: Hashable {
     
+    // Implementing the `Hashable` protocol allows use of the type for elements
+    // in sets and for keys in dictionaries.
     
     public func hash(into hasher: inout Hasher) {
         
