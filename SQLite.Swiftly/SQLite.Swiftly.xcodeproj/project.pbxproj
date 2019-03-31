@@ -31,6 +31,7 @@
 		2990EA0E22357E160001CF2A /* SQLite_InsertQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */; };
 		2990EA0F22357E160001CF2A /* SQLite_SQLRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9FE22357E160001CF2A /* SQLite_SQLRepresentable.swift */; };
 		29EEB7592251010300992A1D /* ColumnTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB7582251010300992A1D /* ColumnTypeTests.swift */; };
+		29EEB75B225105BB00992A1D /* TableDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_InsertQuery.swift; sourceTree = "<group>"; };
 		2990E9FE22357E160001CF2A /* SQLite_SQLRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_SQLRepresentable.swift; sourceTree = "<group>"; };
 		29EEB7582251010300992A1D /* ColumnTypeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnTypeTests.swift; sourceTree = "<group>"; };
+		29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDescriptionTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				298C722D223B00E5008594C7 /* DatabaseSchemaTests.swift */,
+				29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */,
 				29EEB7582251010300992A1D /* ColumnTypeTests.swift */,
 			);
 			path = DatabaseSchema;
@@ -324,6 +327,7 @@
 			files = (
 				296131BE223577AE006C4483 /* ConnectionTests.swift in Sources */,
 				2986A937223AA31E0066200E /* QueryTests.swift in Sources */,
+				29EEB75B225105BB00992A1D /* TableDescriptionTests.swift in Sources */,
 				298C722E223B00E5008594C7 /* DatabaseSchemaTests.swift in Sources */,
 				29EEB7592251010300992A1D /* ColumnTypeTests.swift in Sources */,
 			);

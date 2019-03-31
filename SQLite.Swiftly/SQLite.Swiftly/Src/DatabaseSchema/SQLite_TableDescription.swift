@@ -18,14 +18,20 @@ public class SQLite_TableDescription {
     let columns: Set<SQLite_ColumnDescription>
     
     
-    /// The names of the columns.
+    /// An array that contains the names of the columns.
     ///
-    lazy var columnNames: Set<String> = Set(columns.map { $0.name })
+    /// This property is provided to offer better performance when we need
+    /// to access the columns names multiple times.
+    ///
+    private lazy var columnNames: Set<String> = Set(columns.map { $0.name })
     
     
     /// The columns indexed by their name.
     ///
-    lazy var columnsByName: [String: SQLite_ColumnDescription] = {
+    /// This property is provided to offer better performance when we need
+    /// to access columns by name multiple times.
+    ///
+    private lazy var columnsByName: [String: SQLite_ColumnDescription] = {
         
         var columnsByName: [String: SQLite_ColumnDescription] = [:]
        

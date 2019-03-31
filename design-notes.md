@@ -181,6 +181,9 @@ need to use them.
 
 By default, things are kept internal or private.
 
+Making things public make them part of the public API, and thus requires that
+they are maintained in future versions.
+
 
 ## SQL queries never transit as strings
 
