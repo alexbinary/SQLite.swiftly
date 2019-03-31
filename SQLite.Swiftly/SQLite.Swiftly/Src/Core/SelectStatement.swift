@@ -44,7 +44,7 @@ extension SelectStatement {
     /// - Returns: The rows. Values are read according to the type of the
     ///            corresponding column declared in the table description.
     ///
-    public func readAllRows() -> [SQLite_TableRow] {
+    public func readAllRows() -> [TableRow] {
         
         let rows = runThroughCompletion(readingResultRowsWith: tableDescription)
         

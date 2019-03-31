@@ -214,7 +214,7 @@ extension Connection {
     ///            of the corresponding column declared in the table
     ///            description.
     ///
-    public func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [SQLite_TableRow] {
+    public func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [TableRow] {
         
         let statement = SelectStatement(selectingFromTable: tableDescription, connection: self)
         
