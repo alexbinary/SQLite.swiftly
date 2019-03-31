@@ -5,7 +5,7 @@ import Foundation
 
 /// A description of a column in a SQLite database table.
 ///
-public class SQLite_ColumnDescription {
+public class ColumnDescription {
     
     
     /// The column's name.
@@ -38,7 +38,7 @@ public class SQLite_ColumnDescription {
 }
 
 
-extension SQLite_ColumnDescription: SQLite_SQLRepresentable {
+extension ColumnDescription: SQLite_SQLRepresentable {
     
     
     /// The SQL string that represents the column.
@@ -62,12 +62,12 @@ extension SQLite_ColumnDescription: SQLite_SQLRepresentable {
 }
 
 
-extension SQLite_ColumnDescription: Equatable {
+extension ColumnDescription: Equatable {
 
     // Implementing the `Equatable` protocol allows implementation of the
     // `Hashable` protocol.
 
-    public static func == (lhs: SQLite_ColumnDescription, rhs: SQLite_ColumnDescription) -> Bool {
+    public static func == (lhs: ColumnDescription, rhs: ColumnDescription) -> Bool {
 
         return lhs.name == rhs.name
             && lhs.type == rhs.type
@@ -76,7 +76,7 @@ extension SQLite_ColumnDescription: Equatable {
 }
 
 
-extension SQLite_ColumnDescription: Hashable {
+extension ColumnDescription: Hashable {
     
     // Implementing the `Hashable` protocol allows use of the type for elements
     // in sets and for keys in dictionaries.

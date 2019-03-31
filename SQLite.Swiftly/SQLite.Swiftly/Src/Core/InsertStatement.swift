@@ -46,7 +46,7 @@ extension InsertStatement {
     /// - Parameter columnValues: A dictionary that contain the value to insert
     ///             in each column.
     ///
-    public func insert(_ columnValues: [SQLite_ColumnDescription: SQLite_QueryParameterValue]) {
+    public func insert(_ columnValues: [ColumnDescription: SQLite_QueryParameterValue]) {
         
         var parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:]
         

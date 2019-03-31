@@ -15,7 +15,7 @@ public class SQLite_TableDescription {
     
     /// The table's columns.
     ///
-    let columns: Set<SQLite_ColumnDescription>
+    let columns: Set<ColumnDescription>
     
     
     /// An array that contains the names of the columns.
@@ -31,9 +31,9 @@ public class SQLite_TableDescription {
     /// This property is provided to offer better performance when we need
     /// to access columns by name multiple times.
     ///
-    private lazy var columnsByName: [String: SQLite_ColumnDescription] = {
+    private lazy var columnsByName: [String: ColumnDescription] = {
         
-        var columnsByName: [String: SQLite_ColumnDescription] = [:]
+        var columnsByName: [String: ColumnDescription] = [:]
        
         columns.forEach { column in
          
@@ -49,7 +49,7 @@ public class SQLite_TableDescription {
     /// - Parameter name: The table's name.
     /// - Parameter columns: The table's columns.
     ///
-    public init(name: String, columns: Set<SQLite_ColumnDescription>) {
+    public init(name: String, columns: Set<ColumnDescription>) {
         
         self.name = name
         self.columns = columns
@@ -69,7 +69,7 @@ extension SQLite_TableDescription {
     ///
     /// - Complexity: O(1)
     ///
-    func column(withName name: String) -> SQLite_ColumnDescription? {
+    func column(withName name: String) -> ColumnDescription? {
         
         return columnsByName[name]
     }

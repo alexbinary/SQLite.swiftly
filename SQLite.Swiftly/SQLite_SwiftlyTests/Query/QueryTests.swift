@@ -27,8 +27,8 @@ class QueryTests: XCTestCase {
         
         // setup: create a simple query
         
-        let column1 = SQLite_ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
-        let column2 = SQLite_ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
+        let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
+        let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
         
         let table = SQLite_TableDescription(name: "t", columns: [column1, column2])
         
@@ -55,8 +55,8 @@ class QueryTests: XCTestCase {
         
         // setup: create a simple query
         
-        let column1 = SQLite_ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
-        let column2 = SQLite_ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
+        let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
+        let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
         
         let table = SQLite_TableDescription(name: "t", columns: [column1, column2])
         

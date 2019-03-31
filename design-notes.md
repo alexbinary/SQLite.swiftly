@@ -255,3 +255,15 @@ columns.
 
 Plus, the order of the columns in a table is not important, and although columns
 do have an order in the table, using column names is safer than using positions.
+
+
+## Table and columns descriptions
+
+The classes used to communicate the structure of tables and columns are called
+`TableDescription` and `ColumnDescription` and not just `Table` and `Column` to
+avoid confusing those object with actual tables and columns.
+
+If those object were actual tables and columns, one could expect methods like
+`Table.drop()`, and would be confused if they could not find those methods.
+
+Using names that communicate that those are just models helps prevent this.

@@ -342,7 +342,7 @@ extension Statement {
     /// - Returns: The value, which is read according to the type of the
     ///            column declared in the column description.
     ///
-    private func readValue(at index: Int32, using columnDescription: SQLite_ColumnDescription) -> ColumnValue {
+    private func readValue(at index: Int32, using columnDescription: ColumnDescription) -> ColumnValue {
         
         switch columnDescription.type {
             
