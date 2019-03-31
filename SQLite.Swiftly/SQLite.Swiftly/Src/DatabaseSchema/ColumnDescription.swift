@@ -38,7 +38,7 @@ public class ColumnDescription {
 }
 
 
-extension ColumnDescription: SQLite_SQLRepresentable {
+extension ColumnDescription {
     
     
     /// The SQL string that represents the column.

@@ -17,7 +17,7 @@ class QueryTests: XCTestCase {
         
         // assert: SQL representation is correct
         
-        XCTAssertEqual(query.sqlRepresentation, "SELECT * FROM t;")
+        XCTAssertEqual(query.sqlString, "SELECT * FROM t;")
     }
     
     
@@ -37,7 +37,7 @@ class QueryTests: XCTestCase {
         // assert: SQL representation is correct
         // NB: the order of the columns is undefined
         
-        assertThat(query.sqlRepresentation,
+        assertThat(query.sqlString,
             
             matchesPattern: "CREATE TABLE t \\((.+)\\);",
             
@@ -65,7 +65,7 @@ class QueryTests: XCTestCase {
         // assert: SQL representation is correct
         // NB: the order of the columns is undefined
         
-        assertThat(query.sqlRepresentation,
+        assertThat(query.sqlString,
                    
             matchesPattern: "INSERT INTO t \\((.+)\\) VALUES\\((.+)\\);",
 

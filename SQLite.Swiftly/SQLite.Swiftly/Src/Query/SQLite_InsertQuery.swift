@@ -50,7 +50,7 @@ struct SQLite_InsertQuery: SQLite_Query {
     
     /// The SQL code that implements the query.
     ///
-    var sqlRepresentation: String {
+    var sqlString: String {
         
         let columns = Array(tableDescription.columns)
         let parameters = columns.map { self.parameters[$0]! }

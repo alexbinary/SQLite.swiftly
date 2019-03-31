@@ -28,7 +28,7 @@ struct SQLite_SelectQuery: SQLite_Query {
     
     /// The SQL code that implements the query.
     ///
-    var sqlRepresentation: String {
+    var sqlString: String {
         
         return "SELECT * FROM \(tableDescription.name);"
     }

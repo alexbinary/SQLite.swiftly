@@ -177,9 +177,9 @@ extension Connection {
         
         var statementPointer: OpaquePointer!
         
-        guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
+        guard sqlite3_prepare_v2(pointer, query.sqlString, -1, &statementPointer, nil) == SQLITE_OK else {
             
-            throw "[Connection] sqlite3_prepare_v2() failed. Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
+            throw "[Connection] sqlite3_prepare_v2() failed. Compiling query: \(query.sqlString). SQLite error: \(errorMessage ?? "")"
         }
         
         return statementPointer

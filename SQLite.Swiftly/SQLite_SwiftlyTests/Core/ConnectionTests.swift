@@ -228,7 +228,7 @@ extension String: SQLite_Query {
     
     /// The SQL string that represents the query.
     ///
-    public var sqlRepresentation: String { return self }
+    public var sqlString: String { return self }
 }
 
 

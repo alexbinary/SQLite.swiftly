@@ -22,7 +22,7 @@ public enum ColumnType: Hashable {
 }
 
 
-extension ColumnType: SQLite_SQLRepresentable {
+extension ColumnType {
     
     
     /// The SQL string that represents the column type.
