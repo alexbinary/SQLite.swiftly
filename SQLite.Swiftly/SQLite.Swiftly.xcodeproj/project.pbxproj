@@ -186,10 +186,10 @@
 		2990E9F022357E160001CF2A /* DatabaseSchema */ = {
 			isa = PBXGroup;
 			children = (
-				2990E9F122357E160001CF2A /* TableRow.swift */,
 				2990E9F222357E160001CF2A /* TableDescription.swift */,
-				2990E9F322357E160001CF2A /* ColumnType.swift */,
 				2990E9F422357E160001CF2A /* ColumnDescription.swift */,
+				2990E9F322357E160001CF2A /* ColumnType.swift */,
+				2990E9F122357E160001CF2A /* TableRow.swift */,
 				2990E9F522357E160001CF2A /* ColumnValue.swift */,
 			);
 			path = DatabaseSchema;
