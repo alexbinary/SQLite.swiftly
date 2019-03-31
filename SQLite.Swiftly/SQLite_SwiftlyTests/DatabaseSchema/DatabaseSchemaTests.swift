@@ -7,20 +7,6 @@ import XCTest
 class DatabaseSchema: XCTestCase {
 
  
-    func test_columnType_shouldHaveCorrectSqlRepresentation() {
-        
-        [
-            (type: SQLite_ColumnType.char(size: 11), expectedSql: "CHAR(11)"),
-            (type: SQLite_ColumnType.char(size: 64), expectedSql: "CHAR(64)"),
-            (type: SQLite_ColumnType.bool, expectedSql: "BOOL"),
-            
-        ].forEach { (type, expectedSql) in
-         
-            XCTAssertEqual(type.sqlRepresentation, expectedSql, "SQL representation differ from expected.")
-        }
-    }
-    
-    
     func test_column_shouldHaveCorrectSQLRepresentation() {
         
         [
