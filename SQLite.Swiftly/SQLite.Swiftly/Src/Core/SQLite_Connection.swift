@@ -116,7 +116,7 @@ public class SQLite_Connection {
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
-            throw "[SQLite_Connection] sqlite3_open() failed. SQLite error: \(errorMessage ?? "")"
+            throw "[SQLite_Connection] sqlite3_open() failed. Opening database: \(url.path). SQLite error: \(errorMessage ?? "")"
         }
         
         print("[SQLite_Connection] Connected")
