@@ -48,7 +48,7 @@ extension InsertStatement {
     ///
     public func insert(_ columnValues: [ColumnDescription: SQLite_QueryParameterValue]) {
         
-        var parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:]
+        var parameterValues: [QueryParameter: SQLite_QueryParameterValue] = [:]
         
         for (column, parameter) in insertQuery.parameters {
         

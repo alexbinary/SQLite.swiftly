@@ -50,7 +50,7 @@ public class Statement {
     /// by the latest call to the `bind(parameterValues:)` method. Each call to
     /// `bind(parameterValues:)` updates theses values.
     ///
-    private var boundValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:]
+    private var boundValues: [QueryParameter: SQLite_QueryParameterValue] = [:]
     
     
     /// Creates a new prepared statement.
@@ -96,7 +96,7 @@ extension Statement {
     /// - Returns: The rows. Values are read according to the type of the
     ///            corresponding column declared in the table description.
     ///
-    func runThroughCompletion(with parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:], readingResultRowsWith tableDescription: TableDescription? = nil) -> [TableRow] {
+    func runThroughCompletion(with parameterValues: [QueryParameter: SQLite_QueryParameterValue] = [:], readingResultRowsWith tableDescription: TableDescription? = nil) -> [TableRow] {
         
         makeSureParameterValuesMatchActualQueryParameters(parameterValues)
         
@@ -121,7 +121,7 @@ extension Statement {
     /// - Parameter parameterValues: A dictionnary that contains values to bind
     ///             to the query parameters.
     ///
-    private func makeSureParameterValuesMatchActualQueryParameters(_ parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue]) {
+    private func makeSureParameterValuesMatchActualQueryParameters(_ parameterValues: [QueryParameter: SQLite_QueryParameterValue]) {
         
         let parameterCount = sqlite3_bind_parameter_count(pointer)
         
@@ -204,7 +204,7 @@ extension Statement {
     /// - Parameter parameterValues: A dictionnary that indicates values to bind
     ///             to parameters.
     ///
-    private func bind(_ parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue]) {
+    private func bind(_ parameterValues: [QueryParameter: SQLite_QueryParameterValue]) {
         
         parameterValues.forEach { (parameter, value) in
         
@@ -220,7 +220,7 @@ extension Statement {
     /// - Parameter value: The value to bind.
     /// - Parameter parameter: The query parameter to bind the value to.
     ///
-    private func bind(_ value: SQLite_QueryParameterValue, to parameter: SQLite_QueryParameter) {
+    private func bind(_ value: SQLite_QueryParameterValue, to parameter: QueryParameter) {
         
         let index = sqlite3_bind_parameter_index(pointer, parameter.name)
         

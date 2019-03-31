@@ -25,7 +25,7 @@ struct InsertQuery: Query {
     /// This property returns a dictionary that indicates the parameter used to
     /// represent the value that should be inserted into each column.
     ///
-    let parameters: [ColumnDescription: SQLite_QueryParameter]
+    let parameters: [ColumnDescription: QueryParameter]
     
    
     /// Creates a new query.
@@ -37,11 +37,11 @@ struct InsertQuery: Query {
         
         self.tableDescription = tableDescription
         
-        var parameters: [ColumnDescription: SQLite_QueryParameter] = [:]
+        var parameters: [ColumnDescription: QueryParameter] = [:]
         
         for column in tableDescription.columns {
             
-            parameters[column] = SQLite_QueryParameter(name: ":\(column.name)")
+            parameters[column] = QueryParameter(name: ":\(column.name)")
         }
         
         self.parameters = parameters
