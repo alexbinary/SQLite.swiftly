@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `INSERT INTO <table>;`.
 ///
-public class SQLite_InsertStatement: SQLite_Statement {
+public class SQLite_InsertStatement: Statement {
     
     
     /// A description of the table the statement inserts data into.

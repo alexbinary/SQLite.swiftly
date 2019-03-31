@@ -17,7 +17,7 @@ import SQLite3
 /// It is important that you let the object be deallocated when you are done to
 /// destroy the statement and release associated resources.
 ///
-public class SQLite_Statement {
+public class Statement {
 
     
     /// The SQLite pointer to the underlying statement object.
@@ -79,7 +79,7 @@ public class SQLite_Statement {
 }
 
 
-extension SQLite_Statement {
+extension Statement {
     
 
     /// Executes the statement until all result rows are returned.
@@ -127,7 +127,7 @@ extension SQLite_Statement {
         
         guard parameterCount == parameterValues.count else {
             
-            fatalError("[SQLite_Statement] Trying to bind \(parameterCount) parameter(s) to a statement that has only \(parameterCount) parameter(s). Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
+            fatalError("[Statement] Trying to bind \(parameterCount) parameter(s) to a statement that has only \(parameterCount) parameter(s). Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
         }
         
         let parameterNames = parameterValues.keys.map { $0.name }
@@ -138,14 +138,14 @@ extension SQLite_Statement {
                 
                 guard let rawParameterName = sqlite3_bind_parameter_name(pointer, index) else {
                     
-                    fatalError("[SQLite_Statement] Cannot get parameter name for index: \(index). Query: \(query.sqlRepresentation)")
+                    fatalError("[Statement] Cannot get parameter name for index: \(index). Query: \(query.sqlRepresentation)")
                 }
                 
                 let parameterName = String(cString: rawParameterName)
                 
                 guard parameterNames.contains(parameterName) else {
                 
-                    fatalError("[SQLite_Statement] Statement has a query parameter \"\(parameterName)\" but no value was provided for that parameter. Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
+                    fatalError("[Statement] Statement has a query parameter \"\(parameterName)\" but no value was provided for that parameter. Query: \(query.sqlRepresentation) Parameter values: \(parameterValues)")
                 }
             }
         }
@@ -168,12 +168,12 @@ extension SQLite_Statement {
             
             if columnCount == 0 {
                 
-                fatalError("[SQLite_Statement] Table description provided for a query that returns no data. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
+                fatalError("[Statement] Table description provided for a query that returns no data. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
             }
             
             if columnCount != tableDescription.columns.count {
                 
-                fatalError("[SQLite_Statement] Actual column count (\(columnCount)) does not match table description. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
+                fatalError("[Statement] Actual column count (\(columnCount)) does not match table description. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
             }
             
             (0..<columnCount).forEach { index in
@@ -184,19 +184,19 @@ extension SQLite_Statement {
                 
                 if !tableDescription.hasColumn(withName: columnName) {
                     
-                    fatalError("[SQLite_Statement] Result row has a column \"\(columnName)\" but that column was not found in the provided table description. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
+                    fatalError("[Statement] Result row has a column \"\(columnName)\" but that column was not found in the provided table description. Query: \(query.sqlRepresentation) Table description: \(tableDescription)")
                 }
             }
             
         } else if columnCount > 0 {
             
-            fatalError("[SQLite_Statement] No table description provided for a query that returns data. Query: \(query.sqlRepresentation)")
+            fatalError("[Statement] No table description provided for a query that returns data. Query: \(query.sqlRepresentation)")
         }
     }
 }
 
 
-extension SQLite_Statement {
+extension Statement {
     
     
     /// Bind values to the statement's query parameters.
@@ -226,7 +226,7 @@ extension SQLite_Statement {
         
         guard index != 0 else {
             
-            fatalError("[SQLite_Statement] Attempted to bind parameter \"\(parameter.name)\" but the statement does not define such parameter. Query: \(query.sqlRepresentation)")
+            fatalError("[Statement] Attempted to bind parameter \"\(parameter.name)\" but the statement does not define such parameter. Query: \(query.sqlRepresentation)")
         }
         
         switch (value) {
@@ -249,13 +249,13 @@ extension SQLite_Statement {
             
         default:
             
-            fatalError("[SQLite_Statement] Trying to bind a value of unsupported type: \(String(describing: value)) on query: \(query.sqlRepresentation)")
+            fatalError("[Statement] Trying to bind a value of unsupported type: \(String(describing: value)) on query: \(query.sqlRepresentation)")
         }
     }
 }
 
 
-extension SQLite_Statement {
+extension Statement {
     
     
     /// Executes the statement, reading each result row.
@@ -277,14 +277,14 @@ extension SQLite_Statement {
             
             guard [SQLITE_ROW, SQLITE_DONE].contains(stepResult) else {
                 
-                fatalError("[SQLite_Statement] sqlite3_step() returned \(stepResult) for query: \(query.sqlRepresentation). SQLite error: \(connection.errorMessage ?? "")")
+                fatalError("[Statement] sqlite3_step() returned \(stepResult) for query: \(query.sqlRepresentation). SQLite error: \(connection.errorMessage ?? "")")
             }
             
             if stepResult == SQLITE_ROW {
                 
                 guard let tableDescription = tableDescription else {
                     
-                    fatalError("[SQLite_Statement] The query returned result rows but no table description was provided. Query: \(query.sqlRepresentation)")
+                    fatalError("[Statement] The query returned result rows but no table description was provided. Query: \(query.sqlRepresentation)")
                 }
                 
                 let row = readRow(using: tableDescription)
@@ -365,7 +365,7 @@ extension SQLite_Statement {
 }
 
 
-extension SQLite_Statement {
+extension Statement {
     
     
     /// Returns whether a value in a result row is `NULL`.
@@ -396,7 +396,7 @@ extension SQLite_Statement {
         
         guard !valueIsNull(at: index) else {
             
-            fatalError("[SQLite_Statement] Found `NULL` while expecting non-null boolean value at index: \(index). Query: \(query.sqlRepresentation)")
+            fatalError("[Statement] Found `NULL` while expecting non-null boolean value at index: \(index). Query: \(query.sqlRepresentation)")
         }
         
         return sqlite3_column_int(pointer, index) != 0
@@ -417,12 +417,12 @@ extension SQLite_Statement {
         
         guard !valueIsNull(at: index) else {
             
-            fatalError("[SQLite_Statement] Found `NULL` while expecting non-null string value at index: \(index). Query: \(query.sqlRepresentation)")
+            fatalError("[Statement] Found `NULL` while expecting non-null string value at index: \(index). Query: \(query.sqlRepresentation)")
         }
         
         guard let raw = sqlite3_column_text(pointer, index) else {
             
-            fatalError("[SQLite_Statement] sqlite3_column_text() returned a nil pointer at index: \(index). Query: \(query.sqlRepresentation)")
+            fatalError("[Statement] sqlite3_column_text() returned a nil pointer at index: \(index). Query: \(query.sqlRepresentation)")
         }
         
         return String(cString: raw)
