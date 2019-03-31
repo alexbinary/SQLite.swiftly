@@ -74,7 +74,7 @@ class ContactTable: Table {
 let contactTable = ContactTable()
 
 // Open a connection to the database
-let connection = Connection(toDatabaseIn: "path/to/db.sqlite")
+let connection = Connection(toNewDatabaseAt: "path/to/db.sqlite")
 
 // Create the table
 connection.create(contactTable)
