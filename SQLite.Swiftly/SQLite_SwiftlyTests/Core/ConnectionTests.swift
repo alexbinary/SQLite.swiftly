@@ -42,32 +42,6 @@ class ConnectionTests: XCTestCase {
 extension ConnectionTests {
     
     
-    /// Asserts that a SQLite connection returns no error.
-    ///
-    /// - Parameter connection: The connection to test for errors.
-    /// - Parameter message: The assertion message.
-    ///
-    func assertNoError(on connection: SQLite_Connection, _ message: String) {
-        
-        XCTAssertNil(connection.errorMessage, message)
-    }
-    
-    
-    /// Asserts that a SQLite connection returns an error.
-    ///
-    /// - Parameter connection: The connection to test for errors.
-    /// - Parameter message: The assertion message.
-    ///
-    func assertError(on connection: SQLite_Connection, _ message: String) {
-        
-        XCTAssertNotNil(connection.errorMessage, message)
-    }
-}
-
-
-extension ConnectionTests {
-    
-    
     /// Opening a connection to a new database file should create a database
     /// file at the provided location.
     ///
@@ -81,7 +55,6 @@ extension ConnectionTests {
         //         file should be created
         
         XCTAssertNotNil(connection, "Connection failed.")
-        assertNoError(on: connection!, "Connection produced one or more errors.")
         XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file was not created.")
     }
     
@@ -119,7 +92,6 @@ extension ConnectionTests {
         // assert: connection should succeed without error
         
         XCTAssertNotNil(connection, "Connection failed.")
-        assertNoError(on: connection!, "Connection produced one or more errors.")
     }
     
     
@@ -136,24 +108,6 @@ extension ConnectionTests {
         // assert: connection should throw an error
         
         XCTAssertThrowsError(try SQLite_Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
-    }
-}
-
-
-extension ConnectionTests {
-    
-    
-    /// A connection should offer a way to access the latest error message.
-    ///
-    func test_Connection_errorMessage_shouldBeAccessible() {
-        
-        // setup: open connection
-        
-        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
-        
-        // test: access latest error message
-        
-        _ = connection.errorMessage
     }
 }
 
@@ -176,7 +130,6 @@ extension ConnectionTests {
         // should be produced on the connection
         
         XCTAssertNoThrow(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM sqlite_master")), "Compilation failed.")
-        assertNoError(on: connection, "Connection produced one or more errors.")
     }
     
     
@@ -194,7 +147,6 @@ extension ConnectionTests {
         // should be produced on the connection
         
         XCTAssertThrowsError(try connection.compile(CustomSQLQuery(withSQL: "SELECT * FROM foo")), "Compilation did not fail as expected.")
-        assertError(on: connection, "Connection produced no errors.")
     }
 }
 
@@ -220,7 +172,6 @@ extension ConnectionTests {
         // assert: table exists and no error raised on the connection
         
         _ = connection.readAllRows(fromTable: table)
-        assertNoError(on: connection, "Connection produced one or more errors.")
     }
 }
 
@@ -263,8 +214,6 @@ extension ConnectionTests {
         XCTAssertTrue(rows[1].keys.contains(column2))
         XCTAssertTrue(rows[1][column1]! as! String == "c")
         XCTAssertTrue(rows[1][column2]! as! String == "d")
-        
-        assertNoError(on: connection, "Connection produced one or more errors.")
     }
 }
 

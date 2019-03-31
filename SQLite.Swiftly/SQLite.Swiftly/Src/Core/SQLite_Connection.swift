@@ -143,21 +143,23 @@ extension SQLite_Connection {
     /// The latest error message produced on the connection by the SQLite
     /// engine.
     ///
-    /// This is `nil` if no error message has been produced yet.
+    /// Can be `nil` if the SQLite engine returns no data.
+    ///
+    /// - Warning: Do not assume that a `nil` value means there is no error, and
+    ///            that a non-`nil` value means there is an error. The SQLite
+    ///            engine can return a non-`nil` string even if there is no
+    ///            error.
     ///
     var errorMessage: String? {
         
-        if let rawErrorString = sqlite3_errmsg(pointer) {
+        if let raw = sqlite3_errmsg(pointer) {
             
-            let errorString = String(cString: rawErrorString)
+            return String(cString: raw)
             
-            if errorString != SQLiteConstants.ERROR_NO_ERROR {
-                
-                return errorString
-            }
+        } else {
+    
+            return nil
         }
-        
-        return nil
     }
 }
 

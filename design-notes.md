@@ -233,3 +233,13 @@ The error message is not intended to be used publicly by client code, as it is
 part of the implementation details. It is however usefull to other classes that
 are related to a connection, namely statements. Statements log the connection's
 error message when they detect an error during their execution.
+
+
+## SQLite errors are not detected using the error message
+
+The latest error message provided by the SQLite engine is used only to provide
+additionnal information when errors are detected. It is not used to check
+whether an error occured or not.
+
+Errors triggered by SQLite functions are detected using the return value of
+those functions when they have one.
