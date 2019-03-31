@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `SELECT * FROM <table>;`.
 ///
-public class SQLite_SelectStatement: Statement {
+public class SelectStatement: Statement {
     
     
     /// A description of the table the statement reads from.
@@ -36,7 +36,7 @@ public class SQLite_SelectStatement: Statement {
 }
 
 
-extension SQLite_SelectStatement {
+extension SelectStatement {
     
     
     /// Read all result rows returned by the statement.

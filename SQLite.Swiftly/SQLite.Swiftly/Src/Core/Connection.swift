@@ -216,7 +216,7 @@ extension Connection {
     ///
     public func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [SQLite_TableRow] {
         
-        let statement = SQLite_SelectStatement(selectingFromTable: tableDescription, connection: self)
+        let statement = SelectStatement(selectingFromTable: tableDescription, connection: self)
         
         let rows = statement.readAllRows()
         
