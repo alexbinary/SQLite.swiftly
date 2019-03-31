@@ -41,7 +41,7 @@ public class Statement {
     /// Use this property to access the original SQL query that the statement
     /// was compiled from.
     ///
-    private var query: SQLite_Query
+    private var query: Query
     
     
     /// The values that have been bound to the statement's query parameters.
@@ -58,7 +58,7 @@ public class Statement {
     /// - Parameter query: The SQL query to compile.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(compiling query: SQLite_Query, on connection: Connection) {
+    public init(compiling query: Query, on connection: Connection) {
         
         self.query = query
         self.connection = connection

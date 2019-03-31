@@ -5,7 +5,7 @@ import Foundation
 
 /// A SQL query.
 ///
-public protocol SQLite_Query {
+public protocol Query {
  
     
     /// The SQL string that expresses the query.

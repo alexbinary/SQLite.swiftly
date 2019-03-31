@@ -223,7 +223,7 @@ extension ConnectionTests {
 /// NB: defeats the purpose of the protocol to enforce type safe values instead
 ///     of opaque strings, but useful for tests.
 ///
-extension String: SQLite_Query {
+extension String: Query {
     
     
     /// The SQL string that represents the query.

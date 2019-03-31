@@ -173,7 +173,7 @@ extension Connection {
     ///
     /// - Returns: A pointer to the SQLite statement object.
     ///
-    func compile(_ query: SQLite_Query) throws -> OpaquePointer {
+    func compile(_ query: Query) throws -> OpaquePointer {
         
         var statementPointer: OpaquePointer!
         
