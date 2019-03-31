@@ -5,7 +5,7 @@ import Foundation
 
 /// The set of possible data types for columns in a SQLite database table.
 ///
-public enum SQLite_ColumnType: Hashable {
+public enum ColumnType: Hashable {
     
     
     /// A column that contains a small amount of text.
@@ -22,7 +22,7 @@ public enum SQLite_ColumnType: Hashable {
 }
 
 
-extension SQLite_ColumnType: SQLite_SQLRepresentable {
+extension ColumnType: SQLite_SQLRepresentable {
     
     
     /// The SQL string that represents the column type.

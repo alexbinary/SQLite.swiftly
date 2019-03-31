@@ -9,7 +9,7 @@ class ColumnDescriptionTests: XCTestCase {
  
     func test_shouldHaveCorrectSQLRepresentation() {
         
-        XCTAssertEqual(SQLite_ColumnDescription(name: "col1", type: .bool, nullable: true).sqlRepresentation, "col1 \(SQLite_ColumnType.bool.sqlRepresentation) NULL")
-        XCTAssertEqual(SQLite_ColumnDescription(name: "col1", type: .bool, nullable: false).sqlRepresentation, "col1 \(SQLite_ColumnType.bool.sqlRepresentation) NOT NULL")
+        XCTAssertEqual(SQLite_ColumnDescription(name: "col1", type: .bool, nullable: true).sqlRepresentation, "col1 \(ColumnType.bool.sqlRepresentation) NULL")
+        XCTAssertEqual(SQLite_ColumnDescription(name: "col1", type: .bool, nullable: false).sqlRepresentation, "col1 \(ColumnType.bool.sqlRepresentation) NOT NULL")
     }
 }

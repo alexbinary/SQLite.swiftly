@@ -15,7 +15,7 @@ public class SQLite_ColumnDescription {
     
     /// The column's type.
     ///
-    let type: SQLite_ColumnType
+    let type: ColumnType
     
     
     /// Whether the column can contain the value NULL.
@@ -29,7 +29,7 @@ public class SQLite_ColumnDescription {
     /// - Parameter type: The column's type.
     /// - Parameter nullable: Whether the column can contain the value NULL.
     ///
-    public init(name: String, type: SQLite_ColumnType, nullable: Bool) {
+    public init(name: String, type: ColumnType, nullable: Bool) {
         
         self.name = name
         self.type = type
