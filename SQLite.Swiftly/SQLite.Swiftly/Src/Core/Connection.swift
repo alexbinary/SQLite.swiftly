@@ -196,7 +196,7 @@ extension Connection {
     ///
     public func createTable(describedBy tableDescription: SQLite_TableDescription) {
         
-        let statement = SQLite_CreateTableStatement(creatingTable: tableDescription, connection: self)
+        let statement = CreateTableStatement(creatingTable: tableDescription, connection: self)
         
         statement.run()
     }

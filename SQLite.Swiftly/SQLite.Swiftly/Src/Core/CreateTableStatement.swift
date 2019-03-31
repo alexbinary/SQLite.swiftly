@@ -8,7 +8,7 @@ import Foundation
 /// This class provides convenience methods that facilitate the execution of
 /// queries of the form `CREATE TABLE (<columns>);`.
 ///
-public class SQLite_CreateTableStatement: Statement {
+public class CreateTableStatement: Statement {
     
     
     /// A description of the table the statement creates.
@@ -36,7 +36,7 @@ public class SQLite_CreateTableStatement: Statement {
 }
 
 
-extension SQLite_CreateTableStatement {
+extension CreateTableStatement {
     
 
     /// Executes the statement.
