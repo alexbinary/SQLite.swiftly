@@ -7,7 +7,7 @@ import Foundation
 ///
 /// This type represents queries of the form `CREATE TABLE (<columns>);`.
 ///
-struct SQLite_CreateTableQuery: Query {
+struct CreateTableQuery: Query {
     
     
     /// A description of the table the query should create.

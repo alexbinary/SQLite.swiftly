@@ -18,7 +18,7 @@ public class CreateTableStatement: Statement {
     
     /// The query that was used to compile the statement.
     ///
-    private let createTableQuery: SQLite_CreateTableQuery
+    private let createTableQuery: CreateTableQuery
     
     
     /// Creates a new statement.
@@ -29,7 +29,7 @@ public class CreateTableStatement: Statement {
     public init(creatingTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
-        self.createTableQuery = SQLite_CreateTableQuery(creatingTable: tableDescription)
+        self.createTableQuery = CreateTableQuery(creatingTable: tableDescription)
         
         super.init(compiling: createTableQuery, on: connection)
     }
