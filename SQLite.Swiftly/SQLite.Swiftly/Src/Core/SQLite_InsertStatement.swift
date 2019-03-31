@@ -28,7 +28,7 @@ public class SQLite_InsertStatement: SQLite_Statement {
     ///
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(insertingIntoTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
+    public init(insertingIntoTable tableDescription: SQLite_TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.insertQuery = SQLite_InsertQuery(insertingIntoTable: tableDescription)

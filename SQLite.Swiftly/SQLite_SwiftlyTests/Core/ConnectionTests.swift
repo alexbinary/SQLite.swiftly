@@ -49,7 +49,7 @@ extension ConnectionTests {
         
         // test: connect to a new database
         
-        let connection = try? SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try? Connection(toNewDatabaseAt: testDatabaseURL)
         
         // assert: connection should succeed without error and the database
         //         file should be created
@@ -71,7 +71,7 @@ extension ConnectionTests {
         // test: connect to a new database at the file's location
         // assert: connection should throw an error
         
-        XCTAssertThrowsError(try SQLite_Connection(toNewDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
+        XCTAssertThrowsError(try Connection(toNewDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
     
     
@@ -82,12 +82,12 @@ extension ConnectionTests {
         
         // prepare: create empty database
         
-        _ = try? SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        _ = try? Connection(toNewDatabaseAt: testDatabaseURL)
         XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected to exist but does not.")
         
         // test: connect to the database created above
         
-        let connection = try? SQLite_Connection(toExistingDatabaseAt: testDatabaseURL)
+        let connection = try? Connection(toExistingDatabaseAt: testDatabaseURL)
         
         // assert: connection should succeed without error
         
@@ -107,7 +107,7 @@ extension ConnectionTests {
         // test: connect to a database that does not exist
         // assert: connection should throw an error
         
-        XCTAssertThrowsError(try SQLite_Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
+        XCTAssertThrowsError(try Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
     }
 }
 
@@ -121,7 +121,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a simple query
         //
@@ -141,7 +141,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a buggy query
         // assert: an error should be thrown during compilation
@@ -160,7 +160,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table
         
@@ -183,7 +183,7 @@ extension ConnectionTests {
         
         // setup: open connection
         
-        let connection = try! SQLite_Connection(toNewDatabaseAt: testDatabaseURL)
+        let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: create a simple table and populate with data
         

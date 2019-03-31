@@ -26,7 +26,7 @@ public class SQLite_SelectStatement: SQLite_Statement {
     /// - Parameter tableDescription: The table the statement reads from.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(selectingFromTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
+    public init(selectingFromTable tableDescription: SQLite_TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.selectQuery = SQLite_SelectQuery(selectingFromTable: tableDescription)

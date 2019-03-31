@@ -26,7 +26,7 @@ public class SQLite_CreateTableStatement: SQLite_Statement {
     /// - Parameter tableDescription: The table the statement should create.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(creatingTable tableDescription: SQLite_TableDescription, connection: SQLite_Connection) {
+    public init(creatingTable tableDescription: SQLite_TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.createTableQuery = SQLite_CreateTableQuery(creatingTable: tableDescription)

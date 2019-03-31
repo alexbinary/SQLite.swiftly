@@ -33,7 +33,7 @@ public class SQLite_Statement {
     /// A statement is bound to the connection that was used to compile the
     /// query. You provide the connection in the initializer.
     ///
-    private var connection: SQLite_Connection!
+    private var connection: Connection!
     
     
     /// The SQL query that the statement was compiled from.
@@ -58,7 +58,7 @@ public class SQLite_Statement {
     /// - Parameter query: The SQL query to compile.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(compiling query: SQLite_Query, on connection: SQLite_Connection) {
+    public init(compiling query: SQLite_Query, on connection: Connection) {
         
         self.query = query
         self.connection = connection

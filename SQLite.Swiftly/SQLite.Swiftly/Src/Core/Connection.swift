@@ -25,7 +25,7 @@ import SQLite3
 /// It is important that you close the connection after use to release
 /// associated resources.
 ///
-public class SQLite_Connection {
+public class Connection {
     
     
     /// The SQLite pointer to the underlying connection object.
@@ -56,11 +56,11 @@ public class SQLite_Connection {
     ///
     public convenience init(toNewDatabaseAt url: URL) throws {
         
-        print("[SQLite_Connection] Opening connection to new database at \(url.path)")
+        print("[Connection] Opening connection to new database at \(url.path)")
         
         if FileManager.default.fileExists(atPath: url.path) {
             
-            throw "[SQLite_Connection] Cannot create database, file exists: \(url.path)"
+            throw "[Connection] Cannot create database, file exists: \(url.path)"
         }
         
         try self.init(toDatabaseAt: url)
@@ -85,11 +85,11 @@ public class SQLite_Connection {
     ///
     public convenience init(toExistingDatabaseAt url: URL) throws {
         
-        print("[SQLite_Connection] Opening connection to existing database at \(url.path)")
+        print("[Connection] Opening connection to existing database at \(url.path)")
         
         if !FileManager.default.fileExists(atPath: url.path) {
             
-            throw "[SQLite_Connection] Cannot connect to database, file does not exist: \(url.path)"
+            throw "[Connection] Cannot connect to database, file does not exist: \(url.path)"
         }
         
         try self.init(toDatabaseAt: url)
@@ -116,10 +116,10 @@ public class SQLite_Connection {
         
         guard sqlite3_open(url.path, &pointer) == SQLITE_OK else {
             
-            throw "[SQLite_Connection] sqlite3_open() failed. Opening database: \(url.path). SQLite error: \(errorMessage ?? "")"
+            throw "[Connection] sqlite3_open() failed. Opening database: \(url.path). SQLite error: \(errorMessage ?? "")"
         }
         
-        print("[SQLite_Connection] Connected")
+        print("[Connection] Connected")
     }
     
     
@@ -130,14 +130,14 @@ public class SQLite_Connection {
     ///
     deinit {
         
-        print("[SQLite_Connection] Closing connection")
+        print("[Connection] Closing connection")
         
         sqlite3_close(pointer)
     }
 }
 
 
-extension SQLite_Connection {
+extension Connection {
     
     
     /// The latest error message produced on the connection by the SQLite
@@ -164,7 +164,7 @@ extension SQLite_Connection {
 }
 
 
-extension SQLite_Connection {
+extension Connection {
     
     
     /// Compiles a query into a low level SQLite statement object.
@@ -179,7 +179,7 @@ extension SQLite_Connection {
         
         guard sqlite3_prepare_v2(pointer, query.sqlRepresentation, -1, &statementPointer, nil) == SQLITE_OK else {
             
-            throw "[SQLite_Connection] sqlite3_prepare_v2() failed. Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
+            throw "[Connection] sqlite3_prepare_v2() failed. Compiling query: \(query.sqlRepresentation). SQLite error: \(errorMessage ?? "")"
         }
         
         return statementPointer
@@ -187,7 +187,7 @@ extension SQLite_Connection {
 }
 
 
-extension SQLite_Connection {
+extension Connection {
     
     
     /// Creates a table in the database.
@@ -203,7 +203,7 @@ extension SQLite_Connection {
 }
 
 
-extension SQLite_Connection {
+extension Connection {
     
     
     /// Reads all rows from a table.

@@ -15,7 +15,7 @@
 		298C722E223B00E5008594C7 /* ColumnDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298C722D223B00E5008594C7 /* ColumnDescriptionTests.swift */; };
 		2990E9FF22357E160001CF2A /* SQLite_Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9EB22357E160001CF2A /* SQLite_Statement.swift */; };
 		2990EA0022357E160001CF2A /* SQLite_SelectStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9EC22357E160001CF2A /* SQLite_SelectStatement.swift */; };
-		2990EA0122357E160001CF2A /* SQLite_Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9ED22357E160001CF2A /* SQLite_Connection.swift */; };
+		2990EA0122357E160001CF2A /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9ED22357E160001CF2A /* Connection.swift */; };
 		2990EA0222357E160001CF2A /* SQLite_CreateTableStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9EE22357E160001CF2A /* SQLite_CreateTableStatement.swift */; };
 		2990EA0322357E160001CF2A /* SQLite_InsertStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9EF22357E160001CF2A /* SQLite_InsertStatement.swift */; };
 		2990EA0422357E160001CF2A /* SQLite_TableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990E9F122357E160001CF2A /* SQLite_TableRow.swift */; };
@@ -56,7 +56,7 @@
 		298C722D223B00E5008594C7 /* ColumnDescriptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColumnDescriptionTests.swift; sourceTree = "<group>"; };
 		2990E9EB22357E160001CF2A /* SQLite_Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_Statement.swift; sourceTree = "<group>"; };
 		2990E9EC22357E160001CF2A /* SQLite_SelectStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_SelectStatement.swift; sourceTree = "<group>"; };
-		2990E9ED22357E160001CF2A /* SQLite_Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_Connection.swift; sourceTree = "<group>"; };
+		2990E9ED22357E160001CF2A /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		2990E9EE22357E160001CF2A /* SQLite_CreateTableStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_CreateTableStatement.swift; sourceTree = "<group>"; };
 		2990E9EF22357E160001CF2A /* SQLite_InsertStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_InsertStatement.swift; sourceTree = "<group>"; };
 		2990E9F122357E160001CF2A /* SQLite_TableRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLite_TableRow.swift; sourceTree = "<group>"; };
@@ -173,9 +173,9 @@
 		2990E9EA22357E160001CF2A /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				2990E9ED22357E160001CF2A /* Connection.swift */,
 				2990E9EB22357E160001CF2A /* SQLite_Statement.swift */,
 				2990E9EC22357E160001CF2A /* SQLite_SelectStatement.swift */,
-				2990E9ED22357E160001CF2A /* SQLite_Connection.swift */,
 				2990E9EE22357E160001CF2A /* SQLite_CreateTableStatement.swift */,
 				2990E9EF22357E160001CF2A /* SQLite_InsertStatement.swift */,
 				2915B72E223DACDB0018C3DA /* Errors.swift */,
@@ -344,7 +344,7 @@
 				2990EA0422357E160001CF2A /* SQLite_TableRow.swift in Sources */,
 				2990EA0B22357E160001CF2A /* SQLite_Query.swift in Sources */,
 				2990EA0022357E160001CF2A /* SQLite_SelectStatement.swift in Sources */,
-				2990EA0122357E160001CF2A /* SQLite_Connection.swift in Sources */,
+				2990EA0122357E160001CF2A /* Connection.swift in Sources */,
 				2990EA0F22357E160001CF2A /* SQLite_SQLRepresentable.swift in Sources */,
 				2990EA0522357E160001CF2A /* SQLite_TableDescription.swift in Sources */,
 				2990EA0322357E160001CF2A /* SQLite_InsertStatement.swift in Sources */,
