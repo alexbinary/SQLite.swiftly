@@ -150,9 +150,9 @@
 		298C722C223B00B3008594C7 /* DatabaseSchema */ = {
 			isa = PBXGroup;
 			children = (
+				29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */,
 				298C722D223B00E5008594C7 /* ColumnDescriptionTests.swift */,
 				29EEB7582251010300992A1D /* ColumnTypeTests.swift */,
-				29EEB75A225105BB00992A1D /* TableDescriptionTests.swift */,
 			);
 			path = DatabaseSchema;
 			sourceTree = "<group>";
