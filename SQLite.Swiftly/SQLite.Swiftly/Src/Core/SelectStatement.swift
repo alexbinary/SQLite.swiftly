@@ -18,7 +18,7 @@ public class SelectStatement: Statement {
     
     /// The query that was used to compile the statement.
     ///
-    private let selectQuery: SQLite_SelectQuery
+    private let selectQuery: SelectQuery
     
     
     /// Creates a new statement.
@@ -29,7 +29,7 @@ public class SelectStatement: Statement {
     public init(selectingFromTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
-        self.selectQuery = SQLite_SelectQuery(selectingFromTable: tableDescription)
+        self.selectQuery = SelectQuery(selectingFromTable: tableDescription)
         
         super.init(compiling: selectQuery, on: connection)
     }

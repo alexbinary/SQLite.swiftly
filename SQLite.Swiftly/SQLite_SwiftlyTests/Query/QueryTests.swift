@@ -13,7 +13,7 @@ class QueryTests: XCTestCase {
         
         // setup: create a simple query
         
-        let query = SQLite_SelectQuery(selectingFromTable: TableDescription(name: "t", columns: []))
+        let query = SelectQuery(selectingFromTable: TableDescription(name: "t", columns: []))
         
         // assert: SQL representation is correct
         

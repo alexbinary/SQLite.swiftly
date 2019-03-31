@@ -7,7 +7,7 @@ import Foundation
 ///
 /// This type represents queries of the form `SELECT * FROM <table>;`.
 ///
-struct SQLite_SelectQuery: Query {
+struct SelectQuery: Query {
     
     
     /// A description of the table the query should select data from.
