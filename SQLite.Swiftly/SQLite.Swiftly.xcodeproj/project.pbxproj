@@ -172,9 +172,9 @@
 			children = (
 				2990E9ED22357E160001CF2A /* Connection.swift */,
 				2990E9EB22357E160001CF2A /* Statement.swift */,
-				2990E9EC22357E160001CF2A /* SelectStatement.swift */,
 				2990E9EE22357E160001CF2A /* CreateTableStatement.swift */,
 				2990E9EF22357E160001CF2A /* InsertStatement.swift */,
+				2990E9EC22357E160001CF2A /* SelectStatement.swift */,
 				2915B72E223DACDB0018C3DA /* Errors.swift */,
 			);
 			path = Core;
@@ -195,12 +195,12 @@
 		2990E9F622357E160001CF2A /* Query */ = {
 			isa = PBXGroup;
 			children = (
-				2990E9F722357E160001CF2A /* SQLite_QueryParameter.swift */,
-				2990E9F822357E160001CF2A /* SQLite_SelectQuery.swift */,
 				2990E9F922357E160001CF2A /* SQLite_Query.swift */,
-				2990E9FA22357E160001CF2A /* SQLite_QueryParameterValue.swift */,
 				2990E9FB22357E160001CF2A /* SQLite_CreateTableQuery.swift */,
 				2990E9FC22357E160001CF2A /* SQLite_InsertQuery.swift */,
+				2990E9F822357E160001CF2A /* SQLite_SelectQuery.swift */,
+				2990E9F722357E160001CF2A /* SQLite_QueryParameter.swift */,
+				2990E9FA22357E160001CF2A /* SQLite_QueryParameterValue.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
