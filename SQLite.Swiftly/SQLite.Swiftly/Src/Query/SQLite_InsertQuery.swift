@@ -17,7 +17,7 @@ struct SQLite_InsertQuery: SQLite_Query {
     
     /// A description of the table the query should insert data into.
     ///
-    let tableDescription: SQLite_TableDescription
+    let tableDescription: TableDescription
     
     
     /// The query parameters used in the query.
@@ -33,7 +33,7 @@ struct SQLite_InsertQuery: SQLite_Query {
     /// - Parameter tableDescription: A description of the table the query
     ///             should insert data into.
     ///
-    init(insertingIntoTable tableDescription: SQLite_TableDescription) {
+    init(insertingIntoTable tableDescription: TableDescription) {
         
         self.tableDescription = tableDescription
         

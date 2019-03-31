@@ -13,7 +13,7 @@ public class SelectStatement: Statement {
     
     /// A description of the table the statement reads from.
     ///
-    private let tableDescription: SQLite_TableDescription
+    private let tableDescription: TableDescription
     
     
     /// The query that was used to compile the statement.
@@ -26,7 +26,7 @@ public class SelectStatement: Statement {
     /// - Parameter tableDescription: The table the statement reads from.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(selectingFromTable tableDescription: SQLite_TableDescription, connection: Connection) {
+    public init(selectingFromTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.selectQuery = SQLite_SelectQuery(selectingFromTable: tableDescription)

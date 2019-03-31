@@ -12,7 +12,7 @@ struct SQLite_CreateTableQuery: SQLite_Query {
     
     /// A description of the table the query should create.
     ///
-    let tableDescription: SQLite_TableDescription
+    let tableDescription: TableDescription
     
     
     /// Creates a new query.
@@ -20,7 +20,7 @@ struct SQLite_CreateTableQuery: SQLite_Query {
     /// - Parameter tableDescription: A description of the table the query
     ///             should create.
     ///
-    init(creatingTable tableDescription: SQLite_TableDescription) {
+    init(creatingTable tableDescription: TableDescription) {
      
         self.tableDescription = tableDescription
     }

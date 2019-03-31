@@ -13,7 +13,7 @@ public class CreateTableStatement: Statement {
     
     /// A description of the table the statement creates.
     ///
-    private let tableDescription: SQLite_TableDescription
+    private let tableDescription: TableDescription
     
     
     /// The query that was used to compile the statement.
@@ -26,7 +26,7 @@ public class CreateTableStatement: Statement {
     /// - Parameter tableDescription: The table the statement should create.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(creatingTable tableDescription: SQLite_TableDescription, connection: Connection) {
+    public init(creatingTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.createTableQuery = SQLite_CreateTableQuery(creatingTable: tableDescription)

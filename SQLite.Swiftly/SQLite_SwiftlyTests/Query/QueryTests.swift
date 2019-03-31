@@ -13,7 +13,7 @@ class QueryTests: XCTestCase {
         
         // setup: create a simple query
         
-        let query = SQLite_SelectQuery(selectingFromTable: SQLite_TableDescription(name: "t", columns: []))
+        let query = SQLite_SelectQuery(selectingFromTable: TableDescription(name: "t", columns: []))
         
         // assert: SQL representation is correct
         
@@ -30,7 +30,7 @@ class QueryTests: XCTestCase {
         let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
         let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
         
-        let table = SQLite_TableDescription(name: "t", columns: [column1, column2])
+        let table = TableDescription(name: "t", columns: [column1, column2])
         
         let query = SQLite_CreateTableQuery(creatingTable: table)
         
@@ -58,7 +58,7 @@ class QueryTests: XCTestCase {
         let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
         let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
         
-        let table = SQLite_TableDescription(name: "t", columns: [column1, column2])
+        let table = TableDescription(name: "t", columns: [column1, column2])
         
         let query = SQLite_InsertQuery(insertingIntoTable: table)
         

@@ -10,7 +10,7 @@ class TableDescriptionTests: XCTestCase {
     func test_columnWithName_shouldReturnCorrectColumnIfExists() {
         
         let column = ColumnDescription(name: "col", type: .bool, nullable: false)
-        let table = SQLite_TableDescription(name: "t", columns: [column])
+        let table = TableDescription(name: "t", columns: [column])
         
         XCTAssertEqual(table.column(withName: "col"), column)
     }
@@ -18,7 +18,7 @@ class TableDescriptionTests: XCTestCase {
     
     func test_columnWithName_shouldReturnNilIfNotExists() {
         
-        let table = SQLite_TableDescription(name: "t", columns: [
+        let table = TableDescription(name: "t", columns: [
             ColumnDescription(name: "col", type: .bool, nullable: false)
         ])
         
@@ -28,7 +28,7 @@ class TableDescriptionTests: XCTestCase {
     
     func test_hasColumnWithName_shouldReturnTrueIfExists() {
         
-        let table = SQLite_TableDescription(name: "t", columns: [
+        let table = TableDescription(name: "t", columns: [
             ColumnDescription(name: "col", type: .bool, nullable: false)
         ])
         
@@ -38,7 +38,7 @@ class TableDescriptionTests: XCTestCase {
     
     func test_hasColumnWithName_shouldReturnFalseIfNotExists() {
         
-        let table = SQLite_TableDescription(name: "t", columns: [
+        let table = TableDescription(name: "t", columns: [
             ColumnDescription(name: "col", type: .bool, nullable: false)
         ])
         

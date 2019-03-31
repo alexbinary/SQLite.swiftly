@@ -194,7 +194,7 @@ extension Connection {
     ///
     /// - Parameter tableDescription: A description of the table to create.
     ///
-    public func createTable(describedBy tableDescription: SQLite_TableDescription) {
+    public func createTable(describedBy tableDescription: TableDescription) {
         
         let statement = CreateTableStatement(creatingTable: tableDescription, connection: self)
         
@@ -214,7 +214,7 @@ extension Connection {
     ///            of the corresponding column declared in the table
     ///            description.
     ///
-    public func readAllRows(fromTable tableDescription: SQLite_TableDescription) -> [TableRow] {
+    public func readAllRows(fromTable tableDescription: TableDescription) -> [TableRow] {
         
         let statement = SelectStatement(selectingFromTable: tableDescription, connection: self)
         

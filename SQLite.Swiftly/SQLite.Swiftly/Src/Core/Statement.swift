@@ -96,7 +96,7 @@ extension Statement {
     /// - Returns: The rows. Values are read according to the type of the
     ///            corresponding column declared in the table description.
     ///
-    func runThroughCompletion(with parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:], readingResultRowsWith tableDescription: SQLite_TableDescription? = nil) -> [TableRow] {
+    func runThroughCompletion(with parameterValues: [SQLite_QueryParameter: SQLite_QueryParameterValue] = [:], readingResultRowsWith tableDescription: TableDescription? = nil) -> [TableRow] {
         
         makeSureParameterValuesMatchActualQueryParameters(parameterValues)
         
@@ -160,7 +160,7 @@ extension Statement {
     ///
     /// - Parameter tableDescription: The table description to evaluate.
     ///
-    private func makeSureTableDescriptionMatchesActualResults(_ tableDescription: SQLite_TableDescription?) {
+    private func makeSureTableDescriptionMatchesActualResults(_ tableDescription: TableDescription?) {
         
         let columnCount = sqlite3_column_count(pointer)
         
@@ -267,7 +267,7 @@ extension Statement {
     /// - Returns: The rows. Values are read according to the type of the
     ///            corresponding column declared in the table description.
     ///
-    private func readAllRows(using tableDescription: SQLite_TableDescription?) -> [TableRow] {
+    private func readAllRows(using tableDescription: TableDescription?) -> [TableRow] {
         
         var rows: [TableRow] = []
         
@@ -311,7 +311,7 @@ extension Statement {
     /// - Returns: The row. Values are read according to the type of the
     ///            corresponding column declared in the table description.
     ///
-    private func readRow(using tableDescription: SQLite_TableDescription) -> TableRow {
+    private func readRow(using tableDescription: TableDescription) -> TableRow {
         
         var row = TableRow()
         

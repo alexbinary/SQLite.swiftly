@@ -13,7 +13,7 @@ public class InsertStatement: Statement {
     
     /// A description of the table the statement inserts data into.
     ///
-    private let tableDescription: SQLite_TableDescription
+    private let tableDescription: TableDescription
     
     
     /// The query that was used to compile the statement.
@@ -28,7 +28,7 @@ public class InsertStatement: Statement {
     ///
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(insertingIntoTable tableDescription: SQLite_TableDescription, connection: Connection) {
+    public init(insertingIntoTable tableDescription: TableDescription, connection: Connection) {
         
         self.tableDescription = tableDescription
         self.insertQuery = SQLite_InsertQuery(insertingIntoTable: tableDescription)

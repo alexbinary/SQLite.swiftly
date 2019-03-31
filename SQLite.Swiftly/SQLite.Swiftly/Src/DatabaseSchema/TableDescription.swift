@@ -5,7 +5,7 @@ import Foundation
 
 /// A description of a SQLite database table.
 ///
-public class SQLite_TableDescription {
+public class TableDescription {
    
     
     /// The table's name.
@@ -57,7 +57,7 @@ public class SQLite_TableDescription {
 }
 
 
-extension SQLite_TableDescription {
+extension TableDescription {
 
     
     /// Returns a column from its name.
