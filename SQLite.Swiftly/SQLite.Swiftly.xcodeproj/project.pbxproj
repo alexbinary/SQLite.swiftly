@@ -96,8 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				2986A934223AA2A90066200E /* Core */,
-				2986A935223AA2FA0066200E /* Query */,
 				298C722C223B00B3008594C7 /* DatabaseSchema */,
+				2986A935223AA2FA0066200E /* Query */,
 				296131BF223577AE006C4483 /* Info.plist */,
 			);
 			path = SQLite_SwiftlyTests;
