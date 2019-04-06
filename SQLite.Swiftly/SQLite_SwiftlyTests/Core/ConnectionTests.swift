@@ -1,6 +1,8 @@
 
 import XCTest
 
+import SQLite3
+
 @testable import SQLite_Swiftly
 
 
@@ -181,9 +183,20 @@ extension ConnectionTests {
         ])
         connection.createTable(describedBy: table)
         
-        // assert: table exists and no error raised on the connection
+        // assert: table should exist
         
-        _ = connection.readAllRows(fromTable: table)
+        var connectionPointer: OpaquePointer!
+        let openResult = sqlite3_open(testDatabaseURL.path, &connectionPointer)
+        XCTAssertEqual(openResult, SQLITE_OK, "Verification failure: Failed to connect to database. sqlite3_open() returned \(openResult)")
+        
+        var statementPointer: OpaquePointer!
+        let prepareResult = sqlite3_prepare_v2(connectionPointer, "SELECT * FROM sqlite_master WHERE name='\(table.name)'", -1, &statementPointer, nil)
+        XCTAssertEqual(prepareResult, SQLITE_OK, "Verification failure: Failed to compile query. sqlite3_prepare_v2() returned \(prepareResult)")
+        
+        let stepResult = sqlite3_step(statementPointer)
+        XCTAssert([SQLITE_ROW, SQLITE_DONE].contains(stepResult), "Verification failure: Query failed. sqlite3_step() returned \(stepResult)");
+        
+        XCTAssertEqual(stepResult, SQLITE_ROW, "Table sqlite_master does not contain a table whose name match the name of the table that should have been created.");
     }
 }
 
