@@ -119,7 +119,7 @@ struct MyDatabaseSchema {
   static let contactTableDescription = ContactTableDescription()
 }
 
-class ContactInsertStatement {
+class ContactInsertStatement: InsertStatement {
 
   init(connection: Connection) {
     super.init(insertingIntoTable: MyDatabaseSchema.contactTableDescription, on: connection)
