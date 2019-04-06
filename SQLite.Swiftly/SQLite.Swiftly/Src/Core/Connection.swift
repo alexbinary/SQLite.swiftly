@@ -6,6 +6,10 @@ import SQLite3
 
 /// A connection to a SQLite database.
 ///
+/// The connection is the primary object used to interract with a database. You
+/// must always open a connection to a database in order to perform operations
+/// in it.
+///
 /// This class provides two initializers :
 ///
 /// - Use the `init(toExistingDatabaseAt:)` initializer when you want to open a
