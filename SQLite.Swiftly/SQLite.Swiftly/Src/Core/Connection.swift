@@ -223,13 +223,3 @@ extension Connection {
         return rows
     }
 }
-
-
-/// Collection of constant values.
-///
-enum SQLiteConstants {
-    
-    /// Error string returned by the SQLite engine when there is no error.
-    ///
-    static let ERROR_NO_ERROR = "not an error"
-}
