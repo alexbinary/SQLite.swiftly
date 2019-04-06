@@ -1,14 +1,16 @@
 
 # Design notes
 
-## Overview
+## Architectural diagram
 
 ![](design.png)
 
 [SVG version](design.svg) - [Draw.io source file](design.drawio)
 
 
-## SQLite.swiftly is designed for the needs of the My LEGO Collection project
+## General design considerations
+
+### SQLite.swiftly is designed for the needs of the My LEGO Collection project
 
 In My LEGO Collection we need to:
 
@@ -25,7 +27,9 @@ Many features you would expect from a generic SQLite client are not implemented
 in *SQLite.swiftly*.
 
 
-## `Connection` and `Statement` encapsulate low level objects
+## General architecture design
+
+### `Connection` and `Statement` encapsulate low level objects
 
 `Connection` and `Statement` are the two main objects in *SQLite.swiftly*.
 
@@ -48,7 +52,7 @@ From the user point of view, `Connection` and `Statement` are stateless: all
 public methods can be called at any time and in any order.
 
 
-## Statements are linked to a connection
+### Statements are linked to a connection
 
 A statement holds a reference to the connection that was used to compile it.
 The connection that was used to compile the statement is the connection on which
@@ -65,7 +69,7 @@ The reference to the connection is kept private until we see a relevant scenario
 where one would need to access it.
 
 
-## Low level statements objects are created by instances of `Connection`
+### Low level statements objects are created by instances of `Connection`
 
 Compiling a statement requires access to the low level connection object. As
 that object is private to the `Connection` object, only the `Connection` object 
@@ -82,60 +86,21 @@ it would have to inject the low level object into a `Statement` instance, which
 is impossible by design (see above).
 
 
-## `Statement` has one general purpose public method
+## Public API design
 
-`Statement` has only one public method besides the initializer. This method
-triggers the execution of the statement and returns the result rows, if any.
+### General public exposure rule
 
-The method takes a list of parameters that get bound to the statement.
-Parameters are verified against the actual query to make sure that all
-parameters are given a value.
+Classes, structs, enums, protocols, methods and properties are exposed for
+public use only if there is at least one approved scenario where a user would
+need to use them.
 
-The method takes a table model that is used to read the raw data in the
-appropriate format and present the output data. The model is verified against
-the actual data to make sure that they match.
+By default, things are kept internal or private.
 
-If the parameters or the table model do not match the actual query, a runtime
-error is triggered to help the programmer detect mistakes.
-
-The underlying state machine is reset on each execution so that the method can
-be called multiple times with different parameters.
+Making things public make them part of the public API, and thus requires that
+they are maintained in future versions.
 
 
-## `Connection` offers convenience methods
-
-`Connection` offers conveniance methods to execute simple queries on the
-connection without having to create a statement explicitly. The method creates 
-the statement for you and executes it immediately.
-
-The following convenience methods exist:
-- create a table from a table model
-- read all rows from a table
-
-
-## Inserts use explicit prepared statement
-
-Insert statements insert one row at a time. Although there are ways to insert
-multiple rows in one single `INSERT INTO` query, inserting only one row allows
-a much simpler design. Using prepared statements mitigates the possible
-performance loss.
-
-To insert data into a table, the user must explicitly request a prepared
-statement, then use it to insert data. 
-
-This helps achieve good performances when inserting large amount of data as it
-encourages the use of one prepared statement to insert many rows.
-
-Having a convenience method on the connection that compiles a statement and
-inserts a single row would make it too easy for the user to inadvertantly
-compile a new statement for each row they insert.
-
-`SELECT` and `CREATE TABLE` statements are not usually run multiple times with
-varying data, so compiling a new statement each time is not an issue. That is
-why there are convenience methods for that.
-
-
-## Only insert statements are exposed for public use
+### Only insert statements are exposed for public use
 
 Although internally various subclasses of `Statement` are used, almost 
 everything can be achieved using convenience methods on the Connection class.
@@ -144,11 +109,23 @@ Thus, `Statement` and most of its subclasses do not need to be exposed for
 public use.
 
 Inserting data is the only operation that requires explicit use of `Statement`
-object (by design, see above), and thus only the corresponding subclass of 
+object (by design, see below), and thus only the corresponding subclass of 
 `Statement` needs to be exposed for public use.
 
 
-## `Connection` intializers
+### Naming
+
+The classes used to communicate the structure of tables and columns are called
+`TableDescription` and `ColumnDescription` and not just `Table` and `Column` to
+avoid confusing those object with actual tables and columns.
+
+If those object were actual tables and columns, one could expect methods like
+`Table.drop()`, and would be confused if they could not find those methods.
+
+Using names that communicate that those are just models helps prevent this.
+
+
+### `Connection` intializers
 
 The native SQLite function creates a new database when you try to connect to a
 database that does not exist. This is convenient but can lead to confusion.
@@ -173,37 +150,81 @@ This helps catch situations where you think you are doing one thing but you are
 actually doing something else you did not intend.
 
 
-## Things are exposed for public use only if they need to be
+### `Connection` offers convenience methods
 
-Classes, structs, enums, protocols, methods and properties are exposed for
-public use only if there is at least one approved scenario where a user would
-need to use them.
+`Connection` offers conveniance methods to execute simple queries on the
+connection without having to create a statement explicitly. The method creates 
+the statement for you and executes it immediately.
 
-By default, things are kept internal or private.
+The following convenience methods exist:
+- create a table from a table model
+- read all rows from a table
 
-Making things public make them part of the public API, and thus requires that
-they are maintained in future versions.
+
+### Inserts use explicit prepared statement
+
+Insert statements insert one row at a time. Although there are ways to insert
+multiple rows in one single `INSERT INTO` query, inserting only one row allows
+a much simpler design. Using prepared statements mitigates the possible
+performance loss.
+
+To insert data into a table, the user must explicitly request a prepared
+statement, then use it to insert data. 
+
+This helps achieve good performances when inserting large amount of data as it
+encourages the use of one prepared statement to insert many rows.
+
+Having a convenience method on the connection that compiles a statement and
+inserts a single row would make it too easy for the user to inadvertantly
+compile a new statement for each row they insert.
+
+`SELECT` and `CREATE TABLE` statements are not usually run multiple times with
+varying data, so compiling a new statement each time is not an issue. That is
+why there are convenience methods for that.
 
 
-## SQL queries never transit as strings
+## Internal design
+
+### SQL queries never transit as strings
 
 Whenever a SQL query is expected, use an instance of a type that conforms to the
 `SQLQuery` protocol. Passing SQL queries as strings should be avoided at all
 costs as this provides no guarantee that the string contains a valid SQL query.
 
 
-## Error handling uses conventional swift strategy
+### A table model has a set of columns, not an array
 
-Methods that can fail can throw enum values that conform to the swift `Error`
-protocol.
+Using a set guarantees that prevents a table model from having two identical
+columns.
 
-It is up to the user to handle the error in any way they want.
-
-Using `fatalError()` as was initially the case, although simple and convenient,
-is not testable. Throwable functions are testable.
+Plus, the order of the columns in a table is not important, and although columns
+do have an order in the table, using column names is safer than using positions.
 
 
-## Error handling is minimal
+### `Statement` has one general purpose non-private method
+
+`Statement` has only one public method besides the initializer. This method
+triggers the execution of the statement and returns the result rows, if any.
+
+The method takes a list of parameters that get bound to the statement.
+Parameters are verified against the actual query to make sure that all
+parameters are given a value.
+
+The method takes a table model that is used to read the raw data in the
+appropriate format and present the output data. The model is verified against
+the actual data to make sure that they match.
+
+If the parameters or the table model do not match the actual query, a runtime
+error is triggered to help the programmer detect mistakes.
+
+The underlying state machine is reset on each execution so that the method can
+be called multiple times with different parameters.
+
+
+
+## Error handling
+
+### Error handling is minimal
 
 Until *SQLite.swiftly* becomes more stable, error handling will recieve only as
 much attention as is absolutely required.
@@ -222,7 +243,18 @@ Only one, generic type of error is used. The error carries a custom message
 designed to help the programmer identify what went wrong.
 
 
-## `Connection` provides internal access to the latest error message
+### Error handling uses conventional swift strategy
+
+Methods that can fail can throw enum values that conform to the swift `Error`
+protocol.
+
+It is up to the user to handle the error in any way they want.
+
+Using `fatalError()` as was initially the case, although simple and convenient,
+is not testable. Throwable functions are testable.
+
+
+### `Connection` provides internal access to the latest error message
 
 When errors occur on a connection, the latest error message is stored and can
 be access with a simple function. If no error has occured yet, the error message
@@ -238,7 +270,7 @@ are related to a connection, namely statements. Statements log the connection's
 error message when they detect an error during their execution.
 
 
-## SQLite errors are not detected using the error message
+### SQLite errors are not detected using the error message
 
 The latest error message provided by the SQLite engine is used only to provide
 additionnal information when errors are detected. It is not used to check
@@ -246,24 +278,3 @@ whether an error occured or not.
 
 Errors triggered by SQLite functions are detected using the return value of
 those functions when they have one.
-
-
-## A table model has a set of columns, not an array
-
-Using a set guarantees that prevents a table model from having two identical
-columns.
-
-Plus, the order of the columns in a table is not important, and although columns
-do have an order in the table, using column names is safer than using positions.
-
-
-## Table and columns descriptions
-
-The classes used to communicate the structure of tables and columns are called
-`TableDescription` and `ColumnDescription` and not just `Table` and `Column` to
-avoid confusing those object with actual tables and columns.
-
-If those object were actual tables and columns, one could expect methods like
-`Table.drop()`, and would be confused if they could not find those methods.
-
-Using names that communicate that those are just models helps prevent this.
