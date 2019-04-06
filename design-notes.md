@@ -27,6 +27,15 @@ Many features you would expect from a generic SQLite client are not implemented
 in *SQLite.swiftly*.
 
 
+## SQLite general design notes
+
+To interract with a database, a SQLite client must first get a *connection handle*.
+All subsequent operations use that handle.
+
+Queries must *compiled* before they can be executed. Compiled queries are called
+*prepared statements*.
+
+
 ## General architecture design
 
 ### `Connection` and `Statement` encapsulate low level objects
@@ -88,7 +97,7 @@ is impossible by design (see above).
 
 ## Public API design
 
-### General public exposure rule
+### Things are exposed for public use only if they need to be
 
 Classes, structs, enums, protocols, methods and properties are exposed for
 public use only if there is at least one approved scenario where a user would
@@ -113,7 +122,7 @@ object (by design, see below), and thus only the corresponding subclass of
 `Statement` needs to be exposed for public use.
 
 
-### Naming
+### Naming communicates clearly what things are and are not
 
 The classes used to communicate the structure of tables and columns are called
 `TableDescription` and `ColumnDescription` and not just `Table` and `Column` to
@@ -125,7 +134,7 @@ If those object were actual tables and columns, one could expect methods like
 Using names that communicate that those are just models helps prevent this.
 
 
-### `Connection` intializers
+### `Connection` intializers make assumptions explicit
 
 The native SQLite function creates a new database when you try to connect to a
 database that does not exist. This is convenient but can lead to confusion.
@@ -158,6 +167,7 @@ the statement for you and executes it immediately.
 
 The following convenience methods exist:
 - create a table from a table model
+- prepare an insert statement
 - read all rows from a table
 
 
