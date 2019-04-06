@@ -26,12 +26,12 @@ public class SelectStatement: Statement {
     /// - Parameter tableDescription: The table the statement reads from.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(selectingFromTable tableDescription: TableDescription, connection: Connection) {
+    public init(selectingFromTable tableDescription: TableDescription, on: Connection) {
         
         self.tableDescription = tableDescription
         self.selectQuery = SelectQuery(selectingFromTable: tableDescription)
         
-        super.init(compiling: selectQuery, on: connection)
+        super.init(compiling: selectQuery, on: on)
     }
 }
 

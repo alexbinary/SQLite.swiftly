@@ -196,7 +196,7 @@ extension Connection {
     ///
     public func createTable(describedBy tableDescription: TableDescription) {
         
-        let statement = CreateTableStatement(creatingTable: tableDescription, connection: self)
+        let statement = CreateTableStatement(creatingTable: tableDescription, on: self)
         
         statement.run()
     }
@@ -216,7 +216,7 @@ extension Connection {
     ///
     public func readAllRows(fromTable tableDescription: TableDescription) -> [TableRow] {
         
-        let statement = SelectStatement(selectingFromTable: tableDescription, connection: self)
+        let statement = SelectStatement(selectingFromTable: tableDescription, on: self)
         
         let rows = statement.readAllRows()
         

@@ -26,12 +26,12 @@ public class CreateTableStatement: Statement {
     /// - Parameter tableDescription: The table the statement should create.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(creatingTable tableDescription: TableDescription, connection: Connection) {
+    public init(creatingTable tableDescription: TableDescription, on: Connection) {
         
         self.tableDescription = tableDescription
         self.createTableQuery = CreateTableQuery(creatingTable: tableDescription)
         
-        super.init(compiling: createTableQuery, on: connection)
+        super.init(compiling: createTableQuery, on: on)
     }
 }
 
