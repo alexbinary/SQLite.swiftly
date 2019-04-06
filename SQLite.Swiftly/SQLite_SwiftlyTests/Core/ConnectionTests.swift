@@ -206,11 +206,12 @@ extension ConnectionTests {
     
     func test_readAllRows_shouldReturnAllRowsAndAllColumns() {
         
-        // setup: open connection
+        // setup:
+        // - open connection
+        // - create a simple table
+        // - populate table with data
         
         let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
-        
-        // test: create a simple table and populate with data
         
         let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
         let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
@@ -218,27 +219,29 @@ extension ConnectionTests {
         
         connection.createTable(describedBy: table)
         
-        let insertStatement = InsertStatement(insertingIntoTable: table, connection: connection)
+        let insertStatement = InsertStatement(insertingIntoTable: table, on: connection)
         insertStatement.insert([column1: "a", column2: "b"])
         insertStatement.insert([column1: "c", column2: "d"])
         
-        // assert: table exists and no error raised on the connection
+        // test: read all table data
         
         let rows = connection.readAllRows(fromTable: table)
         
-        XCTAssertTrue(rows.count == 2)
+        // assert: data are returned in the correct presentation
         
-        XCTAssertTrue(rows[0].count == 2)
-        XCTAssertTrue(rows[0].keys.contains(column1))
-        XCTAssertTrue(rows[0].keys.contains(column2))
-        XCTAssertTrue(rows[0][column1]! as! String == "a")
-        XCTAssertTrue(rows[0][column2]! as! String == "b")
+        XCTAssertTrue(rows.count == 2, "Result did not contain the expected number of rows.")
         
-        XCTAssertTrue(rows[1].count == 2)
-        XCTAssertTrue(rows[1].keys.contains(column1))
-        XCTAssertTrue(rows[1].keys.contains(column2))
-        XCTAssertTrue(rows[1][column1]! as! String == "c")
-        XCTAssertTrue(rows[1][column2]! as! String == "d")
+        XCTAssertTrue(rows[0].count == 2, "Result for the first row did not contain the expected number of values.")
+        XCTAssertTrue(rows[0].keys.contains(column1), "Result for the first row did not contain a value for the first column.")
+        XCTAssertTrue(rows[0].keys.contains(column2), "Result for the first row did not contain a value for the second column.")
+        XCTAssertTrue(rows[0][column1]! as! String == "a", "Result for the first row did not contain the expected value for the first column.")
+        XCTAssertTrue(rows[0][column2]! as! String == "b", "Result for the first row did not contain the expected value for the second column.")
+        
+        XCTAssertTrue(rows[1].count == 2, "Result for the second row did not contain the expected number of values.")
+        XCTAssertTrue(rows[1].keys.contains(column1), "Result for the second row did not contain a value for the first column.")
+        XCTAssertTrue(rows[1].keys.contains(column2), "Result for the second row did not contain a value for the second column.")
+        XCTAssertTrue(rows[1][column1]! as! String == "c", "Result for the second row did not contain the expected value for the first column.")
+        XCTAssertTrue(rows[1][column2]! as! String == "d", "Result for the second row did not contain the expected value for the second column.")
     }
 }
 
