@@ -51,8 +51,9 @@ extension ConnectionTests {
         
         let connection = try? Connection(toNewDatabaseAt: testDatabaseURL)
         
-        // assert: connection should succeed without error and the database
-        //         file should be created
+        // assert:
+        // - connection should succeed
+        // - database file should be created
         
         XCTAssertNotNil(connection, "Connection failed.")
         XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file was not created.")
@@ -69,9 +70,12 @@ extension ConnectionTests {
         FileManager.default.createFile(atPath: testDatabaseURL.path, contents: nil)
         
         // test: connect to a new database at the file's location
-        // assert: connection should throw an error
         
-        XCTAssertThrowsError(try Connection(toNewDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
+        let connection = try? Connection(toNewDatabaseAt: testDatabaseURL)
+        
+        // assert: connection should fail
+        
+        XCTAssertNil(connection, "Connection succeeded.")
     }
     
     
@@ -82,14 +86,14 @@ extension ConnectionTests {
         
         // prepare: create empty database
         
-        _ = try? Connection(toNewDatabaseAt: testDatabaseURL)
-        XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected to exist but does not.")
+        _ = try! Connection(toNewDatabaseAt: testDatabaseURL)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Precondition failure: Database file does not exist.")
         
         // test: connect to the database created above
         
         let connection = try? Connection(toExistingDatabaseAt: testDatabaseURL)
         
-        // assert: connection should succeed without error
+        // assert: connection should succeed
         
         XCTAssertNotNil(connection, "Connection failed.")
     }
@@ -102,12 +106,15 @@ extension ConnectionTests {
         
         // prepare: make sure file does not exist
         
-        XCTAssertFalse(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Database file expected not to exist but does.")
+        XCTAssertFalse(FileManager.default.fileExists(atPath: testDatabaseURL.path), "Precondition failure: Database file exists.")
         
         // test: connect to a database that does not exist
-        // assert: connection should throw an error
         
-        XCTAssertThrowsError(try Connection(toExistingDatabaseAt: testDatabaseURL), "Connection expected to fail but did not.")
+        let connection = try? Connection(toExistingDatabaseAt: testDatabaseURL)
+        
+        // assert: connection should fail
+        
+       XCTAssertNil(connection, "Connection succeeded.")
     }
 }
 
@@ -127,10 +134,12 @@ extension ConnectionTests {
         //
         // NB: `sqlite_master` is a built-in table that is guaranteed to always
         //     exist.
-        //
-        // assert: no error should be thrown during compilation
         
-        XCTAssertNoThrow(try connection.compile("SELECT * FROM sqlite_master"), "Compilation failed.")
+        let statement = try? connection.compile("SELECT * FROM sqlite_master")
+        
+        // assert: compilation should succeed
+        
+        XCTAssertNotNil(statement, "Compilation failed.")
     }
     
     
@@ -144,9 +153,12 @@ extension ConnectionTests {
         let connection = try! Connection(toNewDatabaseAt: testDatabaseURL)
         
         // test: compile a buggy query
-        // assert: an error should be thrown during compilation
         
-        XCTAssertThrowsError(try connection.compile("SELECT * FROM foo"), "Compilation did not fail as expected.")
+        let statement = try? connection.compile("SELECT * FROM foo")
+        
+        // assert: compilation should fail
+        
+        XCTAssertNil(statement, "Compilation succeeded.")
     }
 }
 
