@@ -93,6 +93,65 @@ for row in rows {
 // "name: Bob"
 ```
 
+### Subclassing
+
+For even more type safety in your app, you can subclass `Connection` and 
+`InsertStatement`:
+
+```swift
+
+class ContactTableDescription: TableDescription {
+  
+  let idColumn = ColumnDescription(name: "id", type: .int(size: 11), nullable: false)
+  let nameColumn = ColumnDescription(name: "name", type: .char(size: 255), nullable: false)
+
+  init() {
+    super.init(name: "colors", columns: [idColumn, nameColumn])
+  }
+
+  struct Row {
+    let id: Int
+    let name: String
+  }
+}
+
+struct MyDatabaseSchema {
+  static let contactTableDescription = ContactTableDescription()
+}
+
+class ContactInsertStatement {
+
+  init(connection: Connection) {
+    super.init(insertingIntoTable: MyDatabaseSchema.contactTableDescription, on: connection)
+  }
+    
+  func insert(id: Int, name: String) {
+    let table = MyDatabaseSchema.contactTableDescription
+    insert([
+      table.idColumn.name: id,
+      table.nameColumn.name: name,
+    ])
+  }
+}
+
+class MyDatabaseConnection: Connection {
+
+  func prepareContactInsert() -> ContactInsertStatement {
+    return ContactInsertStatement(connection: self)
+  }
+
+  func readAllContacts() -> [ContactTableDescription.Row] {
+    let table = MyDatabaseSchema.contactTableDescription
+    return readAllRowsFromTable(describedBy: table).map { columnValues in
+      return ContactTableDescription.Row(
+        id: columnValues[table.idColumn.name] as! Int,
+        name: columnValues[table.nameColumn.name] as! String,
+      )
+    }
+  }
+}
+```
+
 
 ## Getting started
 
