@@ -81,7 +81,7 @@ insertStatement.insert([
 ])
 
 // Read data
-let rows = db.readlAllRowsFromTable(describedBy: contactTableDescription)
+let rows = db.readlAllRows(fromTable: contactTableDescription)
 for row in rows {
   for (column, value) in row {
     print("\(column.name): \(String(describing: value))")
@@ -142,7 +142,7 @@ class MyDatabaseConnection: Connection {
 
   func readAllContacts() -> [ContactTableDescription.Row] {
     let table = MyDatabaseSchema.contactTableDescription
-    return readAllRowsFromTable(describedBy: table).map { columnValues in
+    return readAllRows(fromTable: table).map { columnValues in
       return ContactTableDescription.Row(
         id: columnValues[table.idColumn.name] as! Int,
         name: columnValues[table.nameColumn.name] as! String,
