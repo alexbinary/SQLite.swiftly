@@ -15,9 +15,9 @@ class QueryTests: XCTestCase {
         
         let query = SelectQuery(selectingFromTable: TableDescription(name: "t", columns: []))
         
-        // assert: SQL representation is correct
+        // assert: SQL representation should be correct
         
-        XCTAssertEqual(query.sqlString, "SELECT * FROM t;")
+        XCTAssertEqual(query.sqlString, "SELECT * FROM t;", "SQL string was not correct.")
     }
     
     
@@ -29,23 +29,44 @@ class QueryTests: XCTestCase {
         
         let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
         let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
-        
         let table = TableDescription(name: "t", columns: [column1, column2])
         
         let query = CreateTableQuery(creatingTable: table)
         
         // assert: SQL representation is correct
-        // NB: the order of the columns is undefined
+        //
+        // NB: by design, we cannot expect the query to list the columns in any specific order
         
         assertThat(query.sqlString,
-            
             matchesPattern: "CREATE TABLE t \\((.+)\\);",
-            
             withUnorderedComponents: [
-                
-                (components: [column1, column2].map { $0.sqlRepresentation}, separatedBy: ", "),
+                (components: [column1, column2].map { $0.sqlRepresentation}, separator: ", "),
             ]
         )
+    }
+    
+    
+    /// A query of type INSERT INTO should produce a named parameter for each column.
+    ///
+    func test_insertQuery_shouldProduceANamedParameterForEachColumn() {
+        
+        // setup: create a simple query
+        
+        let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
+        let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
+        let table = TableDescription(name: "t", columns: [column1, column2])
+        
+        let query = InsertQuery(insertingIntoTable: table)
+        
+        // assert: each column should have an associated named parameter
+        //
+        // NB: by design, we cannot expect the parameter to have a specific name
+        
+        [column1, column2].forEach { column in
+            
+            XCTAssertNotNil(query.parameters[column], "Missing parameter for column \(column.name)")
+            XCTAssertTrue(query.parameters[column]!.name.starts(with: ":"), "Parameter for column \(column.name) is not a valid named parameter.")
+        }
     }
     
     
@@ -57,22 +78,19 @@ class QueryTests: XCTestCase {
         
         let column1 = ColumnDescription(name: "c1", type: .char(size: 1), nullable: false)
         let column2 = ColumnDescription(name: "c2", type: .char(size: 1), nullable: false)
-        
         let table = TableDescription(name: "t", columns: [column1, column2])
         
         let query = InsertQuery(insertingIntoTable: table)
         
         // assert: SQL representation is correct
-        // NB: the order of the columns is undefined
+        //
+        // NB: by design, we cannot expect the query to list the columns in any specific order
         
         assertThat(query.sqlString,
-                   
             matchesPattern: "INSERT INTO t \\((.+)\\) VALUES\\((.+)\\);",
-
             withUnorderedComponents: [
-                
-                (components: ["c1", "c2"], separatedBy: ", "),
-                (components: [":c1", ":c2"], separatedBy: ", "),
+                (components: [column1, column2].map { $0.name }, separator: ", "),
+                (components: [column1, column2].map { query.parameters[$0]!.name }, separator: ", "),
             ]
         )
     }
@@ -117,7 +135,7 @@ extension QueryTests {
         
         _ inputString: String,
         matchesPattern pattern: String,
-        withUnorderedComponents expectedComponents: [(components: [String], separatedBy: String)]
+        withUnorderedComponents expectedComponents: [(components: [String], separator: String)]
         
     ) {
         
@@ -131,7 +149,7 @@ extension QueryTests {
         
         let nakedComponents = zip(substrings, expectedComponents).map { (substring, expectedComponentSet) in
             return (
-                actual: substring.components(separatedBy: expectedComponentSet.separatedBy),
+                actual: substring.components(separatedBy: expectedComponentSet.separator),
                 expected: expectedComponentSet.components
             )
         }
