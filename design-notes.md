@@ -148,7 +148,7 @@ object (by design, see above), and thus only the corresponding subclass of
 `Statement` needs to be exposed for public use.
 
 
-## `Connection` has two intializers that expect the database to exist or not exist
+## `Connection` intializers
 
 The native SQLite function creates a new database when you try to connect to a
 database that does not exist. This is convenient but can lead to confusion.
@@ -166,7 +166,7 @@ did is wrong.
 
 When you request a connection to a database, *SQLite.swiftly* asks you to 
 express whether you expect the database to exist or not. If you expect the 
-database to  exist and it does not, then a runtime error is raised. Same if you 
+database to exist and it does not, then a runtime error is raised. Same if you 
 expect the database to not exist and it does.
 
 This helps catch situations where you think you are doing one thing but you are
