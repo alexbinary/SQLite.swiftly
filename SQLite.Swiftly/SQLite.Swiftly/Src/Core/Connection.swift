@@ -107,7 +107,7 @@ public class Connection {
     /// The connection remains open as long as the object is not deallocated.
     ///
     /// - Parameter url: A file URL specifying the database file to connect to.
-    ///             If no file exists at that URL, a new file is created.
+    ///             If the file does not exist, a new file is created.
     ///
     /// - Throws:
     ///   - If the connection fails
