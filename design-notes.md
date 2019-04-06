@@ -35,6 +35,9 @@ All subsequent operations use that handle.
 Queries must *compiled* before they can be executed. Compiled queries are called
 *prepared statements*.
 
+The C-style API available on iOS uses pointers to manipulate the native SQLite
+objects.
+
 
 ## General architecture design
 
