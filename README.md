@@ -55,39 +55,33 @@ One of the key principle of *SQLite.swiftly* is that it requires you to declare
 your database structure. That way it can generate the correct SQL queries for
 you.
 
-Here is how you create a table, insert data into it, and read the data back.
-Notice how we never write SQL queries:
-
 ```swift
-// Here we describe a simple table named `contact` with one column `id` of type
-// int and a column `name` of type varchar:
-
-class ContactTable: Table {
-
-  let idColumn = Column(name: "id", type: .int(size: 11), nullable: false)
-  let nameColumn = Column(name: "name", type: .char(size: 255), nullable: false)
-
-  init() {
-    super.init(name: "contact", columns: [idColumn, nameColumn])
-  }
-}
-let contactTable = ContactTable()
+// First, declare the table
+let idColumnDescription = ColumnDescription(name: "id", type: .int(size: 11), nullable: false)
+let nameColumnDescription = ColumnDescription(name: "name", type: .char(size: 255), nullable: false)
+let contactTableDescription = TableDescription(name: "contact", columns: [idColumnDescription, nameColumnDescription])
 
 // Open a connection to the database
-let connection = Connection(toNewDatabaseAt: "path/to/db.sqlite")
+let db = Connection(toNewDatabaseAt: "path/to/db.sqlite")
 
 // Create the table
-connection.create(contactTable)
+db.createTable(describedBy: contactTableDescription)
 
 // Prepare a statement that inserts data into the table
-let insertStatement = connection.prepare(insertInto: contactTable)
+let insertStatement = db.prepareInsertIntoTable(describedBy: contactTableDescription)
 
 // Insert data into the table
-insertStatement.insert([contactTable.idColumn: 1, contactTable.nameColumn: "Alice"])
-insertStatement.insert([contactTable.idColumn: 2, contactTable.nameColumn: "Bob"])
+insertStatement.insert([
+  idColumnDescription.name: 1,
+  nameColumnDescription.name: "Alice"
+])
+insertStatement.insert([
+  idColumnDescription.name: 2,
+  nameColumnDescription.name: "Bob"
+])
 
 // Read data
-let rows = connection.readlAllRows(from: contactTable)
+let rows = db.readlAllRowsFromTable(describedBy: contactTableDescription)
 for row in rows {
   for (column, value) in row {
     print("\(column.name): \(String(describing: value))")
