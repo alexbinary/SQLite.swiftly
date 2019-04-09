@@ -8,6 +8,13 @@
 [SVG version](design.svg) - [Draw.io source file](design.drawio)
 
 
+## Wrapping diagram
+
+![](design_internal.png)
+
+[SVG version](design_internal.svg) - [Draw.io source file](design_internal.drawio)
+
+
 ## General design considerations
 
 ### SQLite.swiftly is designed for the needs of the My LEGO Collection project
