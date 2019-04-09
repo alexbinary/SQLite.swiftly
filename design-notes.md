@@ -5,12 +5,17 @@
 
 ![](design.png)
 
+This diagram shows how the various components of *SQLite.siwftly* fit together.
+
 [SVG version](design.svg) - [Draw.io source file](design.drawio)
 
 
 ## Wrapping diagram
 
 ![](design_internal.png)
+
+This diagram shows how the low level SQLite objects are wrapped by higher level
+objects, namely `Connection` and `Statement`.
 
 [SVG version](design_internal.svg) - [Draw.io source file](design_internal.drawio)
 
