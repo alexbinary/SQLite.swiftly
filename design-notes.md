@@ -303,3 +303,20 @@ whether an error occured or not.
 
 Errors triggered by SQLite functions are detected using the return value of
 those functions when they have one.
+
+
+## Testing
+
+### It is better to test more rather than test less
+
+A test that makes assertions that are too specific is better than a test that
+does not make enough assertions.
+
+If an assertion is too specific, it might break when the code is updated while
+staying correct. In that case the test needs to be updated, and the update should
+be relatively easy.
+
+However if a test does not make enough assertions, it might still pass after a
+change that breaks the code. In that case a bug might go unnoticed.
+
+Hence, too many assertions is better than too less.
