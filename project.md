@@ -237,12 +237,20 @@ The details of the SQLite canonical APIs have no impact on higher level concepts
 that we expose to the user. That is why these are hidden from the user.
 
 
-## What is the expected overall quality
+## Quality and development experience
 
-The system is correct and efficient, the code is clean, minimalist and documented.
+The system under development is subject to the highest standard of quality,
+both in the final product and in the methodology.
 
-Documentation is extensive and well-crafted.
+In all aspect of the system, the code is clean, minimalist, and strives for
+efficiency.
 
-The system is heavily tested.
+Documentation is extensive and well-crafted, and encompasses the code itself as
+well as the design in general.
 
-Common development tasks are automated and high-quality tools are provided.
+The system is heavily tested with a suite of automated tests that are run as 
+often as possible and rigorously maintained.
+
+Common development tasks are automated and high-quality tools are provided,
+creating a robust and welcoming development environement that gives contributor
+confidence and encourages the best practices available.
