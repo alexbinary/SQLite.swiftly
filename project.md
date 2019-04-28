@@ -29,12 +29,12 @@ The system is designed specifically to be used on iOS.
 
 ### With ease
 
-Ease of use is one of the main design goal, and is obtained with the following
-design choices.
+Ease of use is one of the main design goal, and is obtained with design choices
+desribed below.
 
 First, the details of the C-style API available on iOS are hidden away, as well
 as low level technical considerations such as pointers and state machines.
-Programmer interract with the system using APIs that let them express their
+Programmers interract with the system using APIs that let them express their
 intent rather than manage technical details.
 
 Second, the APIs exposed respect [Swift's API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
@@ -45,8 +45,8 @@ many compile-time checks as possible, and make writing incorrect code harder.
 
 ### With efficiency
 
-Efficiency is the other main design goal, and is obtained with the following
-design choices.
+Efficiency is the other main design goal, and is obtained with design choices
+desribed below.
 
 First, the system adds minimal overhead to common operations.
 
@@ -115,17 +115,17 @@ reading all columns and all rows. Filters, joints and functions are not
 supported.
 
 
-## What is exposed and what is hidden
+## Exposed and hidden concepts
 
-We provide a way for users to access SQLite databases. Users are expected to be
-familliar with databases in general and SQLite databases in particular.
+The system allows users to interract with SQLite databases. Users are expected 
+to be familliar with databases in general and SQLite databases in particular.
 
-When working with SQLite databases on iOS with the vanilla APIs, a user has to
+When working with SQLite databases on iOS with the vanilla APIs, users have to
 deal with a number of things, ranging from classic database concepts to API
 implementation details.
 
-Out goal is to hide from the user most of the things what are not strictly
-necessary for them to accomplish their goals.
+The system hides away most of the things what are not directly relevant to the
+user's goals.
 
 Concepts that are part of the user's goal (e.g. the concepts of databases,
 tables and columns) obviously need to be exposed, while concepts that are not
@@ -146,17 +146,20 @@ users to access databases, these concepts are obviously exposed.
 ### Connections
 
 Part of the user's goal: no
-Exposed: yes
-Reason: performance control
+Exposed: no
 
 Opening and closing connections to a database is required to interract with it,
-but is not part of the user's goals. As such, the concept of database connections
-is not required to be exposed to the user.
+but is not part of the user's goals. As such, the concept of database 
+connections is not strictly required to be exposed to the user.
 
 However opening and closing connections can have serious performance impact if
-done wrong, and it is difficult to do it right without beeing in the user's head.
-That is why we choose to expose the concept of connections to let the user
-decide how they want to manage them.
+done wrong. For example, when doing a lot of successive operations, it is better
+to open a connection once and then reuse it for every operations, and close it
+only after all operations are done.
+
+Users who work with databases are used to managing connections, and the concept
+is easily understandable by newcomers. That is the system exposes the concept of
+connections and let the user manage them.
 
 ### Queries
 
@@ -172,7 +175,7 @@ internally.
 
 Additionnaly, queries are plain strings that are easy to get wrong. Although
 they can have dynamic parts, queries are usually written by the programmer and
-built a compile time, as opposed to generated at runtime. Unfortunatly, since
+built at compile time, as opposed to generated at runtime. Unfortunatly, since
 they are essentially data, incorrect queries will not trigger compile time
 errors, only runtime errors. This is another incentive to hide the queries from
 the user, as having the queries generated automatically minimizes the risk of
@@ -198,8 +201,22 @@ re-creating the same statement every time. That is why we choose to expose the
 concept of prepared statements, even though the concept of queries and query 
 compilation are not exposed.
 
-To the user, the concept of prepared statements looks like "Im about to do the
-same thing multiple times, here I go, here I go, here I go, etc."
+### Database schema, table and column descriptions
+
+Part of the user's goal: no
+Exposed: no
+Reason: making things explicit
+
+Although not always explicilty written in code, database schemas, that is the
+description of the tables and the columns in them, are an essential part when
+working with databases. Indeed, users necessarily know about the tables that
+exist or should exist in the database, the columns in the tables, and the data
+type of each column.
+
+Our system requires users to explicitly express the schema they need to use
+before doing anything. This gives the system knowledge about the database that
+users are manipulating, and helps prevent inconsistencies and errors due to an
+implicit schema definition that manifests itself indirectly on multiple places.
 
 ### Internal state machines
 
