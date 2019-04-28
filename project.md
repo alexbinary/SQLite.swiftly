@@ -4,17 +4,63 @@
 
 ## What are we building
 
-We are building a set of components that allow users to write code that interracts
-with a SQLite database on iOS without having to deal with low level technical considerations
-such as pointers and state machines.
+We are building a set of components that allow users to interract with a SQLite
+database on iOS with ease and efficiency.
 
-We offer APIs that allow the programmer to express their intent rather than
-manage technical details.
+The system we are building is optimized for use in My LEGO Collection.
 
-We offer APIs that make writing incorrect code harder by leveraging Swift's type system.
+### A set of components
 
-The system is simple, lightweight, fast and efficient, and is optimized for
-use in My LEGO Collection.
+The system exposes several types that form a consistent system where everything
+works together naturally and efficiently.
+
+### That allow users to interract with a SQLite database
+
+The system is designed for progammers who write programs that create SQLite
+databases, store data into SQLite databases, and read data stored in SQLite
+databases.
+
+The system is designed specifically for SQLite databases. It does not support
+other types of SQL databases.
+
+### On iOS
+
+The system is designed specifically to be used on iOS.
+
+### With ease
+
+Ease of use is one of the main design goal, and is obtained with the following
+design choices.
+
+First, the details of the C-style API available on iOS are hidden away, as well
+as low level technical considerations such as pointers and state machines.
+Programmer interract with the system using APIs that let them express their
+intent rather than manage technical details.
+
+Second, the APIs exposed respect [Swift's API Design Guidelines](https://swift.org/documentation/api-design-guidelines/).
+Method calls and classes are expressive and feel natural to Swift users.
+
+Finally, the system relies heavily on Swift's strong type system to enable as
+many compile-time checks as possible, and make writing incorrect code harder.
+
+### With efficiency
+
+Efficiency is the other main design goal, and is obtained with the following
+design choices.
+
+First, the system adds minimal overhead to common operations.
+
+Second, the system's design encourages users to write efficient code.
+
+Finally, users have full control over elements that have a significant impact on
+performance and that cannot be managed transparently by the system in an
+efficient manner.
+
+### Optimized for My LEGO Collection
+
+The system is designed primarily to be used in the My LEGO Collection project.
+The design is optimized to provide only the features that are needed for that 
+project and deliver them with the best performance.
 
 
 ## Whate are we not building
@@ -22,6 +68,8 @@ use in My LEGO Collection.
 We are not building a full featured system.
 
 We are not building an ultra flexible system.
+
+We are not building an abstract persistence layer where usage of a SQLite database is an implementation detail.
 
 
 ## How is it different from SQLite.swift
