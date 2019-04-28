@@ -29,7 +29,7 @@ import SQLite3
 /// It is important that you close the connection after use to release
 /// associated resources.
 ///
-public class Connection {
+class Connection {
     
     
     /// The SQLite pointer to the underlying connection object.

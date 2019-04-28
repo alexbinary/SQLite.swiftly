@@ -26,7 +26,7 @@ public class SelectStatement: Statement {
     /// - Parameter tableDescription: The table the statement reads from.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(selectingFromTable tableDescription: TableDescription, on: Connection) {
+    init(selectingFromTable tableDescription: TableDescription, on: Connection) {
         
         self.tableDescription = tableDescription
         self.selectQuery = SelectQuery(selectingFromTable: tableDescription)

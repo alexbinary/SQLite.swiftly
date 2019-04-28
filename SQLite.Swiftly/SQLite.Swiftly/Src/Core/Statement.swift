@@ -58,7 +58,7 @@ public class Statement {
     /// - Parameter query: The SQL query to compile.
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(compiling query: Query, on connection: Connection) {
+    init(compiling query: Query, on connection: Connection) {
         
         self.query = query
         self.connection = connection

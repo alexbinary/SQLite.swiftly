@@ -28,7 +28,7 @@ public class InsertStatement: Statement {
     ///
     /// - Parameter connection: The connection to use to compile the query.
     ///
-    public init(insertingIntoTable tableDescription: TableDescription, on connection: Connection) {
+    init(insertingIntoTable tableDescription: TableDescription, on connection: Connection) {
         
         self.tableDescription = tableDescription
         self.insertQuery = InsertQuery(insertingIntoTable: tableDescription)
