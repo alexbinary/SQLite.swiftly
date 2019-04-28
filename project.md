@@ -65,16 +65,27 @@ project and deliver them with the best performance.
 
 ## Whate are we not building
 
-We are not building a full featured system.
+### An abstract persistence layer
 
-We are not building an ultra flexible system.
+We are not building an abstract persistence layer where usage of a SQLite
+database is just an implementation detail.The target audience has specific
+requirements to use SQLite databases, and they want a system that allows them to
+do that.
 
-We are not building an abstract persistence layer where usage of a SQLite database is an implementation detail.
+### A full featured system
 
+We are not building a system that allows users to do everything that can be done
+with a SQLite database. The system is focused on the needs of the My LEGO
+Collection project and provides only the features that are needed on that
+project.
 
-## How is it different from SQLite.swift
+### An ultra flexible system
 
-SQLite.swift is full featured, whereas we are focused on just the features that are needed for My LEGO Collection.
+We are not building a system with extensive configuration capabilities. The
+system is focused on providing features in the most straight forward way
+possible, with strong design choices that meet the needs of the My LEGO
+Collection project. Configuration, if ever needed, is minimal and always based
+on actual use cases.
 
 
 ## What are the features
