@@ -88,13 +88,31 @@ Collection project. Configuration, if ever needed, is minimal and always based
 on actual use cases.
 
 
-## What are the features
+## Feature list
 
-- create a new database
-- connect to an existing database
-- create tables
-- insert multiple rows into one table at a time efficiently
-- retrieve all rows from one table at a time
+### Create databases
+
+The system allows users to create database files that can then be used like any
+other database files.
+
+### Create tables
+
+The system allows users to create arbitrary tables in an existing database.
+Users are free to create the table and columns they want, provided the data
+types are supported. The system only supports data types that are needed in the
+My LEGO Collection project.
+
+### Insert multiple rows into a table
+
+The system allows users to insert one or more rows into an existing table.
+Users are free to insert the data they want, but they must provide a value for
+each and every column of the table.
+
+### Retrieve all rows and all columns from a table
+
+The system allows users to read data from a table. The operation only supports
+reading all columns and all rows. Filters, joints and functions are not
+supported.
 
 
 ## What is exposed and what is hidden
