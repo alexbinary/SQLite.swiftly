@@ -1,5 +1,5 @@
 
-# Project document
+# General design
 
 
 ## What are we building
