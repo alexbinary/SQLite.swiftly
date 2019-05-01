@@ -227,9 +227,8 @@ preparation, then using the token to perform the prepared operation.
 
 ### Database schema, table and column descriptions
 
-Part of a user's goal: no
-Exposed: no
-Reason: single source of truth
+Part of a user's goal: yes
+Exposed: yes
 
 Although not always explicilty written in code, database schemas, that is the
 description of the tables and the columns in them, are an essential part when
@@ -237,34 +236,37 @@ working with databases. Indeed, users necessarily know about the tables that
 exist or should exist in the database, the columns in the tables, and the data
 type of each column.
 
-Our system requires users to explicitly express the schema they need to use
-before doing anything. This gives the system knowledge about the database that
-users are manipulating, and helps prevent inconsistencies and errors due to an
-implicit schema definition that manifests itself indirectly on multiple places.
+Most systems do not expose this concept. Users use their knowledge of the
+database to produce queries that are fed in the system. This is error prone as
+users may have the database schema wrong (e.g. forget about a recent change)
+when they write the queries, and results in the database schema being expressed
+indirectly throught the various queries. Any future change in the schema
+requires changing all queries that are impacted by the change, which is both
+tedious and error prone.
 
-### Internal state machines
+*SQLite.swiftly* requires users to explicitly declare the schema they need to 
+use, and encourages doing it in the most type safe way possible. Users build
+objects that describe the tables, columsn, and data types. When requesting an
+operation to be performed on the database, instead of passing every individual
+piece of schema like the table and individual columns name, they pass objects
+that encapsulates everything. When the schema changes, only the definition
+object needs to be updated, and by leveraging Swift's type system,
+*SQLite.swiftly* can detect errors and inconsistencies at build time.
+
+### SQLite API details
 
 Part of a user's goal: no
 Exposed: no
 
-SQLite objects have an internal state machine that requires that interractions
-with the object happen in a certain way. This is an implementation details
-related to the SQLite canonical APIs that has no impact on higher level concepts
-that we expose to the user. That is why these are hidden from the user.
-
-### API details
-
-Part of a user's goal: no
-Exposed: no
-
-The details of the SQLite canonical APIs have no impact on higher level concepts
-that we expose to the user. That is why these are hidden from the user.
+The details of the SQLite canonical APIs, like methods names, low level data
+types, or state machines that must be respected, have no impact on higher level
+concepts. *SQLite.swiftly* completly hides this from users.
 
 
 ## Quality and development experience
 
-The system under development is subject to the highest standard of quality,
-both in the final product and in the methodology.
+*SQLite.swiftly* is subject to the highest standard of quality, both in the
+final product and in the methodology.
 
 In all aspect of the system, the code is clean, minimalist, and strives for
 efficiency.
@@ -276,5 +278,5 @@ The system is heavily tested with a suite of automated tests that are run as
 often as possible and rigorously maintained.
 
 Common development tasks are automated and high-quality tools are provided,
-creating a robust and welcoming development environement that gives contributor
+creating a robust and welcoming development environement that gives contributors
 confidence and encourages the best practices available.
